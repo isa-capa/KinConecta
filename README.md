@@ -10,7 +10,7 @@
 
 ## 📖 Descripción del Proyecto
 
-**Kin Conecta** es una plataforma digital (Red Social de Viajes) diseñada para conectar a turistas nacionales y extranjeros con **guías locales** en México. 
+**Kin Conecta** es una plataforma digital (Red Social de Viajes) diseñada para conectar a turistas nacionales y extranjeros con **guías locales** en México.
 
 El proyecto nace de la problemática actual donde los viajeros encuentran experiencias genéricas y estandarizadas. Nuestra solución facilita la personalización de viajes, permitiendo a los usuarios contactar directamente con expertos locales para vivir experiencias auténticas y seguras.
 
@@ -74,20 +74,15 @@ Este proyecto fue desarrollado por el equipo **Bugbusters** como parte del Proye
 | Integrante | Rol Principal | GitHub |
 | :--- | :--- | :--- |
 | **Isaura Casas** | Backend / Data Engineer | [@user](https://github.com/) |
-| **Oscar Monroy** | Frontend / Fullstack | [@user](https://github.com/) |
-| **Hageo Balam** | Backend / Data | [@user](https://github.com/) |
-| **Gabriel Flores** | Frontend Developer | [@user](https://github.com/) |
+| **Oscar Monroy | / |[@user](https://github.com/) |
+| **Hageo Balam** |  /  | [@user](https://github.com/) |
+| **Gabriel Flores** |   | [@Gabriel-Onitsuaf](https://github.com/Gabriel-Onitsuaf) |
 | **Emmanuel Montiel** | Fullstack Developer | [@esaumonti-blip](https://github.com/) |
-| **José Evelio** | Frontend Developer | [@user](https://github.com/) |
-| **Mariana Carmona** | Frontend / UI | [@user](https://github.com/) |
-| **Andrea Meneses** | Fullstack Developer | [@user](https://github.com/) |
-| **Juan Ariel Alarcón** | Fullstack Developer | [@user](https://github.com/) |
+| **José Evelio** | / | [@user](https://github.com/) |
+| **Mariana Carmona** | / | [@user](https://github.com/) |
+| **Andrea Meneses** |  / | [@user](https://github.com/) |
+| **Juan Ariel Alarcón** | /  | [@user](https://github.com/) |
 
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE.md](LICENSE.md) para detalles.
 
 ---
 ⌨️ con ❤️ por el equipo **Bugbusters** 😊
