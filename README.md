@@ -73,18 +73,18 @@ git st
 
 Este proyecto fue desarrollado por el equipo **Bugbusters** como parte del Proyecto Integrador del Bootcamp Generation CH63.
 
-| Integrante             | Rol Principal           | GitHub                                                   |
-| :--------------------- | :---------------------- | :------------------------------------------------------- |
-| **Isaura Casas**       | Backend / Data Engineer | [@isa-capa](https://github.com/isa-capa)                             |
-| **Oscar Monroy**       | FullStack Dev / Java    | [@user](https://github.com/omonroyt)                     |
-| **Hageo Balam**        | Backend / Data Engineer | [@Ajo-png](https://github.com/Ajo-png)                   |
-| **Gabriel Flores**     |                         | [@Gabriel-Onitsuaf](https://github.com/Gabriel-Onitsuaf) |
-| **Emmanuel Montiel**   | Fullstack               | [@esaumonti-blip](https://github.com/esaumonti-blip)     |
-| **José Evelio**        | /                       | [@josesnowdev](https://github.com/josesnowdev)           |
-| **Mariana Carmona**    |FullStack JavaScript Dev/| [@Carmonah-Mariana](https://github.com/Carmonah-Mariana) |
-| **Andrea Meneses**     | /                       | [@user](https://github.com/)                             |
-| **Juan Ariel Alarcón** | /                       | [@JuanAG1003](https://github.com/JuanAG1003)             |
+| Integrante | Rol Principal | GitHub |
+| :--- | :--- | :--- |
+| **Isaura Casas** | Backend / Data Engineer | [@user](https://github.com/) |
+| **Oscar Monroy** | / |[@user](https://github.com/) |
+| **Hageo Balam** | Backend / Data Engineer | [@Ajo-png](https://github.com/Ajo-png) |
+| **Gabriel Flores** |   | [@Gabriel-Onitsuaf](https://github.com/Gabriel-Onitsuaf) |
+| **Emmanuel Montiel** |  Fullstack | [@esaumonti-blip](https://github.com/esaumonti-blip) |
+| **José Evelio** | / | [@josesnowdev](https://github.com/josesnowdev) | 
+| **Mariana Carmona**    |FullStack JavaScript Dev/| [@Carmonah-Mariana](https://github.com/Carmonah-Mariana
+| **Andrea Meneses** |  / | [@AndreaMeneses13](https://github.com/AndreaMeneses13) |
+| **Juan Ariel Alarcón** | /  | [@JuanAG1003](https://github.com/JuanAG1003) |
+
 
 ---
-
-⌨️ con ❤️ por el equipo **Bugbusters** 😊
+⌨️ con ❤️ por el equipo **Bugbusters** 😊.
