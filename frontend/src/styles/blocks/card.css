@@ -1,14 +1,21 @@
 .card {
-  background-color: var(--color-bg-page);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
+  border-radius: 1.55rem;
   padding: 2rem;
-  transition: all 0.3s;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
 }
 
 .card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-  border-color: rgba(219, 112, 6, 0.35);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--color-accent);
 }
 
 .card__title {
@@ -19,97 +26,70 @@
 
 .card__text {
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* Modificador: Value Card */
+/* Value cards */
 .card--value .card__icon-wrapper {
   width: 3.5rem;
   height: 3.5rem;
-  border-radius: 50%;
-  background-color: rgba(219, 112, 6, 0.1);
+  border-radius: 999px;
+  background-color: var(--color-surface-3);
   color: var(--color-primary);
+  border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   transition:
-    background-color 0.3s,
-    color 0.3s;
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .card--value:hover .card__icon-wrapper {
   background-color: var(--color-primary);
-  color: white;
+  color: #fff;
+  transform: scale(1.02);
 }
 
-/* Modificador: Profile (Team) Card */
+/* Profile cards */
 .card--profile {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-
-  padding: 1.5rem;
-  border-color: transparent;
-  background-color: var(--color-bg-page);
-}
-
-.card--profile:hover {
-  border-color: rgba(219, 112, 6, 0.18);
+  padding: 1.6rem 1.6rem 1.35rem 1.6rem;
 }
 
 .card__avatar {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
+  width: 6.2rem;
+  height: 6.2rem;
+  border-radius: 999px;
   overflow: hidden;
   margin-bottom: 1rem;
-  border: 2px solid var(--color-bg-surface);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--color-surface);
+  box-shadow: 0 10px 25px rgba(22, 35, 42, 0.14);
 }
 
 .card__role {
-  color: var(--color-primary);
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: var(--color-accent); /* NUEVO color visible */
+  font-size: 0.92rem;
+  font-weight: 900;
   margin-bottom: 0.75rem;
 }
 
-/* Social buttons en cards de perfil */
-.card--profile {
-  position: relative; /* para posicionar .card__social */
-  padding: 1.5rem 1.5rem 1.25rem 1.5rem;
-}
-
 .card__social {
-  margin-top: auto; /* empuja este bloque al fondo del card */
-  align-self: flex-end; /* lo alinea a la derecha dentro del card */
+  margin-top: auto;
+  align-self: flex-end;
   display: flex;
-  gap: 0.5rem;
-
-  padding-top: 1rem; /* espacio entre texto y botones */
+  gap: 0.55rem;
+  padding-top: 1rem;
 }
 
-.card--profile .card__text {
-  margin-bottom: 0;
-}
-
-.btn--social {
-  height: 2.5rem;
-  width: 2.5rem;
-  padding: 0; /* icon button */
-  border-radius: 0.75rem;
-}
-
-.btn__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn__icon svg {
-  width: 1.1rem;
-  height: 1.1rem;
+.team-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--color-primary);
 }

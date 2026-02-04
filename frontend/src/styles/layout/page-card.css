@@ -1,0 +1,22 @@
+/* =========================================================
+  LAYOUT: page-card
+========================================================= */
+.page-card {
+  max-width: 1080px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-card--hero {
+  padding: 0;
+}
+
+.page-card--contact {
+  padding: 2.25rem;
+}

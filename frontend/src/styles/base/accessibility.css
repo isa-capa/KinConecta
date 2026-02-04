@@ -1,0 +1,14 @@
+/* =========================================================
+  Accesibilidad: reduce motion
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}

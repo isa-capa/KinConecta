@@ -1,0 +1,37 @@
+.toast {
+  position: sticky;
+  top: 1rem;
+  z-index: 20;
+  margin-bottom: 1rem;
+}
+
+.toast__content {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border-radius: 1.35rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.toast__icon {
+  color: var(--color-sea);
+}
+
+.toast__message {
+  font-weight: 900;
+}
+
+.toast__close {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  border-radius: 1rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}

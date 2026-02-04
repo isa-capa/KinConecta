@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Sobre Nosotros - Kin Conecta</title>
+    <title>Nosotros - Kin Conecta</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;700&display=swap"
       rel="stylesheet"
@@ -15,166 +16,398 @@
 
     <link rel="stylesheet" href="../styles/main.css" />
   </head>
+
   <body>
     <!-- NAVBAR -->
-    <header class="header">
+    <header class="header" id="top">
       <div class="container header__container">
         <!-- Izquierda: navegación -->
         <div class="header__nav-wrapper">
-          <nav class="header__nav">
-            <a href="#" class="header__link">Inicio</a>
-            <a href="#" class="header__link">Explorar</a>
-            <a href="#" class="header__link header__link--active">Nosotros</a>
+          <nav class="header__nav" aria-label="Navegación principal">
+            <a href="#inicio" class="header__link">Inicio</a>
+            <a href="#explorar" class="header__link">Explorar</a>
+            <a href="#nosotros" class="header__link header__link--active"
+              >Nosotros</a
+            >
+            <a href="#contacto" class="header__link">Contacto</a>
           </nav>
         </div>
 
         <!-- Centro: marca -->
-        <div class="header__brand">
-          <div class="header__logo-icon">
-            <svg
-              fill="currentColor"
-              viewBox="0 0 48 48"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M6 6H42L36 24L42 42H6L12 24L6 6Z"></path>
-            </svg>
+        <a class="header__brand" href="#top" aria-label="Ir al inicio">
+          <div class="header__logo-icon" aria-hidden="true">
+            <img src="../assets/logo.png" alt="logo Kin Conecta" />
           </div>
           <h2 class="header__title">Kin Conecta</h2>
-        </div>
+        </a>
 
         <!-- Derecha: acciones -->
         <div class="header__actions">
           <a href="#" class="header__link">Iniciar Sesión</a>
-          <button class="btn btn--primary">Registrarse</button>
+          <button class="btn btn--primary btn--ripple">Registrarse</button>
         </div>
 
-        <!-- Mobile menu button (se mantiene) -->
-        <div class="header__menu-btn">
+        <!-- Mobile menu button -->
+        <button
+          class="header__menu-btn"
+          type="button"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
           <span class="material-symbols-outlined">menu</span>
-        </div>
+        </button>
+      </div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <nav class="mobile-menu__nav" aria-label="Navegación móvil">
+          <a class="mobile-menu__link" href="#inicio">Inicio</a>
+          <a class="mobile-menu__link" href="#explorar">Explorar</a>
+          <a class="mobile-menu__link" href="#nosotros">Nosotros</a>
+          <a class="mobile-menu__link" href="#contacto">Contacto</a>
+
+          <div class="mobile-menu__actions">
+            <a href="#" class="btn btn--ghost btn--ripple">Iniciar Sesión</a>
+            <button class="btn btn--primary btn--large btn--ripple">
+              Registrarse
+            </button>
+          </div>
+        </nav>
       </div>
     </header>
 
-    <!-- HERO (CARD con background image) -->
-    <section class="hero">
+    <!-- HERO (NUEVO: SOBRE NOSOTROS) -->
+    <section class="hero" id="inicio">
       <div class="container">
-        <div
-          class="page-card page-card--hero hero__card"
-          style="
-            background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCkWDMF_5-94A3ZewwYxqJX-lhI_bXpvQJgihosseImfWchsYhqWxUaQTXgK37Q9kwwaG4bsC6AozTtjdyeO2uzgnBhhRf2QJsUvhqwc1db6KUm21CQDqIGKyPftlnMSl2QQzWlp1jzIw7LOnbtKhkqEY1H_VsdcnQti0Km3ko065NxLpNMsYHRjvrxa_2ASZb8GkzMxlc1zNsFyocwbMjGH85TXFOOWeEtgdUQ3jzSPr5zUbEfxB779U9IPLLBGVIT212TrJFj_Hk3&quot;);
-          "
-        >
-          <div class="hero__overlay"></div>
+        <div class="page-card page-card--hero hero__card reveal">
+          <div class="hero__grid">
+            <!-- Texto -->
+            <div class="hero__content">
+              <h1 class="hero__title">
+                Conócenos
+                <span class="text-accent"><br />Kin Conecta</span>
+              </h1>
 
-          <div class="hero__content">
-            <h1 class="hero__title">
-              Conectando Viajeros,<br />
-              <span class="text-primary">Descubriendo el México Real</span>
-            </h1>
+              <p class="hero__description">
+                Kin Conecta es una plataforma social de viajes que conecta a
+                turistas de todas partes con guías locales originarios del
+                destino al que viajas en México. Queremos que cada viaje sea
+                auténtico, seguro y a tu medida: sin tours genéricos, sin
+                itinerarios rígidos y con recomendaciones reales de quienes
+                viven ahí. Enamórate de México por su gente, su cultura y sus
+                rincones ocultos, con la confianza de que cada conexión es
+                genuina y personalizada.
+              </p>
 
-            <p class="hero__description">
-              Kin Conecta es el lugar donde nacen las experiencias auténticas.
-              Nos dedicamos a eliminar la barrera del turismo genérico
-              conectando a visitantes curiosos con guías locales apasionados,
-              fomentando un intercambio cultural seguro y personalizado.
-            </p>
+              <ul class="hero__bullets" aria-label="Qué resolvemos">
+                <li>
+                  <span
+                    class="bullet__icon material-symbols-outlined"
+                    aria-hidden="true"
+                    >check_circle</span
+                  >
+                  Experiencias auténticas y personalizadas que ofrecen un
+                  intercambio cultural real.
+                </li>
+                <li>
+                  <span
+                    class="bullet__icon material-symbols-outlined"
+                    aria-hidden="true"
+                    >verified_user</span
+                  >
+                  Conexión segura con guías verificados.
+                </li>
+                <li>
+                  <span
+                    class="bullet__icon material-symbols-outlined"
+                    aria-hidden="true"
+                    >route</span
+                  >
+                  Planes personalizados: intereses, tiempos y al ritmo de cada
+                  viajero/a.
+                </li>
+              </ul>
 
-            <!-- Barra de búsqueda centrada -->
-            <form class="search" action="#" method="get">
-              <label class="search__label" for="search-destino"
-                >¿A dónde quieres ir?</label
-              >
-              <div class="search__bar">
-                <span class="material-symbols-outlined search__icon"
-                  >search</span
+              <div class="hero__actions">
+                <a
+                  class="btn btn--primary btn--large btn--icon btn--ripple"
+                  href="#nosotros"
                 >
-                <input
-                  class="search__input"
-                  id="search-destino"
-                  name="q"
-                  type="text"
-                  placeholder="Ej. Oaxaca, CDMX, Mérida..."
-                  autocomplete="off"
-                />
-                <button
-                  class="btn btn--primary btn--large search__btn"
-                  type="submit"
+                  <span>Conoce nuestra misión</span>
+                  <span class="material-symbols-outlined">arrow_downward</span>
+                </a>
+
+                <a
+                  class="btn btn--ghost btn--large btn--icon btn--ripple"
+                  href="#contacto"
                 >
-                  Buscar
-                </button>
+                  <span>Contáctanos</span>
+                  <span class="material-symbols-outlined">chat</span>
+                </a>
               </div>
-            </form>
+            </div>
+
+            <!-- Media / Micro-cards -->
+            <div class="hero__media">
+              <div class="hero__image-wrap" aria-hidden="true">
+                <img
+                  class="hero__image"
+                  src="../assets/turismo_nosotros.jpg"
+                  alt="Foto de un guía local mostrando un sitio turístico a unos viajeros."
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="hero-floats" aria-hidden="true">
+                <div class="float-card float-card--a js-float">
+                  <span class="material-symbols-outlined">public</span>
+                  <div>
+                    <p class="float-card__title">Especialización local</p>
+                    <p class="float-card__text">
+                      México, sin un catálogo genérico
+                    </p>
+                  </div>
+                </div>
+
+                <div class="float-card float-card--b js-float">
+                  <span class="material-symbols-outlined">shield</span>
+                  <div>
+                    <p class="float-card__title">Verificación</p>
+                    <p class="float-card__text">Para garantizar la seguridad</p>
+                  </div>
+                </div>
+
+                <div class="float-card float-card--c js-float">
+                  <span class="material-symbols-outlined">map</span>
+                  <div>
+                    <p class="float-card__title">Planes de tour</p>
+                    <p class="float-card__text">
+                      Itinerarios claros y tangibles
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero__mini-note">
+                <span class="material-symbols-outlined" aria-hidden="true"
+                  >tips_and_updates</span
+                >
+                <span>
+                  Nuestro enfoque: Autenticidad, viviendo experiencias cercanas
+                  con guías locales y planes hechos a tu medida.
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- NUESTRA ENERGÍA KIN (CARD) -->
-    <section class="section">
+    <!-- EXPLORAR -->
+    <section class="section" id="explorar">
       <div class="container">
-        <div class="page-card">
+        <div class="page-card reveal">
           <div class="section__header">
-            <h2 class="section__title">Nuestra Energía KIN</h2>
+            <h2 class="section__title">Explora con intención</h2>
             <p class="section__subtitle">
-              Nos impulsa el deseo de iluminar el turismo en México, guiándonos
-              por principios que transforman viajes ordinarios en conexiones
-              humanas genuinas.
+              Aquí no encontrarás simple “turismo”. Kin Conecta es
+              <strong>conexión</strong> con personas, culturas y lugares únicos.
+              Elige el tipo de experiencia y te contamos qué significa en Kin.
             </p>
           </div>
 
-          <div class="grid grid--3-cols">
-            <div class="card card--value">
+          <div
+            class="pill-grid"
+            role="tablist"
+            aria-label="Categorías de exploración"
+          >
+            <button
+              class="pill pill--accent btn--ripple"
+              type="button"
+              data-pill="gastro"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">restaurant</span>
+              Gastronomía local
+            </button>
+
+            <button
+              class="pill btn--ripple"
+              type="button"
+              data-pill="naturaleza"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">hiking</span>
+              Naturaleza & senderos
+            </button>
+
+            <button
+              class="pill btn--ripple"
+              type="button"
+              data-pill="arte"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">palette</span>
+              Arte & cultura
+            </button>
+
+            <button
+              class="pill pill--dark btn--ripple"
+              type="button"
+              data-pill="tradiciones"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">festival</span>
+              Tradiciones vivas
+            </button>
+          </div>
+
+          <!-- Panel expandible -->
+          <div class="pill-panel" id="pillPanel" hidden>
+            <div class="pill-panel__inner">
+              <div class="pill-panel__head">
+                <h3 class="pill-panel__title" id="pillTitle">Explora</h3>
+                <button
+                  class="pill-panel__close btn--ripple"
+                  type="button"
+                  aria-label="Cerrar"
+                >
+                  <span class="material-symbols-outlined">close</span>
+                </button>
+              </div>
+              <p class="pill-panel__text" id="pillText">
+                Selecciona una categoría para ver detalles.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUESTRA ENERGÍA KIN -->
+    <section class="section" id="nosotros">
+      <div class="container">
+        <div class="page-card reveal">
+          <div class="section__header">
+            <h2 class="section__title">Nuestra Energía KIN</h2>
+            <p class="section__subtitle">
+              Principios que transforman viajes ordinarios en conexiones humanas
+              genuinas.
+            </p>
+          </div>
+
+          <div class="mosaic">
+            <article class="mosaic__card mosaic__card--main card card--value">
               <div class="card__icon-wrapper">
                 <span class="material-symbols-outlined">public</span>
               </div>
               <h3 class="card__title">Nuestra Misión</h3>
               <p class="card__text">
                 Conectar a turistas con guías locales en México mediante una
-                plataforma digital segura, facilitando la creación de agendas de
-                recorrido personalizadas y el acceso a recomendaciones
-                auténticas.
+                plataforma digital segura, facilitando agendas personalizadas y
+                recomendaciones auténticas.
               </p>
-            </div>
+              <div class="mosaic__badge">
+                <span class="material-symbols-outlined">bolt</span>
+                <span>Acción + impacto</span>
+              </div>
+            </article>
 
-            <div class="card card--value">
+            <article class="mosaic__card mosaic__card--tall card card--value">
               <div class="card__icon-wrapper">
                 <span class="material-symbols-outlined">visibility</span>
               </div>
               <h3 class="card__title">Nuestra Visión</h3>
               <p class="card__text">
-                Ser la plataforma referente para el turismo personalizado en
-                México, permitiendo que cualquier viajero pueda encontrar un
-                guía confiable y planes a su medida en destinos nacionales.
+                Ser la plataforma referente del turismo personalizado en México,
+                donde cualquier viajero encuentre un guía confiable y planes a
+                su medida.
               </p>
-            </div>
 
-            <div class="card card--value">
+              <div class="mosaic__mini">
+                <span class="material-symbols-outlined">insights</span>
+                <span>Matching inteligente</span>
+              </div>
+
+              <div class="mosaic__mini mosaic__mini--alt">
+                <span class="material-symbols-outlined">shield</span>
+                <span>Diseñado para confianza</span>
+              </div>
+            </article>
+
+            <article class="mosaic__card mosaic__card--wide card card--value">
               <div class="card__icon-wrapper">
                 <span class="material-symbols-outlined">favorite</span>
               </div>
-              <h3 class="card__title">Nuestros Valores</h3>
+              <h3 class="card__title">Nuestros valores</h3>
               <p class="card__text">
-                Actuamos con agilidad, proactividad y resiliencia para cumplir
-                nuestros compromisos con absoluta transparencia. Fomentamos la
-                sinergia y la solidaridad mediante una comunicación clara,
-                trabajando con pasión.
+                Sinergia, transparencia y cultura viva: trabajamos con empatía,
+                comunicación clara y compromiso, para construir experiencias
+                auténticas con comunidad.
               </p>
-            </div>
+
+              <div class="value-tags" aria-label="Valores clave">
+                <span class="value-tag">
+                  <span class="value-tag__icon" aria-hidden="true">
+                    <!-- SVG: transparencia -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fill="currentColor"
+                        d="M12 4C7 4 3.1 7.1 2 12c1.1 4.9 5 8 10 8s8.9-3.1 10-8c-1.1-4.9-5-8-10-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm0-10a4 4 0 100 8 4 4 0 000-8z"
+                      />
+                    </svg>
+                  </span>
+                  Transparencia
+                </span>
+
+                <span class="value-tag">
+                  <span class="value-tag__icon" aria-hidden="true">
+                    <!-- SVG: comunidad -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fill="currentColor"
+                        d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zM8 11c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5C15 14.2 10.3 13 8 13zm8 0c-.3 0-.7 0-1.1.1 1.6.8 2.1 1.9 2.1 3.4V19h7v-2.5c0-2.3-4.7-3.5-7-3.5z"
+                      />
+                    </svg>
+                  </span>
+                  Comunidad
+                </span>
+
+                <span class="value-tag">
+                  <span class="value-tag__icon" aria-hidden="true">
+                    <!-- SVG: cultura viva -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fill="currentColor"
+                        d="M12 2l3 7h7l-5.6 4.1L18.5 21 12 16.9 5.5 21l2.1-7.9L2 9h7l3-7z"
+                      />
+                    </svg>
+                  </span>
+                  Cultura viva
+                </span>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- KIN EN LA HISTORIA (CARD) -->
+    <!-- KIN EN LA HISTORIA -->
     <section class="section">
       <div class="container">
-        <div class="page-card">
+        <div class="page-card reveal">
           <div class="section__header section__header--left">
             <h2 class="section__title">KIN en la historia</h2>
+            <p class="section__subtitle">
+              Un roadmap realista con ambición: construir la mejor conexión
+              entre viajeros y comunidad.
+            </p>
           </div>
 
           <div class="timeline">
             <div class="timeline__line"></div>
+
             <div class="grid grid--4-cols">
               <div class="timeline__item">
                 <div class="timeline__icon">
@@ -184,9 +417,8 @@
                   <span class="timeline__year">2026</span>
                   <h4 class="timeline__title">Nace la idea</h4>
                   <p class="timeline__text">
-                    Lanzamos nuestro MVP enfocado exclusivamente en México,
-                    priorizando la seguridad y la conexión humana real entre
-                    turistas y guías locales.
+                    MVP enfocado en México: seguridad, perfiles y conexión
+                    humana real.
                   </p>
                 </div>
               </div>
@@ -197,11 +429,10 @@
                 </div>
                 <div class="timeline__content">
                   <span class="timeline__year">2027</span>
-                  <h4 class="timeline__title">Ecosistema Digital</h4>
+                  <h4 class="timeline__title">Ecosistema digital</h4>
                   <p class="timeline__text">
-                    Implementaremos mapas interactivos y un sistema de pagos
-                    seguro dentro de la plataforma para centralizar toda la
-                    experiencia de viaje.
+                    Mensajería segura y estructura de planes para visualizar
+                    antes de contactar.
                   </p>
                 </div>
               </div>
@@ -212,11 +443,10 @@
                 </div>
                 <div class="timeline__content">
                   <span class="timeline__year">2028</span>
-                  <h4 class="timeline__title">Inteligencia en Viajes</h4>
+                  <h4 class="timeline__title">Inteligencia en viajes</h4>
                   <p class="timeline__text">
-                    Integraremos algoritmos de matching avanzado y
-                    automatizaciones para unir a las personas basándonos en
-                    pasiones compartidas con mayor precisión.
+                    Matching por afinidad con filtros y cuestionarios
+                    opcionales.
                   </p>
                 </div>
               </div>
@@ -227,13 +457,37 @@
                 </div>
                 <div class="timeline__content">
                   <span class="timeline__year">2030</span>
-                  <h4 class="timeline__title">Expansión Sin Fronteras</h4>
+                  <h4 class="timeline__title">Expansión sin fronteras</h4>
                   <p class="timeline__text">
-                    Llevaremos la filosofía "Kin" al mundo, iniciando nuestra
-                    expansión internacional para democratizar el turismo
-                    auténtico globalmente.
+                    Llevar la filosofía Kin al mundo: turismo auténtico global.
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="strip">
+            <div class="strip__item">
+              <span class="material-symbols-outlined">hotel_class</span>
+              <div>
+                <p class="strip__title">Experiencias premium</p>
+                <p class="strip__text">Sin perder autenticidad</p>
+              </div>
+            </div>
+
+            <div class="strip__item">
+              <span class="material-symbols-outlined">groups</span>
+              <div>
+                <p class="strip__title">Comunidad</p>
+                <p class="strip__text">Tu red local confiable</p>
+              </div>
+            </div>
+
+            <div class="strip__item">
+              <span class="material-symbols-outlined">verified_user</span>
+              <div>
+                <p class="strip__title">Confianza</p>
+                <p class="strip__text">Verificación antes de conectar</p>
               </div>
             </div>
           </div>
@@ -241,10 +495,10 @@
       </div>
     </section>
 
-    <!-- EQUIPO (CARD) -->
+    <!-- EQUIPO -->
     <section class="section section--bg-white">
       <div class="container">
-        <div class="page-card">
+        <div class="page-card reveal">
           <div class="section__header">
             <h2 class="section__title">Conoce al equipo</h2>
             <p class="section__subtitle">
@@ -253,30 +507,29 @@
             </p>
           </div>
 
-          <!-- ✅ UN SOLO GRID (no anidado) -->
-          <div class="grid grid--3-cols">
-            <!-- Montiel Zúñiga Emmanuel Esaú -->
-            <div class="card card--profile">
+          <div class="grid grid--3-cols team-grid">
+            <!-- (Contenido igual, solo cambia look/roles color + animación) -->
+
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img src="../assets/team/EsauMontiel.jpg" alt="Esaú Montiel" />
               </div>
               <h3 class="card__title">Esaú Montiel</h3>
               <p class="card__role">Cofundador y desarrollador</p>
               <p class="card__text">
-                Compañero y amigo aficionado por compartir la cultura de amistad
-                y cercanía mexicana en formación para convertirse en
-                desarrollador Java Full-stack
+                Aficionado por compartir la cultura de amistad y cercanía
+                mexicana. En formación para convertirse en desarrollador Java
+                Full-stack.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="http://www.linkedin.com/in/e-esau-montiel-z"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
-                    <!-- LinkedIn SVG -->
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path
                         fill="currentColor"
@@ -285,15 +538,14 @@
                     </svg>
                   </span>
                 </a>
-
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/esaumonti-blip"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
-                    <!-- GitHub SVG -->
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path
                         fill="currentColor"
@@ -305,23 +557,24 @@
               </div>
             </div>
 
-            <!-- Meneses García Andrea Elizabeth -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
-                <img src="../assets/ANDY (2).png" alt="Andrea Meneses" />
+                <img src="../assets/team/ANDY (2).png" alt="Andrea Meneses" />
               </div>
               <h3 class="card__title">Andrea Meneses</h3>
               <p class="card__role">Fullstack</p>
               <p class="card__text">
                 Enfocada en el crecimiento creativo y sostenible.
               </p>
-
               <div class="card__social">
                 <a
                   class="btn btn--primary btn--icon btn--social"
                   href="https://www.linkedin.com/in/andrea-elizabeth-meneses/"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
+                  href="#"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -335,8 +588,11 @@
                 <a
                   class="btn btn--primary btn--icon btn--social"
                   href="https://github.com/AndyE13"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
+                  href="#"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -350,8 +606,7 @@
               </div>
             </div>
 
-            <!-- Oscar Monroy Téllez -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img
                   src="../assets/team/monroy.png"
@@ -364,13 +619,13 @@
                 Construyo experiencias visuales que hacen que interactuar con el
                 producto sea simple y agradable.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://www.linkedin.com/in/oscarmonroytellez/"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -381,12 +636,12 @@
                     </svg>
                   </span>
                 </a>
-
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/omonroyt"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -400,8 +655,7 @@
               </div>
             </div>
 
-            <!-- Carmona Hinojosa Mariana -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img
                   src="../assets/team/Mariana Carmona (2).png"
@@ -411,16 +665,16 @@
               <h3 class="card__title">Mariana Carmona</h3>
               <p class="card__role">Líder de Comunidad</p>
               <p class="card__text">
-                Colaboración en proyectos web, aplicando conocimientos de JavaScript, Java
-                y fundamentos de lógica de programación.
+                Colaboración en proyectos web aplicando fundamentos de lógica y
+                JavaScript.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://www.linkedin.com/in/marianacarmonah/"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -432,10 +686,11 @@
                   </span>
                 </a>
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/Carmonah-Mariana"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -449,8 +704,7 @@
               </div>
             </div>
 
-            <!-- Nieves Hernández José Evelio -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img
                   src="../assets/team/C36E3207-DCB3-4080-9C76-EC77005E1CA9_1_105_c.jpeg"
@@ -460,16 +714,16 @@
               <h3 class="card__title">Jose Nieves</h3>
               <p class="card__role">Co-fundador y Desarrollador de Software</p>
               <p class="card__text">
-                Desarrollador web Jr, con enfoque en desarrollo full-stack con
-                Java y sólidos fundamentos en lógica de programación.
+                Desarrollador web Jr con enfoque full-stack y sólidos
+                fundamentos en lógica.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://www.linkedin.com/in/josenieveshdz/"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -481,13 +735,15 @@
                   </span>
                 </a>
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/josesnowdev"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      < linking: disable -->
                       <path
                         fill="currentColor"
                         d="M12 .5A11.5 11.5 0 0 0 8.37 23c.58.1.8-.25.8-.56v-2.04c-3.26.71-3.95-1.39-3.95-1.39-.54-1.36-1.32-1.72-1.32-1.72-1.08-.74.08-.73.08-.73 1.19.08 1.82 1.22 1.82 1.22 1.06 1.82 2.78 1.29 3.46.98.1-.77.41-1.29.75-1.59-2.6-.3-5.34-1.3-5.34-5.8 0-1.28.46-2.33 1.22-3.15-.12-.3-.53-1.5.12-3.13 0 0 1-.32 3.28 1.2a11.3 11.3 0 0 1 5.98 0c2.28-1.52 3.28-1.2 3.28-1.2.65 1.63.24 2.83.12 3.13.76.82 1.22 1.87 1.22 3.15 0 4.52-2.74 5.5-5.35 5.79.42.37.8 1.1.8 2.22v3.29c0 .31.22.66.8.56A11.5 11.5 0 0 0 12 .5z"
@@ -498,24 +754,26 @@
               </div>
             </div>
 
-            <!-- Flores Cabañas Gabriel Onitsuaf -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
-                <img src="/frontend/src/assets/team/Gabriel_Flores.jpg" alt="Gabriel Flores" />
+                <img
+                  src="/frontend/src/assets/team/Gabriel_Flores.jpg"
+                  alt="Gabriel Flores"
+                />
               </div>
               <h3 class="card__title">Gabriel Flores</h3>
               <p class="card__role">Full Stack</p>
               <p class="card__text">
-                Desarrollo la plataforma que conecta guías locales con
-                extranjeros para crear experiencias auténticas y seguras.
+                Desarrollo la plataforma que conecta guías con extranjeros para
+                experiencias auténticas y seguras.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://www.linkedin.com/in/onitsuafdeveloperjr/"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -527,10 +785,11 @@
                   </span>
                 </a>
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/Gabriel-Onitsuaf"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -544,24 +803,23 @@
               </div>
             </div>
 
-            <!-- Alarcón García Juan Ariel -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img src="../assets/team/juanAboutUs.png" alt="Juan Alarcón" />
               </div>
               <h3 class="card__title">Juan Alarcón</h3>
               <p class="card__role">Web Developer</p>
               <p class="card__text">
-                Uso mi experiencia en desarrollo Web para crear experiencias
-                visuales que capten la atención de nuestros viajeros.
+                Creo experiencias visuales que capten la atención de nuestros
+                viajeros.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://www.linkedin.com/in/juan-ag-dev/"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -573,10 +831,11 @@
                   </span>
                 </a>
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/JuanAG1003"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -590,23 +849,23 @@
               </div>
             </div>
 
-            <!-- HAGEO -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img src="../assets/team/ajeo.png" alt="Hageo Balam." />
               </div>
               <h3 class="card__title">Hageo Balam</h3>
               <p class="card__role">Data Engineer</p>
-              <p class="card__text">Impulso decisiones mediante la visualización clara de métricas 
-                y una documentación exhaustiva que mejora la evolución del producto.
+              <p class="card__text">
+                Impulso decisiones mediante visualización clara de métricas y
+                documentación exhaustiva.
               </p>
-
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="#"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -618,10 +877,11 @@
                   </span>
                 </a>
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="#"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -635,24 +895,23 @@
               </div>
             </div>
 
-            <!-- Casas Plascencia Isaura -->
-            <div class="card card--profile">
+            <div class="card card--profile team-card">
               <div class="card__avatar">
                 <img src="../assets/team/isaAboutUs.png" alt="Isaura C." />
               </div>
               <h3 class="card__title">Isaura C.</h3>
               <p class="card__role">Data Analyst</p>
               <p class="card__text">
-                Uso los datos para entender qué mueve a nuestros viajeros y cómo
-                mejorar su experiencia.
+                Uso datos para entender qué mueve a nuestros viajeros y mejorar
+                su experiencia.
               </p>
-              <!-- etiquetas para redes sociales -->
               <div class="card__social">
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://www.linkedin.com/in/isadev/"
                   target="_blank"
                   rel="noopener"
+                  aria-label="LinkedIn"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -664,10 +923,11 @@
                   </span>
                 </a>
                 <a
-                  class="btn btn--primary btn--icon btn--social"
+                  class="btn btn--primary btn--icon btn--social btn--ripple"
                   href="https://github.com/isa-capa"
                   target="_blank"
                   rel="noopener"
+                  aria-label="GitHub"
                 >
                   <span class="btn__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -683,27 +943,345 @@
           </div>
           <!-- /grid -->
         </div>
-        <!-- /page-card -->
       </div>
-      <!-- /container -->
     </section>
 
-    <!-- CTA (CARD BLANCO) -->
+    <!-- CONTACTO -->
+    <section class="section contact" id="contacto">
+      <div class="container">
+        <div class="page-card page-card--contact reveal">
+          <!-- Toast -->
+          <div
+            class="toast"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            hidden
+          >
+            <div class="toast__content">
+              <span class="material-symbols-outlined toast__icon"
+                >check_circle</span
+              >
+              <div class="toast__message">¡Mensaje enviado con éxito!</div>
+              <button
+                class="toast__close btn--ripple"
+                type="button"
+                aria-label="Cerrar"
+              >
+                <span class="material-symbols-outlined icon-sm">close</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="contact__card">
+            <!-- Info -->
+            <aside class="contact__info">
+              <div class="contact__info-inner">
+                <div class="contact__header">
+                  <span class="contact__subtitle">Ponte en contacto</span>
+                  <h2 class="contact__title">Estamos aquí para ayudarte.</h2>
+                  <p class="contact__text">
+                    ¿Tienes una pregunta sobre Kin Conecta?, ¿Quieres colaborar?
+                    <br />
+                    Envíanos un mensaje y responderemos lo antes posible.
+                  </p>
+                </div>
+
+                <div class="contact__list">
+                  <div class="contact__item">
+                    <div class="contact__icon-box">
+                      <span class="material-symbols-outlined">mail</span>
+                    </div>
+                    <div class="contact__item-text">
+                      <p class="contact__label">Email</p>
+                      <a
+                        class="contact__value"
+                        href="mailto:hola@kinconecta.com"
+                        >hola@kinconecta.com</a
+                      >
+                    </div>
+                  </div>
+
+                  <div class="contact__item">
+                    <div class="contact__icon-box">
+                      <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <div class="contact__item-text">
+                      <p class="contact__label">Horario</p>
+                      <p class="contact__value">Lun-Vie, 9am - 6pm</p>
+                    </div>
+                  </div>
+
+                  <div class="contact__item">
+                    <div class="contact__icon-box">
+                      <span class="material-symbols-outlined">location_on</span>
+                    </div>
+                    <div class="contact__item-text">
+                      <p class="contact__label">Oficina</p>
+                      <p class="contact__value">Ciudad de México, México</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact__social">
+                  <p class="contact__social-title">Síguenos</p>
+                  <div class="contact__social-icons">
+                    <a
+                      class="social-pill btn--ripple"
+                      href="#"
+                      aria-label="LinkedIn"
+                    >
+                      <span class="btn__icon" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM3.56 20.45h3.56V9H3.56v11.45z"
+                          />
+                        </svg>
+                      </span>
+                    </a>
+
+                    <a
+                      class="social-pill btn--ripple"
+                      href="#"
+                      aria-label="Twitter/X"
+                    >
+                      <span class="btn__icon" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.4L6.3 22H2l7.3-8.4L1 2h6.4l4.4 5.8L18.9 2zm-1.1 18h1.7L7.2 3.9H5.4L17.8 20z"
+                          />
+                        </svg>
+                      </span>
+                    </a>
+
+                    <a
+                      class="social-pill btn--ripple"
+                      href="#"
+                      aria-label="Instagram"
+                    >
+                      <span class="btn__icon" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.2A3.8 3.8 0 1 1 8.2 12 3.8 3.8 0 0 1 12 8.2zM12 10a2 2 0 1 0 2 2 2 2 0 0 0-2-2zm5.5-2.8a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"
+                          />
+                        </svg>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Form -->
+            <div class="contact__form">
+              <div class="contact__form-header">
+                <h2 class="contact__form-title">Hablemos</h2>
+                <p class="contact__form-text">
+                  Llena este formulario y alguien de nuestro equipo se pondrá en
+                  contacto contigo.
+                </p>
+              </div>
+
+              <form class="contact-form" action="#" method="POST" novalidate>
+                <div class="contact-form__row">
+                  <div class="contact-form__group">
+                    <label class="contact-form__label" for="name"
+                      >Nombre completo</label
+                    >
+                    <div class="contact-form__input-wrap">
+                      <span class="material-symbols-outlined contact-form__icon"
+                        >person</span
+                      >
+                      <input
+                        class="contact-form__input"
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Tu nombre"
+                        required
+                      />
+                    </div>
+                    <small class="contact-form__hint" data-hint="name"></small>
+                  </div>
+
+                  <div class="contact-form__group">
+                    <label class="contact-form__label" for="email"
+                      >Correo electrónico</label
+                    >
+                    <div class="contact-form__input-wrap">
+                      <span class="material-symbols-outlined contact-form__icon"
+                        >email</span
+                      >
+                      <input
+                        class="contact-form__input"
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="tu@email.com"
+                        required
+                      />
+                    </div>
+                    <small class="contact-form__hint" data-hint="email"></small>
+                  </div>
+                </div>
+
+                <div class="contact-form__group">
+                  <label class="contact-form__label" for="subject"
+                    >Asunto</label
+                  >
+                </div>
+                <div
+                  class="contact-form__input-wrap contact-form__input-wrap--select"
+                >
+                  <span class="material-symbols-outlined contact-form__icon"
+                    >chat_bubble_outline</span
+                  >
+
+                  <!-- Select real (para submit). Oculto -->
+                  <select
+                    class="contact-form__select"
+                    id="subject"
+                    name="subject"
+                    hidden
+                  >
+                    <option value="Soporte General" selected>
+                      Soporte General
+                    </option>
+                    <option value="Propuesta de Negocio">
+                      Propuesta de Negocio
+                    </option>
+                    <option value="Feedback de Comunidad">
+                      Feedback de Comunidad
+                    </option>
+                    <option value="Otro">Otro</option>
+                  </select>
+
+                  <!-- Select visual -->
+                  <div class="select" data-select="subject">
+                    <button
+                      class="select__btn"
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                    >
+                      <span class="select__value">Soporte General</span>
+                      <span class="material-symbols-outlined select__chev"
+                        >expand_more</span
+                      >
+                    </button>
+
+                    <ul class="select__list" role="listbox">
+                      <li
+                        class="select__option"
+                        role="option"
+                        data-value="Soporte General"
+                      >
+                        Soporte General
+                      </li>
+                      <li
+                        class="select__option"
+                        role="option"
+                        data-value="Propuesta de Negocio"
+                      >
+                        Propuesta de Negocio
+                      </li>
+                      <li
+                        class="select__option"
+                        role="option"
+                        data-value="Feedback de Comunidad"
+                      >
+                        Feedback de Comunidad
+                      </li>
+                      <li
+                        class="select__option"
+                        role="option"
+                        data-value="Otro"
+                      >
+                        Otro
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="contact-form__group">
+                  <label class="contact-form__label" for="message"
+                    >Mensaje</label
+                  >
+                  <textarea
+                    class="contact-form__textarea"
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder="Escribe tu mensaje aquí..."
+                    required
+                  ></textarea>
+                  <small class="contact-form__hint" data-hint="message"></small>
+                </div>
+
+                <div class="contact-form__actions">
+                  <button
+                    type="submit"
+                    class="btn btn--primary btn--large btn--icon btn--shadow btn--ripple contact-form__submit"
+                  >
+                    <span>Enviar mensaje</span>
+                    <span class="material-symbols-outlined icon-sm">send</span>
+                  </button>
+                  <p class="contact-form__microcopy">
+                    Respuesta típica en <strong>24–48 horas</strong>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- /contact__card -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA (MEJOR CONTRASTE) -->
     <section class="section">
       <div class="container">
-        <div class="page-card">
-          <div class="cta cta--light">
-            <div class="cta__bg-effect"></div>
+        <div class="page-card reveal">
+          <div class="cta cta--contrast">
             <div class="cta__content">
               <h2 class="cta__title">¿Listo para descubrir el México real?</h2>
               <p class="cta__text">
-                Deja atrás los tours genéricos. Encuentra hoy mismo a tu guía
-                local ideal y vive una experiencia diseñada a tu medida y sin
-                intermediarios.
+                Deja atrás los tours genéricos. Encuentra a tu guía local ideal
+                y vive una experiencia diseñada a tu medida.
               </p>
+
+              <div class="cta__chips">
+                <div class="cta-chip">
+                  <span class="material-symbols-outlined">verified_user</span>
+                  Guías verificados
+                </div>
+                <div class="cta-chip">
+                  <span class="material-symbols-outlined">route</span>
+                  Planes personalizados
+                </div>
+                <div class="cta-chip">
+                  <span class="material-symbols-outlined">public</span>
+                  Cultura viva
+                </div>
+              </div>
             </div>
+
             <div class="cta__action">
-              <button class="btn btn--primary btn--large btn--icon btn--shadow">
+              <button
+                class="btn btn--primary btn--large btn--icon btn--shadow btn--ripple"
+              >
                 <span>Conectar con Guías</span>
                 <span class="material-symbols-outlined">arrow_outward</span>
               </button>
@@ -713,25 +1291,115 @@
       </div>
     </section>
 
-    <!-- FOOTER (como navbar invertida) -->
+    <!-- FOOTER -->
     <footer class="footer">
-      <div class="container footer__container">
-        <div class="footer__brand">
-          <div class="footer__logo-icon">
-            <svg
-              fill="currentColor"
-              viewBox="0 0 48 48"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M6 6H42L36 24L42 42H6L12 24L6 6Z"></path>
-            </svg>
+      <div class="container">
+        <div class="footer__card">
+          <div class="footer__top">
+            <div class="footer__brand">
+              <div class="footer__logo-icon" aria-hidden="true">
+                <img src="../assets/logo.png" alt="logo Kin Conecta" />
+              </div>
+              <div>
+                <p class="footer__name">Kin Conecta</p>
+                <p class="footer__tagline">
+                  Experiencias auténticas. Conexión humana.
+                </p>
+              </div>
+            </div>
+
+            <div class="footer__cols">
+              <div class="footer__col">
+                <p class="footer__title">Producto</p>
+                <a class="footer__link" href="#explorar">Explorar</a>
+                <a class="footer__link" href="#contacto">Contacto</a>
+                <a class="footer__link" href="#nosotros">Nosotros</a>
+              </div>
+
+              <div class="footer__col">
+                <p class="footer__title">Comunidad</p>
+                <a class="footer__link" href="#">Guías</a>
+                <a class="footer__link" href="#">Viajeros</a>
+                <a class="footer__link" href="#">Colaboraciones</a>
+              </div>
+
+              <div class="footer__col footer__col--newsletter">
+                <p class="footer__title">Recibe novedades</p>
+                <p class="footer__text">
+                  Una vez al mes. Ideas de viaje y experiencias auténticas.
+                </p>
+                <form class="footer__form" action="#" method="get">
+                  <input
+                    class="footer__input"
+                    type="email"
+                    placeholder="tu@email.com"
+                    aria-label="Correo para newsletter"
+                  />
+                  <button class="btn btn--primary btn--ripple" type="submit">
+                    Unirme
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-          <span>Kin Conecta</span>
-        </div>
-        <div class="footer__copyright">
-          © 2026 Kin Conecta. Todos los derechos reservados.
+
+          <div class="footer__bottom">
+            <p class="footer__copyright">
+              © 2026 Kin Conecta. Todos los derechos reservados.
+            </p>
+
+            <div class="footer__social">
+              <a
+                class="footer__social-btn btn--ripple"
+                href="#"
+                aria-label="LinkedIn"
+              >
+                <span class="btn__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fill="currentColor"
+                      d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM3.56 20.45h3.56V9H3.56v11.45z"
+                    />
+                  </svg>
+                </span>
+              </a>
+
+              <a
+                class="footer__social-btn btn--ripple"
+                href="#"
+                aria-label="Twitter/X"
+              >
+                <span class="btn__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fill="currentColor"
+                      d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.4L6.3 22H2l7.3-8.4L1 2h6.4l4.4 5.8L18.9 2zm-1.1 18h1.7L7.2 3.9H5.4L17.8 20z"
+                    />
+                  </svg>
+                </span>
+              </a>
+
+              <a
+                class="footer__social-btn btn--ripple"
+                href="#"
+                aria-label="Instagram"
+              >
+                <span class="btn__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fill="currentColor"
+                      d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4.2A3.8 3.8 0 1 1 8.2 12 3.8 3.8 0 0 1 12 8.2zM12 10a2 2 0 1 0 2 2 2 2 0 0 0-2-2zm5.5-2.8a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
+
+    <!-- IMPORTANTE: antes decía app.js -->
+    <script src="../scripts/nosotros.js"></script>
   </body>
 </html>

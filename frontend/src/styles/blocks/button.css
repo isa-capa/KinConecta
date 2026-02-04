@@ -2,30 +2,63 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.75rem;
-  font-weight: 700;
-  border: none;
+  border-radius: 0.95rem;
+  font-weight: 800;
+  border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
   transition:
-    background-color 0.2s,
-    transform 0.1s;
+    transform 0.14s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    filter 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
 }
 
 .btn--primary {
   background-color: var(--color-primary);
-  color: white;
-  padding: 0.5rem 1.5rem;
-  height: 2.5rem;
-  font-size: 0.875rem;
+  color: #fff;
+  padding: 0.55rem 1.5rem;
+  height: 2.75rem;
+  font-size: 0.92rem;
+  box-shadow: var(--shadow-soft);
 }
 
 .btn--primary:hover {
   background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-1px);
+}
+
+.btn--primary:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn--ghost {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-ink);
+  padding: 0.55rem 1.25rem;
+  height: 2.75rem;
+}
+
+.btn--ghost:hover {
+  background: var(--color-surface-3);
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-1px);
+  border-color: var(--color-accent);
+}
+
+.btn--ghost:active {
+  transform: translateY(1px) scale(0.99);
 }
 
 .btn--large {
-  height: 3rem;
+  height: 3.1rem;
   padding: 0 2rem;
   font-size: 1rem;
 }
@@ -35,9 +68,45 @@
 }
 
 .btn--shadow {
-  box-shadow: 0 8px 18px rgba(219, 112, 6, 0.22);
+  box-shadow: var(--shadow-soft);
 }
 
-.btn:active {
-  transform: translateY(1px);
+.btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn__icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.btn--social {
+  height: 2.7rem;
+  width: 2.7rem;
+  padding: 0;
+  border-radius: 1.05rem;
+}
+
+/* Ripple */
+.btn .ripple,
+.pill .ripple,
+.social-pill .ripple,
+.footer__social-btn .ripple,
+.toast__close .ripple {
+  position: absolute;
+  border-radius: 999px;
+  transform: scale(0);
+  animation: ripple 650ms ease-out;
+  background: #ffffff;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
