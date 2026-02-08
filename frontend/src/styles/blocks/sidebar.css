@@ -1,0 +1,347 @@
+/*
+! ASEGURATE DE QUE EL MAIN ESTE ENVUELTO DE LA SIGUIENTE FORMA: <main class="main-wrapper">
+    ! ESTO ES PARA EVITAR QUE SE SOBREPONGA LA SIDEBAR SOBRE EL CONTENIDO PRINCIPAL DE LA PAGINA
+        ! SOLUCION TEMPORAL SUJETA A CAMBIOS   
+? IMPLEMENTACION: 
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <div class="sidebar__logo-icon">
+                <span class="material-symbols-outlined">travel_explore</span>
+            </div>
+            <div class="sidebar__logo-content">
+                <h1 class="sidebar__logo-title">Kin Conecta</h1>
+                <p class="sidebar__logo-subtitle">Portal de guías</p>
+            </div>
+        </div>
+
+        <nav class="sidebar__nav">
+            <a class="sidebar__nav-item" href="#">
+                <span class="material-symbols-outlined sidebar__nav-icon">dashboard</span>
+                <span class="sidebar__nav-text">Dashboard</span>
+            </a>
+            <a class="sidebar__nav-item" href="#">
+                <span class="material-symbols-outlined sidebar__nav-icon">map</span>
+                <span class="sidebar__nav-text">Mis Tours</span>
+            </a>
+            <a class="sidebar__nav-item" href="#">
+                <span class="material-symbols-outlined sidebar__nav-icon">calendar_month</span>
+                <span class="sidebar__nav-text">Calendario</span>
+            </a>
+            <a class="sidebar__nav-item" href="#">
+                <span class="material-symbols-outlined sidebar__nav-icon">chat_bubble</span>
+                <span class="sidebar__nav-text">Mensajes</span>
+            </a>
+            <a class="sidebar__nav-item" href="#">
+                <span class="material-symbols-outlined sidebar__nav-icon">star</span>
+                <span class="sidebar__nav-text">Reviews</span>
+            </a>
+            <a class="sidebar__nav-item sidebar__nav-item--active" href="#">
+                <span class="material-symbols-outlined sidebar__nav-icon">payments</span>
+                <span class="sidebar__nav-text">Ingresos</span>
+            </a>
+        </nav>
+
+        <div class="sidebar__footer">
+            <a class="sidebar__settings" href="#">
+                <span class="material-symbols-outlined sidebar__settings-icon">settings</span>
+                <span class="sidebar__settings-text">Ajustes</span>
+            </a>
+            <div class="sidebar__user">
+                <div class="sidebar__user-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLNn56x8nKLiIkJ2Oimg0m7Jj13PDy_dn1S-8Br7qaIZu_jW_FqRxokHLeLv8EK78MrsvmlTIM-PPBduPFiWrwUVoEWW21D2F9ZZosGcpnmGinUtXKPFXfGaIO1S9wZ4neppeugzOPPvzcfZ3dTGnO2Hpztor9_9AUUH4Knx5ObQAUFz77Emu-nr3TPx54oBaJu6ruA6XhZI1U2N5LrhmXT6RGXNcXz81Bwm2B6eo0hiKXX0rv7SnDK3-ghIvcMqcom-wjncjYEAka');"></div>
+                <div class="sidebar__user-info">
+                    <span class="sidebar__user-name">Carlos Rivera</span>
+                    <span class="sidebar__user-logout">Cerrar Sesión</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+*/
+
+.sidebar {
+    width: 256px;
+    flex-shrink: 0;
+    background-color: var(--color-sea);
+    color: var(--color-surface);
+    display: none; 
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Show sidebar on desktop */
+@media (min-width: 1024px) {
+    .sidebar {
+        display: flex;
+    }
+}
+
+.sidebar__header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar__logo-icon {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar__logo-icon .material-symbols-outlined {
+    color: var(--color-surface);
+    font-size: 28px;
+}
+
+.sidebar__logo-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.sidebar__logo-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-surface);
+}
+
+.sidebar__logo-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.sidebar__nav {
+    flex: 1; 
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    overflow-y: auto;
+}
+
+.sidebar__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    position: relative;
+}
+
+.sidebar__nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-surface);
+    border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar__nav-item:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Active state modifier */
+.sidebar__nav-item--active {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-left-color: var(--color-primary);
+    color: var(--color-surface);
+    font-weight: 600;
+}
+
+.sidebar__nav-item--active:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar__nav-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.sidebar__nav-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.sidebar__nav-badge {
+    margin-left: auto;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    min-width: 1.25rem;
+    text-align: center;
+}
+
+.sidebar__footer {
+    padding: 1rem 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto; /* Push to bottom */
+}
+
+.sidebar__settings {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+.sidebar__settings:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-surface);
+}
+
+.sidebar__settings:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.sidebar__settings-icon {
+    font-size: 1.25rem;
+}
+
+.sidebar__settings-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.sidebar__user {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+}
+
+.sidebar__user:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar__user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.sidebar__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    overflow: hidden;
+}
+
+.sidebar__user-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar__user-logout {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.sidebar__user-logout:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+}
+
+
+.main-wrapper {
+    margin-left: 0; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+    .main-wrapper {
+        margin-left: 256px; 
+    }
+}
+
+.sidebar--mobile-open {
+    display: flex;
+}
+
+.sidebar__nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.sidebar__nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar__nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar__nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.sidebar__nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* Focus visible for keyboard navigation */
+.sidebar__nav-item:focus-visible,
+.sidebar__settings:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar__nav-item,
+    .sidebar__settings,
+    .sidebar__user-logout {
+        transition: none;
+    }
+}
+
+
+@media print {
+    .sidebar {
+        display: none;
+    }
+    
+    .main-wrapper {
+        margin-left: 0;
+    }
+}
+
