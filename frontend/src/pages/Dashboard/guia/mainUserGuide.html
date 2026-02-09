@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="es" class="theme theme--light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kin Conecta - Inicio (Guía)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Base compartida (la que ya corregimos) -->
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- Estilos específicos del dashboard -->
+    <link rel="stylesheet" href="./mainUserGuide.css" />
+
+    <script defer src="./mainUserGuide.js"></script>
+  </head>
+
+  <body class="app">
+    <div class="layout">
+      <!-- SIDEBAR (reutiliza el mismo layout/estilos) -->
+      <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+        <div class="sidebar__brand">
+          <div class="sidebar__brand-icon" aria-hidden="true">
+            <span class="material-symbols-outlined sidebar__icon"
+              >travel_explore</span
+            >
+          </div>
+          <div class="sidebar__brand-text">
+            <h1 class="sidebar__title">Kin Conecta</h1>
+            <p class="sidebar__subtitle">Portal de Guías</p>
+          </div>
+        </div>
+
+        <nav class="sidebar__nav">
+          <a class="sidebar__link sidebar__link--active" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >dashboard</span
+            >
+            <span class="sidebar__link-text">Inicio</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">map</span>
+            <span class="sidebar__link-text">Mis recorridos</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >calendar_month</span
+            >
+            <span class="sidebar__link-text">Calendario</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >chat_bubble</span
+            >
+            <span class="sidebar__link-text">Mensajes</span>
+            <span
+              class="sidebar__badge"
+              id="msgBadge"
+              aria-label="3 mensajes sin leer"
+              >3</span
+            >
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">star</span>
+            <span class="sidebar__link-text">Reseñas</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >payments</span
+            >
+            <span class="sidebar__link-text">Ingresos</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <a class="sidebar__link sidebar__link--footer" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >settings</span
+            >
+            <span class="sidebar__link-text">Ajustes</span>
+          </a>
+
+          <div class="sidebar__user">
+            <div
+              class="sidebar__avatar"
+              role="img"
+              aria-label="Avatar de Carlos Rivera"
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCLNn56x8nKLiIkJ2Oimg0m7Jj13PDy_dn1S-8Br7qaIZu_jW_FqRxokHLeLv8EK78MrsvmlTIM-PPBduPFiWrwUVoEWW21D2F9ZZosGcpnmGinUtXKPFXfGaIO1S9wZ4neppeugzOPPvzcfZ3dTGnO2Hpztor9_9AUUH4Knx5ObQAUFz77Emu-nr3TPx54oBaJu6ruA6XhZI1U2N5LrhmXT6RGXNcXz81Bwm2B6eo0hiKXX0rv7SnDK3-ghIvcMqcom-wjncjYEAka&quot;);
+              "
+            ></div>
+            <div class="sidebar__user-meta">
+              <span class="sidebar__user-name" id="userName"
+                >Carlos Rivera</span
+              >
+              <button class="sidebar__logout" id="btnLogout" type="button">
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <button
+              class="topbar__menu-btn"
+              id="btnSidebar"
+              type="button"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">menu</span>
+              <span class="u-sr-only">Abrir menú</span>
+            </button>
+
+            <div class="topbar__heading">
+              <h2 class="topbar__title">Inicio</h2>
+              <p class="topbar__subtitle">
+                ¡Bienvenido! Prepárate para tus recorridos de hoy.
+              </p>
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <!-- Estado (Disponible / No disponible) -->
+            <div
+              class="status-pill"
+              role="group"
+              aria-label="Estado de disponibilidad"
+            >
+              <span class="status-pill__label">Estado:</span>
+
+              <label class="status-toggle" for="statusToggle">
+                <input
+                  id="statusToggle"
+                  class="status-toggle__input"
+                  type="checkbox"
+                  checked
+                />
+                <span class="status-toggle__track" aria-hidden="true"></span>
+                <span class="status-toggle__text" id="statusText"
+                  >Disponible</span
+                >
+              </label>
+            </div>
+
+            <span class="topbar__divider" aria-hidden="true"></span>
+
+            <!-- Verificación -->
+            <div class="badge badge--verified" aria-label="Guía verificado">
+              <span class="material-symbols-outlined badge__icon"
+                >verified</span
+              >
+              <span class="badge__text">Guía verificado</span>
+            </div>
+
+            <!-- Notificaciones -->
+            <button
+              class="topbar__notif"
+              id="btnNotif"
+              type="button"
+              aria-label="Notificaciones"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="topbar__notif-dot" aria-hidden="true"></span>
+            </button>
+
+            <!-- Tema -->
+            <button
+              class="topbar__theme"
+              id="btnTheme"
+              type="button"
+              aria-label="Cambiar tema"
+            >
+              <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <section class="dashboard">
+            <div class="dashboard__container">
+              <!-- STATS -->
+              <div class="stats">
+                <article class="stat-card stat-card--rating">
+                  <div class="stat-card__top">
+                    <div class="stat-card__icon-wrap" aria-hidden="true">
+                      <span class="material-symbols-outlined">star</span>
+                    </div>
+                    <span class="stat-card__delta" id="ratingDelta"
+                      >+0.2 este mes</span
+                    >
+                  </div>
+                  <div class="stat-card__body">
+                    <h3 class="stat-card__label">Calificación promedio</h3>
+                    <p class="stat-card__value">
+                      <span id="ratingValue">4.9</span>
+                      <span class="stat-card__value-muted">/ 5.0</span>
+                    </p>
+                  </div>
+                </article>
+
+                <article class="stat-card stat-card--tours">
+                  <div class="stat-card__top">
+                    <div class="stat-card__icon-wrap" aria-hidden="true">
+                      <span class="material-symbols-outlined">flag</span>
+                    </div>
+                    <span class="stat-card__delta" id="toursDelta"
+                      >+12 recorridos</span
+                    >
+                  </div>
+                  <div class="stat-card__body">
+                    <h3 class="stat-card__label">Recorridos completados</h3>
+                    <p class="stat-card__value" id="toursValue">124</p>
+                  </div>
+                </article>
+
+                <article class="stat-card stat-card--income">
+                  <div class="stat-card__top">
+                    <div class="stat-card__icon-wrap" aria-hidden="true">
+                      <span class="material-symbols-outlined"
+                        >attach_money</span
+                      >
+                    </div>
+                    <span class="stat-card__delta" id="incomeDelta"
+                      >+15% vs mes anterior</span
+                    >
+                  </div>
+                  <div class="stat-card__body">
+                    <h3 class="stat-card__label">Ingresos del mes</h3>
+                    <p class="stat-card__value" id="incomeValue">MXN 25,000</p>
+                  </div>
+                </article>
+              </div>
+
+              <!-- GRID: Agenda + Insights -->
+              <div class="dashboard-grid">
+                <!-- Agenda -->
+                <section class="panel panel--schedule">
+                  <header class="panel__header">
+                    <h3 class="panel__title">Agenda de hoy</h3>
+                    <button class="panel__action" id="btnViewAll" type="button">
+                      Ver todo
+                    </button>
+                  </header>
+
+                  <div class="panel__body">
+                    <div
+                      class="schedule"
+                      id="scheduleList"
+                      aria-label="Lista de eventos de hoy"
+                    ></div>
+                  </div>
+                </section>
+
+                <!-- Insights -->
+                <section class="panel panel--insights">
+                  <header class="panel__header">
+                    <div>
+                      <h3 class="panel__title">Tendencia de reservas</h3>
+                      <p class="panel__subtitle">
+                        Crecimiento mensual (últimos 6 meses)
+                      </p>
+                    </div>
+
+                    <label class="select">
+                      <span class="u-sr-only">Rango</span>
+                      <select class="select__control" id="insightsRange">
+                        <option value="6m" selected>Últimos 6 meses</option>
+                        <option value="12m">Último año</option>
+                      </select>
+                    </label>
+                  </header>
+
+                  <div class="panel__body panel__body--stretch">
+                    <div
+                      class="bar-chart"
+                      id="barChart"
+                      aria-label="Gráfica de barras"
+                    ></div>
+                    <div class="bar-chart__hint">
+                      Pasa el cursor o toca una barra para ver el total.
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <!-- Bottom Grid -->
+              <div class="dashboard-grid dashboard-grid--bottom">
+                <!-- Tours populares -->
+                <section class="tours">
+                  <header class="tours__header">
+                    <h3 class="tours__title">Recorridos más populares</h3>
+                  </header>
+
+                  <div
+                    class="tour-grid"
+                    id="tourGrid"
+                    aria-label="Lista de recorridos populares"
+                  ></div>
+                </section>
+
+                <!-- Mini calendario disponibilidad -->
+                <section class="panel panel--mini-calendar">
+                  <header class="panel__header panel__header--compact">
+                    <h3 class="panel__title">Disponibilidad</h3>
+
+                    <div class="mini-cal__nav">
+                      <button
+                        class="icon-btn icon-btn--sm"
+                        id="miniPrev"
+                        type="button"
+                        aria-label="Mes anterior"
+                      >
+                        <span class="material-symbols-outlined"
+                          >chevron_left</span
+                        >
+                      </button>
+                      <span class="mini-cal__label" id="miniLabel"
+                        >Octubre 2023</span
+                      >
+                      <button
+                        class="icon-btn icon-btn--sm"
+                        id="miniNext"
+                        type="button"
+                        aria-label="Mes siguiente"
+                      >
+                        <span class="material-symbols-outlined"
+                          >chevron_right</span
+                        >
+                      </button>
+                    </div>
+                  </header>
+
+                  <div class="panel__body">
+                    <div class="mini-cal" aria-label="Calendario pequeño">
+                      <div class="mini-cal__dow" id="miniDow"></div>
+                      <div class="mini-cal__grid" id="miniGrid"></div>
+                    </div>
+
+                    <div class="mini-cal__actions">
+                      <button
+                        class="btn btn--secondary btn--full"
+                        id="btnManageAvailability"
+                        type="button"
+                      >
+                        Administrar disponibilidad
+                      </button>
+
+                      <div class="mini-cal__legend" aria-label="Leyenda">
+                        <div class="mini-cal__legend-item">
+                          <span
+                            class="mini-cal__dot mini-cal__dot--today"
+                            aria-hidden="true"
+                          ></span>
+                          <span>Hoy</span>
+                        </div>
+                        <div class="mini-cal__legend-item">
+                          <span
+                            class="mini-cal__dot mini-cal__dot--booked"
+                            aria-hidden="true"
+                          ></span>
+                          <span>Reservado</span>
+                        </div>
+                        <div class="mini-cal__legend-item">
+                          <span
+                            class="mini-cal__dot mini-cal__dot--blocked"
+                            aria-hidden="true"
+                          ></span>
+                          <span>Bloqueado</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <!-- Backdrop para mobile sidebar -->
+          <div class="backdrop" id="backdrop" hidden></div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

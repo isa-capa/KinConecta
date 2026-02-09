@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="es" class="theme theme--light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kin Conecta - Inicio (Turista)</title>
+
+    <!-- Mantengo tu tipografía de marca (Spline Sans) para consistencia visual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Base compartida (la misma de guía/calendario) -->
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- Estilos específicos del dashboard turista -->
+    <link rel="stylesheet" href="./mainUserTourist.css" />
+
+    <script defer src="./mainUserTourist.js"></script>
+  </head>
+
+  <body class="app">
+    <div class="layout">
+      <!-- SIDEBAR (misma estética que guía, pero navegación de turista) -->
+      <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+        <div class="sidebar__brand">
+          <div class="sidebar__brand-icon" aria-hidden="true">
+            <span class="material-symbols-outlined sidebar__icon"
+              >travel_explore</span
+            >
+          </div>
+          <div class="sidebar__brand-text">
+            <h1 class="sidebar__title">Kin Conecta</h1>
+            <p class="sidebar__subtitle">Portal de Turistas</p>
+          </div>
+        </div>
+
+        <nav class="sidebar__nav">
+          <a class="sidebar__link sidebar__link--active" href="#">
+            <span class="material-symbols-outlined sidebar__icon">home</span>
+            <span class="sidebar__link-text">Inicio</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">explore</span>
+            <span class="sidebar__link-text">Explorar</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >favorite</span
+            >
+            <span class="sidebar__link-text">Favoritos</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">map</span>
+            <span class="sidebar__link-text">Mis viajes</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >chat_bubble</span
+            >
+            <span class="sidebar__link-text">Mensajes</span>
+            <span
+              class="sidebar__badge"
+              id="msgBadge"
+              aria-label="3 mensajes sin leer"
+              >3</span
+            >
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">star</span>
+            <span class="sidebar__link-text">Reseñas</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <a class="sidebar__link sidebar__link--footer" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >settings</span
+            >
+            <span class="sidebar__link-text">Ajustes</span>
+          </a>
+
+          <div class="sidebar__user">
+            <div
+              class="sidebar__avatar"
+              role="img"
+              aria-label="Avatar de Alejandro M."
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDfFmC8OK9sh1n8CUEtELdkqASvpoFFqWQAouhYn008y4afi1bJYJhAbWL6ocr3ry8sMosNXuBdKEQ4Xosr396hZtP6ZaFuICC-t4XHHC43D4SeE8TORCCeWTg1jTy1v3E0gANzhZXLX7uYmPsNgFn6H7xbwIyKJ2O38xPWS-HuvbdDK5eQJu2AALZyyngWIjHHvc2__vb_wNPYP_XZvsCf2J2hHkxm7_Ayfw0COww9QOtmyH0kQ8p-VSvB5aBodPhyW_EiLkb9hg4L&quot;);
+              "
+            ></div>
+
+            <div class="sidebar__user-meta">
+              <span class="sidebar__user-name" id="userName">Alejandro M.</span>
+              <button class="sidebar__logout" id="btnLogout" type="button">
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR (misma base, pero acciones de turista) -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <button
+              class="topbar__menu-btn"
+              id="btnSidebar"
+              type="button"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">menu</span>
+              <span class="u-sr-only">Abrir menú</span>
+            </button>
+
+            <!-- Búsqueda -->
+            <div class="search" role="search">
+              <span
+                class="material-symbols-outlined search__icon"
+                aria-hidden="true"
+                >search</span
+              >
+              <input
+                class="search__input"
+                id="searchInput"
+                type="search"
+                placeholder="Buscar destinos en México, guías, experiencias…"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <button
+              class="topbar__notif"
+              id="btnNotif"
+              type="button"
+              aria-label="Notificaciones"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="topbar__notif-dot topbar__notif-dot--gold"
+                aria-hidden="true"
+              ></span>
+            </button>
+
+            <button
+              class="topbar__notif"
+              id="btnChat"
+              type="button"
+              aria-label="Chat"
+            >
+              <span class="material-symbols-outlined">chat</span>
+            </button>
+
+            <span class="topbar__divider" aria-hidden="true"></span>
+
+            <button class="btn btn--secondary" id="btnNewTrip" type="button">
+              <span class="material-symbols-outlined btn__icon"
+                >add_circle</span
+              >
+              Nuevo viaje
+            </button>
+
+            <button
+              class="topbar__theme"
+              id="btnTheme"
+              type="button"
+              aria-label="Cambiar tema"
+            >
+              <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <section class="t-dashboard">
+            <div class="t-dashboard__container">
+              <!-- SALUDO -->
+              <header class="t-dashboard__hero">
+                <div class="t-dashboard__hero-text">
+                  <h1 class="t-dashboard__title" id="welcomeTitle">
+                    ¡Hola, Alejandro! 👋
+                  </h1>
+                  <p class="t-dashboard__subtitle">
+                    ¿A dónde quieres ir hoy? Tu aventura en México comienza
+                    aquí.
+                  </p>
+                </div>
+
+                <!-- Próximo viaje -->
+                <article class="trip-card" aria-label="Próximo viaje">
+                  <div
+                    class="trip-card__media"
+                    id="nextTripMedia"
+                    role="img"
+                    aria-label="Imagen del próximo destino"
+                  >
+                    <div
+                      class="trip-card__media-overlay"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="trip-card__media-badge">
+                      <span class="material-symbols-outlined" aria-hidden="true"
+                        >location_on</span
+                      >
+                      <span>Próximo destino</span>
+                    </div>
+                    <h3 class="trip-card__media-title" id="nextTripDestination">
+                      Oaxaca, México
+                    </h3>
+                  </div>
+
+                  <div class="trip-card__body">
+                    <div class="trip-card__row">
+                      <div>
+                        <h4 class="trip-card__title" id="nextTripTitle">
+                          Ruta cultural y gastronómica
+                        </h4>
+                        <p class="trip-card__date">
+                          <span
+                            class="material-symbols-outlined"
+                            aria-hidden="true"
+                            >calendar_month</span
+                          >
+                          <span id="nextTripDates">15 Oct - 20 Oct, 2023</span>
+                        </p>
+                      </div>
+
+                      <span
+                        class="trip-card__status trip-card__status--ok"
+                        id="nextTripStatus"
+                        >Confirmado</span
+                      >
+                    </div>
+
+                    <div class="trip-card__guide">
+                      <div
+                        class="trip-card__guide-avatar"
+                        id="nextTripGuideAvatar"
+                        role="img"
+                        aria-label="Guía asignado"
+                      ></div>
+                      <div class="trip-card__guide-meta">
+                        <span class="trip-card__guide-label"
+                          >Tu guía asignada</span
+                        >
+                        <span
+                          class="trip-card__guide-name"
+                          id="nextTripGuideName"
+                          >María López</span
+                        >
+                      </div>
+
+                      <button
+                        class="icon-btn"
+                        id="btnChatGuide"
+                        type="button"
+                        aria-label="Chatear con tu guía"
+                      >
+                        <span class="material-symbols-outlined">chat</span>
+                      </button>
+                    </div>
+
+                    <div class="trip-card__actions">
+                      <button
+                        class="btn btn--primary btn--full"
+                        id="btnTripDetails"
+                        type="button"
+                      >
+                        Ver detalles
+                      </button>
+                      <button
+                        class="btn btn--secondary btn--full"
+                        id="btnTripManage"
+                        type="button"
+                      >
+                        Gestionar
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </header>
+
+              <!-- RECOMENDADOS -->
+              <section class="section">
+                <div class="section__header">
+                  <h2 class="section__title">Recomendados para ti</h2>
+                  <button
+                    class="section__link"
+                    id="btnViewAllGuides"
+                    type="button"
+                  >
+                    Ver todos
+                    <span class="material-symbols-outlined" aria-hidden="true"
+                      >arrow_forward</span
+                    >
+                  </button>
+                </div>
+
+                <div class="card-grid" id="recommendedGuides"></div>
+              </section>
+
+              <!-- GRID: Destinos + Guardados -->
+              <section class="t-dashboard__grid">
+                <!-- Destinos -->
+                <div class="section section--destinations">
+                  <div class="section__header">
+                    <h2 class="section__title">Destinos populares en México</h2>
+                  </div>
+
+                  <div class="destination-grid" id="destinationGrid"></div>
+                </div>
+
+                <!-- Guías guardados -->
+                <aside class="section section--saved">
+                  <div class="section__header">
+                    <h2 class="section__title section__title--sm">
+                      Guías guardados
+                    </h2>
+                    <button
+                      class="section__link section__link--sm"
+                      id="btnSavedAll"
+                      type="button"
+                    >
+                      Ver todo
+                    </button>
+                  </div>
+
+                  <div class="saved-card">
+                    <ul class="saved-list" id="savedGuides"></ul>
+
+                    <button
+                      class="saved-card__add"
+                      id="btnExploreMore"
+                      type="button"
+                    >
+                      <span class="material-symbols-outlined" aria-hidden="true"
+                        >add</span
+                      >
+                      Explorar más guías
+                    </button>
+                  </div>
+                </aside>
+              </section>
+            </div>
+          </section>
+
+          <!-- Backdrop mobile sidebar -->
+          <div class="backdrop" id="backdrop" hidden></div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

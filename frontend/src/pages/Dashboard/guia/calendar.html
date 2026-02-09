@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="es" class="theme theme--light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kin Conecta - Calendario de Disponibilidad</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./calendar.css" />
+    <script defer src="./calendar.js"></script>
+  </head>
+
+  <body class="app">
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+        <div class="sidebar__brand">
+          <div class="sidebar__brand-icon" aria-hidden="true">
+            <span class="material-symbols-outlined sidebar__icon"
+              >travel_explore</span
+            >
+          </div>
+          <div class="sidebar__brand-text">
+            <h1 class="sidebar__title">Kin Conecta</h1>
+            <p class="sidebar__subtitle">Guide Portal</p>
+          </div>
+        </div>
+
+        <nav class="sidebar__nav">
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >dashboard</span
+            >
+            <span class="sidebar__link-text">Dashboard</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">map</span>
+            <span class="sidebar__link-text">My Tours</span>
+          </a>
+
+          <a class="sidebar__link sidebar__link--active" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >calendar_month</span
+            >
+            <span class="sidebar__link-text">Calendar</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >chat_bubble</span
+            >
+            <span class="sidebar__link-text">Messages</span>
+            <span class="sidebar__badge" aria-label="3 mensajes sin leer"
+              >3</span
+            >
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon">star</span>
+            <span class="sidebar__link-text">Reviews</span>
+          </a>
+
+          <a class="sidebar__link" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >payments</span
+            >
+            <span class="sidebar__link-text">Income</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <a class="sidebar__link sidebar__link--footer" href="#">
+            <span class="material-symbols-outlined sidebar__icon"
+              >settings</span
+            >
+            <span class="sidebar__link-text">Settings</span>
+          </a>
+
+          <div class="sidebar__user">
+            <div
+              class="sidebar__avatar"
+              role="img"
+              aria-label="Avatar de Carlos Rivera"
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCLNn56x8nKLiIkJ2Oimg0m7Jj13PDy_dn1S-8Br7qaIZu_jW_FqRxokHLeLv8EK78MrsvmlTIM-PPBduPFiWrwUVoEWW21D2F9ZZosGcpnmGinUtXKPFXfGaIO1S9wZ4neppeugzOPPvzcfZ3dTGnO2Hpztor9_9AUUH4Knx5ObQAUFz77Emu-nr3TPx54oBaJu6ruA6XhZI1U2N5LrhmXT6RGXNcXz81Bwm2B6eo0hiKXX0rv7SnDK3-ghIvcMqcom-wjncjYEAka&quot;);
+              "
+            ></div>
+            <div class="sidebar__user-meta">
+              <span class="sidebar__user-name">Carlos Rivera</span>
+              <button class="sidebar__logout" type="button">Log out</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar__left">
+            <button
+              class="topbar__menu-btn"
+              id="btnSidebar"
+              type="button"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">menu</span>
+              <span class="u-sr-only">Abrir menú</span>
+            </button>
+
+            <div class="topbar__heading">
+              <h2 class="topbar__title">Calendario de Disponibilidad</h2>
+              <p class="topbar__subtitle">
+                Administra tu agenda y revisa reservas.
+              </p>
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <button class="btn btn--secondary" id="btnSync" type="button">
+              <span class="material-symbols-outlined btn__icon">sync</span>
+              <span class="btn__text">Sync Calendar</span>
+            </button>
+
+            <button class="btn btn--primary" id="btnBlock" type="button">
+              <span class="material-symbols-outlined btn__icon">block</span>
+              <span class="btn__text">Block Dates</span>
+            </button>
+
+            <span class="topbar__divider" aria-hidden="true"></span>
+
+            <button
+              class="topbar__notif"
+              id="btnNotif"
+              type="button"
+              aria-label="Notificaciones"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="topbar__notif-dot" aria-hidden="true"></span>
+            </button>
+
+            <button
+              class="topbar__theme"
+              id="btnTheme"
+              type="button"
+              aria-label="Cambiar tema"
+            >
+              <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <!-- CALENDAR AREA -->
+          <section class="calendar-area">
+            <div class="calendar-toolbar">
+              <div class="calendar-toolbar__month">
+                <button
+                  class="icon-btn"
+                  id="btnPrev"
+                  type="button"
+                  aria-label="Mes anterior"
+                >
+                  <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+
+                <h3 class="calendar-toolbar__month-title" id="monthLabel">
+                  October 2023
+                </h3>
+
+                <button
+                  class="icon-btn"
+                  id="btnNext"
+                  type="button"
+                  aria-label="Mes siguiente"
+                >
+                  <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+              </div>
+
+              <div
+                class="view-toggle"
+                role="tablist"
+                aria-label="Cambiar vista"
+              >
+                <button
+                  class="view-toggle__btn view-toggle__btn--active"
+                  type="button"
+                  data-view="month"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  Month
+                </button>
+                <button
+                  class="view-toggle__btn"
+                  type="button"
+                  data-view="week"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  Week
+                </button>
+                <button
+                  class="view-toggle__btn"
+                  type="button"
+                  data-view="list"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  List
+                </button>
+              </div>
+            </div>
+
+            <div class="calendar-card">
+              <div class="calendar-grid calendar-grid--header" id="dowHeader">
+                <div class="calendar-grid__dow">Sun</div>
+                <div class="calendar-grid__dow">Mon</div>
+                <div class="calendar-grid__dow">Tue</div>
+                <div class="calendar-grid__dow">Wed</div>
+                <div class="calendar-grid__dow">Thu</div>
+                <div class="calendar-grid__dow">Fri</div>
+                <div class="calendar-grid__dow">Sat</div>
+              </div>
+
+              <!-- Month grid (se renderiza por JS) -->
+              <div
+                class="calendar-grid calendar-grid--month"
+                id="monthGrid"
+                aria-label="Calendario mensual"
+              ></div>
+            </div>
+
+            <div class="legend">
+              <div class="legend__item">
+                <span
+                  class="legend__swatch legend__swatch--booked"
+                  aria-hidden="true"
+                ></span>
+                <span class="legend__text">Booked (Confirmed)</span>
+              </div>
+              <div class="legend__item">
+                <span
+                  class="legend__swatch legend__swatch--blocked"
+                  aria-hidden="true"
+                ></span>
+                <span class="legend__text">Blocked (Unavailable)</span>
+              </div>
+              <div class="legend__item">
+                <span
+                  class="legend__swatch legend__swatch--available"
+                  aria-hidden="true"
+                ></span>
+                <span class="legend__text">Available</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- RIGHT PANEL -->
+          <aside class="details" aria-label="Detalle del día">
+            <div class="details__header">
+              <div class="details__header-row">
+                <span class="details__eyebrow">Selected Date</span>
+                <button
+                  class="icon-btn icon-btn--muted"
+                  id="btnEditDay"
+                  type="button"
+                  aria-label="Editar día seleccionado"
+                >
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              </div>
+
+              <h3 class="details__date" id="selectedDateLabel">—</h3>
+              <p class="details__meta" id="selectedDateMeta">
+                Selecciona un día
+              </p>
+            </div>
+
+            <div class="details__body">
+              <div class="timeline" id="timeline"></div>
+            </div>
+
+            <div class="details__footer">
+              <button
+                class="btn btn--secondary btn--full"
+                id="btnAddBlockTime"
+                type="button"
+              >
+                <span class="material-symbols-outlined btn__icon"
+                  >add_circle</span
+                >
+                <span class="btn__text">Add Block Time</span>
+              </button>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Backdrop para mobile sidebar -->
+        <div class="backdrop" id="backdrop" hidden></div>
+      </main>
+    </div>
+  </body>
+</html>
