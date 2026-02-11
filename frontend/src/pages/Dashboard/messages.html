@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kin Conecta - Mensajería</title>
+
+    <link rel="stylesheet" href="messages.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">☀️</div>
+            <div>
+                <h1>Kin Conecta</h1>
+                <span>Tourist Dashboard</span>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a>Home</a>
+            <a>Explore</a>
+            <a>Favorites</a>
+            <a>Trips</a>
+            <a class="active">Messages</a>
+            <a>Reviews</a>
+        </nav>
+
+        <div class="profile">
+            <img src="../../assets/team/EsauMontiel.jpg">
+            <div>
+                <strong>Esaú Montiel</strong>
+                <span>Pro Traveler</span>
+            </div>
+        </div>
+
+    </aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<!-- CHAT LIST -->
+
+<section class="chat-list">
+
+    <div class="chat-list-header">
+        <h2>Mensajes</h2>
+        <input placeholder="Buscar conversaciones...">
+    </div>
+
+    <div class="chat-item active">
+        <img src="../../assets/team/monroy.png">
+        <div class="chat-info">
+            <div class="chat-top">
+                <strong>Oscar (Guia)</strong>
+                <span>09:30 AM</span>
+            </div>
+            <p>¡Perfecto, te veo en el aeropuerto el día de mañana! 🫡</p>
+        </div>
+        <div class="unread"></div>
+    </div>
+
+    <div class="chat-item">
+        <img src="../../assets/team/isaAboutUs.png">
+        <div class="chat-info">
+            <div class="chat-top">
+                <strong>Isaura (Guia)</strong>
+                <span>Ayer</span>
+            </div>
+            <p>Revisa el itinerario que te acabo de enviar. 🤪</p>
+        </div>
+        <div class="badge">2</div>
+    </div>
+
+</section>
+
+<!-- CONVERSATION -->
+
+<section class="conversation">
+
+    <header class="conversation-header">
+
+        <div class="conv-user">
+            <img src="../../assets/team/monroy.png">
+            <div>
+                <strong>Oscar</strong>
+                <span class="online">Online</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <span class="material-symbols-outlined">call</span>
+            <span class="material-symbols-outlined">videocam</span>
+            <span class="material-symbols-outlined">info</span>
+        </div>
+
+    </header>
+
+    <div class="messages">
+
+        <div class="day">Hoy</div>
+
+        <div class="message received">
+        ¡Perfecto, te veo en el aeropuerto el día de mañana! 🫡
+        </div>
+    </div>
+        <footer class="chat-input">
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">attach_file</span>
+            </button>
+
+            <div class="input-wrapper">
+                <input type="text" placeholder="Escribe un mensaje para Oscar...">
+                <span class="material-symbols-outlined emoji">sentiment_satisfied</span>
+            </div>
+
+            <button class="send-btn">
+                <span class="material-symbols-outlined">send</span>
+            </button>
+
+        </footer>
+</section>
+
+
+

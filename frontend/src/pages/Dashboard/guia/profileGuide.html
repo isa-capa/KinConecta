@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil Público de Guía - Kin Conecta</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<link rel="stylesheet" href="profileGuide.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container nav-content">
+    <div class="nav-left">
+      <div class="logo">
+        <span class="material-symbols-outlined">explore</span>
+      </div>
+      <h2>Kin Conecta</h2>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#">Explorar</a>
+      <a href="#">Destinos</a>
+      <a href="#">Ayuda</a>
+    </nav>
+
+    <div class="nav-actions">
+      <input type="text" placeholder="Buscar guías o tours" class="search-input">
+      <button class="login-btn">Iniciar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+  <div class="hero-cover">
+    <button class="share-btn">
+      <span class="material-symbols-outlined">share</span>
+      Compartir
+    </button>
+  </div>
+
+  <div class="hero-content">
+
+    <div class="avatar-wrapper">
+      <div class="avatar"></div>
+      <span class="verified material-symbols-outlined">verified</span>
+    </div>
+
+    <div class="hero-info">
+
+      <div class="hero-top">
+        <h1>Juan Ariel Alarcón García</h1>
+        <span class="guide-status">DISPONIBLE HOY</span>
+      </div>
+
+      <div class="hero-meta">
+        <div>
+          <span class="material-symbols-outlined">location_on</span>
+          Ciudad de México, México
+        </div>
+
+        <div class="dot"></div>
+
+        <div>
+          <span class="material-symbols-outlined">translate</span>
+          Español, English, français, Deutsch
+        </div>
+
+        <div class="dot"></div>
+
+        <div class="rating-meta">
+          <span class="material-symbols-outlined filled">star</span>
+          <strong>4.8</strong>
+          <span class="reviews">(80 reseñas)</span>
+        </div>
+      </div>
+
+      <div class="tags">
+        <span>#Historia</span>
+        <span>#Deporte</span>
+        <span>#Tecnología</span>
+      </div>
+
+    </div>
+
+    <div class="hero-cta">
+      <p class="price">$40 USD <span>/ hora</span></p>
+      <button class="primary-btn">
+        <span class="material-symbols-outlined">mail</span>
+        <strong>Contactar</strong>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="tabs">
+    <a href="#about" class="active">Sobre mí</a>
+    <a href="#tours">Tours ofrecidos</a>
+    <a href="#reviews">Reseñas</a>
+    <a href="#photos">Fotos</a>
+    <a href="#availability">Disponibilidad</a>
+  </div>
+
+</section>
+
+<div class="content-grid">
+
+<div class="main-column">
+
+<section class="card" id="about">
+  <h3>Sobre mí</h3>
+  <p>
+    ¡Hola! Soy Juan, apasionado de la historia y Tecnología de Ciudad de México.
+    Llevo alrededor de 3 años guiando viajeros de todo el mundo.
+  </p>
+
+  <div class="stats">
+    <div><strong>3+</strong><span>Años Exp.</span></div>
+    <div><strong>100+</strong><span>Tours</span></div>
+    <div><strong>4.8</strong><span>Rating</span></div>
+    <div><strong>✔</strong><span>Verificado</span></div>
+  </div>
+</section>
+
+<section id="tours">
+  <h3 class="section-title">Tours Ofrecidos</h3>
+
+  <div class="tour-card">
+    <div class="tour-img" style="background: url('https://luchacentral.com/wp-content/uploads/IMG_4198-1.jpg') center/cover;">
+      <div class="tour-badge">
+        <span class="material-symbols-outlined">sports_kabaddi</span>
+        Deporte
+      </div>
+    </div>
+
+    <div class="tour-body">
+      <div class="tour-header">
+        <h4>Función de Lucha Libre en Vivo</h4>
+        <div class="tour-rating">
+          <span class="material-symbols-outlined filled">star</span>
+          4.5
+        </div>
+      </div>
+
+      <div class="tour-details">
+        <span>
+          <span class="material-symbols-outlined">schedule</span>
+          6 horas
+        </span>
+        <span>
+          <span class="material-symbols-outlined">group</span>
+          Max 4 personas
+        </span>
+      </div>
+
+      <p class="tour-desc">
+        Visita a la Arena México, la cuna del Consejo Mundial de Lucha Libre.
+      </p>
+
+      <div class="tour-footer">
+        <div>
+          <small>Desde</small>
+          <p class="tour-price">$10 USD PP</p>
+        </div>
+        <button class="secondary-btn">Reservar</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section id="reviews">
+  <h3 class="section-title">Reseñas recientes</h3>
+
+  <div class="reviews-summary">
+    <div class="stars">
+      <span class="material-symbols-outlined filled">star</span>
+      <span class="material-symbols-outlined filled">star</span>
+      <span class="material-symbols-outlined filled">star</span>
+      <span class="material-symbols-outlined filled">star</span>
+      <span class="material-symbols-outlined">star_half</span>
+    </div>
+    <strong>4.8</strong>
+  </div>
+
+  <div class="review-card">
+    <div class="review-header">
+      <strong>Mariana C.</strong>
+      <span>★★★★★</span>
+    </div>
+    <p>Excelente experiencia con Juans. Súper auténtico y profesional.</p>
+  </div>
+
+</section>
+
+</div>
+
+<aside class="sidebar">
+  <div class="card sticky" id="availability">
+    <h3>Disponibilidad</h3>
+    <div class="calendar">
+        <h2> <strong>Febrero</strong> </h2>
+        <br>
+        <span class="available">01</span>
+        <span class="available">02</span>
+        <span class="busy">03</span>
+        <span class="available">04</span>
+        <span class="busy">05</span>
+        <span class="busy">06</span>
+        <span class="busy">07</span>
+        <br>
+        <span class="busy">08</span>
+        <span class="available">09</span>
+        <span class="available"> 10</span>
+        <span class="available">11</span>
+        <span class="available">12</span>
+        <span class="busy">13</span>
+        <span class="busy">14</span>
+        <br>
+        <span class="busy">15</span>
+        <span class="busy">16</span>
+        <span class="busy">17</span>
+        <span class="available">18</span>
+        <span class="available">19</span>
+        <span class="available">20</span>
+        <span class="available">21</span>
+        <br>
+        <span class="available">22</span>
+        <span class="available">23</span>
+        <span class="available">24</span>
+        <span class="available">25</span>
+        <span class="available">26</span>
+        <span class="available">27</span>
+        <span class="available">28</span>
+    </div>
+    <button class="primary-btn full">
+      Ver disponibilidad completa
+    </button>
+  </div>
+</aside>
+
+</div>
+
+</main>
+
+</body>
+</html>
