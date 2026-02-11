@@ -1,101 +1,106 @@
 <!DOCTYPE html>
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Registro - Paso 2: Rol</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#db7006",
-                        "primary-dark": "#C93A01", 
-                        "primary-soft": "#fff0e0",
-                        "background-light": "#f8f7f5",
-                        "background-dark": "#23190f",
-                    },
-                    fontFamily: {
-                        "display": ["Spline Sans", "Noto Sans", "sans-serif"],
-                        "body": ["Spline Sans", "Noto Sans", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col items-center justify-center p-4">
-<div class="w-full max-w-[640px] bg-white dark:bg-[#2A2016] rounded-xl shadow-lg border border-[#e6e0db] dark:border-[#3d2e20] overflow-hidden relative">
-<div class="flex justify-center gap-2 pt-8 pb-2">
-<div class="h-2 w-10 bg-primary/40 rounded-full"></div>
-<div class="h-2 w-10 bg-primary rounded-full"></div>
-<div class="h-2 w-10 bg-[#e6e0db] dark:bg-[#4a3b2a] rounded-full"></div>
-</div>
-<button class="absolute top-4 right-4 text-[#8c755f] hover:text-[#181411] dark:text-[#b09b88] dark:hover:text-white transition-colors">
-<span class="material-symbols-outlined text-2xl">close</span>
-</button>
-<div class="px-8 pb-10 flex flex-col gap-6">
-<div class="text-left mt-2">
-<h1 class="text-[#181411] dark:text-white tracking-tight text-[28px] font-bold leading-tight">Elige tu rol</h1>
-<h2 class="text-[#8c755f] dark:text-[#b09b88] tracking-normal text-base font-medium mt-2">¿Cómo te gustaría usar Kin Conecta?</h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<label class="cursor-pointer group relative">
-<input checked="" class="peer sr-only" name="role" type="radio" value="traveler"/>
-<div class="h-full border-2 border-primary bg-primary-soft/30 dark:bg-primary/5 rounded-xl p-6 flex flex-col gap-4 transition-all hover:shadow-md peer-checked:shadow-md">
-<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
-<div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white">
-<span class="material-symbols-outlined text-sm font-bold">check</span>
-</div>
-</div>
-<div class="w-14 h-14 rounded-full bg-[#FFE4CC] dark:bg-[#59300a] flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-3xl">groups</span>
-</div>
-<div>
-<h3 class="text-[#181411] dark:text-white font-bold text-lg mb-2">Soy un Viajero</h3>
-<p class="text-[#5c4d3f] dark:text-[#d1c2b5] text-sm leading-relaxed">
-                            Descubre experiencias auténticas y conecta con guías locales en todo México.
-                        </p>
-</div>
-</div>
-</label>
-<label class="cursor-pointer group relative">
-<input class="peer sr-only" name="role" type="radio" value="guide"/>
-<div class="h-full border border-[#e6e0db] dark:border-[#4a3b2a] bg-white dark:bg-[#1f160e] hover:border-primary/50 dark:hover:border-primary/50 rounded-xl p-6 flex flex-col gap-4 transition-all hover:shadow-sm peer-checked:border-primary peer-checked:bg-primary-soft/30">
-<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
-<div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white">
-<span class="material-symbols-outlined text-sm font-bold">check</span>
-</div>
-</div>
-<div class="w-14 h-14 rounded-full bg-[#FFE4CC] dark:bg-[#59300a] flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-3xl">campaign</span>
-</div>
-<div>
-<h3 class="text-[#181411] dark:text-white font-bold text-lg mb-2">Soy un Guía Local</h3>
-<p class="text-[#5c4d3f] dark:text-[#d1c2b5] text-sm leading-relaxed">
-                            Comparte tu experiencia local y crea experiencias inolvidables para viajeros.
-                        </p>
-</div>
-</div>
-</label>
-</div>
-<div class="flex gap-4 mt-4 flex-col-reverse md:flex-row">
-<button class="w-full md:w-1/2 bg-white dark:bg-[#1f160e] border border-[#e6e0db] dark:border-[#4a3b2a] text-[#5c4d3f] dark:text-[#d1c2b5] hover:text-[#181411] dark:hover:text-white hover:border-[#d1c8c0] font-bold text-base h-12 rounded-lg transition-colors flex items-center justify-center">
-                Atrás
-            </button>
-<button class="w-full md:w-1/2 bg-primary hover:bg-primary-dark text-white font-bold text-base h-12 rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center justify-center">
-                Continuar
-            </button>
-</div>
-</div>
-</div>
-<div class="fixed inset-0 -z-10 pointer-events-none opacity-40 dark:opacity-10" data-alt="Abstract soft orange gradients in the background" style="background: radial-gradient(circle at 15% 50%, #db700620 0%, transparent 25%), radial-gradient(circle at 85% 30%, #db700615 0%, transparent 20%);">
-</div>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro - Paso 2: Rol</title>
 
-</body></html>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="seleccionaTipoDeCuenta.css" />
+</head>
+
+<body class="page">
+
+  <div class="card">
+
+    <!-- Progress -->
+    <div class="steps">
+      <div class="step soft"></div>
+      <div class="step active"></div>
+      <div class="step"></div>
+    </div>
+
+    <!-- Close -->
+    <button class="close-btn">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <div class="content">
+      <header>
+        <h1>Elige tu rol</h1>
+        <h2>¿Cómo te gustaría usar Kin Conecta?</h2>
+      </header>
+
+      <!-- Roles -->
+      <div class="roles">
+
+        <!-- Traveler -->
+        <label class="role-card">
+          <input type="radio" name="role" checked />
+          <div class="card-inner">
+            <div class="check">
+              <span class="material-symbols-outlined">check</span>
+            </div>
+
+            <div class="icon">
+              <span class="material-symbols-outlined">groups</span>
+            </div>
+
+            <div>
+              <h3>Soy un Viajero</h3>
+              <p>
+                Descubre experiencias auténticas y conecta con guías locales en todo México.
+              </p>
+            </div>
+          </div>
+        </label>
+
+        <!-- Guide -->
+        <label class="role-card">
+          <input type="radio" name="role" />
+          <div class="card-inner">
+            <div class="check">
+              <span class="material-symbols-outlined">check</span>
+            </div>
+
+            <div class="icon">
+              <span class="material-symbols-outlined">campaign</span>
+            </div>
+
+            <div>
+              <h3>Soy un Guía Local</h3>
+              <p>
+                Comparte tu experiencia local y crea experiencias inolvidables para viajeros.
+              </p>
+            </div>
+          </div>
+        </label>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn secondary">Atrás</button>
+        <button class="btn primary">Continuar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="background-glow"></div>
+
+</body>
+</html>

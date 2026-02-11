@@ -1,0 +1,179 @@
+:root {
+  --primary: #d97006;
+  --primary-dark: #c93a01;
+  --bg-light: #f8f7f5;
+  --bg-dark: #23190f;
+  --card-light: #ffffff;
+  --card-dark: #2a2016;
+  --border-light: #e6e0db;
+  --border-dark: #3d2e20;
+  --text-main: #181411;
+  --text-muted: #8c755f;
+  --radius-lg: 0.75rem;
+  --font: "Spline Sans", "Noto Sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+}
+
+.page {
+  min-height: 100vh;
+  background: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card-light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0 0.5rem;
+}
+
+.step {
+  width: 48px;
+  height: 6px;
+  border-radius: 999px;
+  background: #e0e0e0;
+}
+
+.step.active {
+  background: var(--primary);
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+}
+
+.content {
+  padding: 1rem 2rem 2.5rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-main);
+}
+
+header h2 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+}
+
+.form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  width: 82%;
+  height: 48px;
+  padding: 0 2.5rem 0 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-light);
+  font-size: 1rem;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(217,112,6,.2);
+}
+
+.icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a08c7a;
+}
+
+.eye {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #a08c7a;
+  cursor: pointer;
+}
+
+.submit-btn {
+  margin-top: 0.5rem;
+  height: 48px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: var(--primary-dark);
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #5e4e3e;
+}
+
+.login-text a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+.background-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.4;
+  background:
+    radial-gradient(circle at 15% 50%, #db700620 0%, transparent 25%),
+    radial-gradient(circle at 85% 30%, #db700615 0%, transparent 20%);
+}

@@ -1,0 +1,239 @@
+    :root {
+    --primary: #db7006;
+    --primary-dark: #c93a01;
+    --primary-soft: #fff0e0;
+    --bg-light: #f8f7f5;
+    --card-bg: #ffffff;
+    --border: #e6e0db;
+    --border-dark: #4a3b2a;
+    --text-main: #181411;
+    --text-muted: #8c755f;
+    --radius: 0.75rem;
+    --font: "Spline Sans", "Noto Sans", sans-serif;
+    }
+
+    * {
+    box-sizing: border-box;
+    }
+
+    body {
+    margin: 0;
+    font-family: var(--font);
+    }
+
+    .page {
+    min-height: 100vh;
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    }
+
+    .card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    position: relative;
+    overflow: hidden;
+    }
+
+    .steps {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    padding: 2rem 0 .75rem;
+    }
+
+    .step {
+    width: 40px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border);
+    }
+
+    .step.soft {
+    background: rgba(219,112,6,.4);
+    }
+
+    .step.active {
+    background: var(--primary);
+    }
+
+    .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    }
+
+    .content {
+    padding: 0 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    }
+
+    header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: var(--text-main);
+    }
+
+    header h2 {
+    margin-top: .5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    }
+
+    .roles {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+    .roles {
+        grid-template-columns: 1fr 1fr;
+    }
+    }
+
+    .role-card {
+    cursor: pointer;
+    }
+
+    .role-card input {
+    display: none;
+    }
+
+    .card-inner {
+    position: relative;
+    height: 100%;
+    border-radius: var(--radius);
+    border: 2px solid var(--border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all .2s ease;
+    }
+
+    .role-card input:checked + .card-inner {
+    border-color: var(--primary);
+    background: rgba(255,240,224,.6);
+    box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .role-card:hover .card-inner {
+    box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .check {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0;
+    transition: opacity .2s;
+    }
+
+    .role-card input:checked + .card-inner .check {
+    opacity: 1;
+    }
+
+    .check span {
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #ffe4cc;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .icon span {
+    font-size: 32px;
+    }
+
+    .card-inner h3 {
+    margin: 0 0 .5rem;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    }
+
+    .card-inner p {
+    margin: 0;
+    font-size: .9rem;
+    line-height: 1.5;
+    color: #5c4d3f;
+    }
+
+    .actions {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column-reverse;
+    }
+
+    @media (min-width: 768px) {
+    .actions {
+        flex-direction: row;
+    }
+    }
+
+    .btn {
+    height: 48px;
+    border-radius: .5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    }
+
+    .btn.secondary {
+    background: white;
+    color: #5c4d3f;
+    }
+
+    .btn.secondary:hover {
+    color: var(--text-main);
+    border-color: #d1c8c0;
+    }
+
+    .btn.primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    }
+
+    .btn.primary:hover {
+    background: var(--primary-dark);
+    }
+
+    .background-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    opacity: .4;
+    background:
+    radial-gradient(circle at 15% 50%, #db700620 0%, transparent 25%),
+    radial-gradient(circle at 85% 30%, #db700615 0%, transparent 20%);
+}

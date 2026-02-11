@@ -1,86 +1,82 @@
 <!DOCTYPE html>
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Registro - Paso 1: Cuenta</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#D97006", 
-                        "primary-dark": "#C93A01", 
-                        "background-light": "#f8f7f5",
-                        "background-dark": "#23190f",
-                    },
-                    fontFamily: {
-                        "display": ["Spline Sans", "Noto Sans", "sans-serif"],
-                        "body": ["Spline Sans", "Noto Sans", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-</head>
-<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col items-center justify-center p-4">
-<div class="w-full max-w-[520px] bg-white dark:bg-[#2A2016] rounded-xl shadow-lg border border-[#e6e0db] dark:border-[#3d2e20] overflow-hidden relative">
-<div class="flex justify-center gap-2 pt-6 pb-2">
-<div class="h-1.5 w-12 bg-primary rounded-full"></div>
-<div class="h-1.5 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-<div class="h-1.5 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-</div>
-<button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-<span class="material-symbols-outlined text-2xl">close</span>
-</button>
-<div class="px-8 pb-10 pt-4 flex flex-col gap-6">
-<div class="text-left">
-<h1 class="text-[#181411] dark:text-white tracking-tight text-[32px] font-bold leading-tight">Crear cuenta</h1>
-<h2 class="text-[#8c755f] dark:text-[#b09b88] tracking-normal text-lg font-normal mt-1">Únete a la comunidad de Kin Conecta</h2>
-</div>
-<form class="flex flex-col gap-5">
-<div class="flex flex-col gap-2">
-<label class="text-[#181411] dark:text-gray-200 text-sm font-semibold leading-normal" for="fullname">Nombre Completo</label>
-<div class="relative">
-<input class="form-input flex w-full rounded-lg border border-[#e6e0db] dark:border-[#4a3b2a] bg-white dark:bg-[#1f160e] text-[#181411] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 focus:border-primary h-12 pl-10 pr-4 text-base font-normal placeholder:text-[#a08c7a] dark:placeholder:text-[#6b5847] transition-all" id="fullname" placeholder="Juan Pérez" type="text"/>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#a08c7a] text-[20px]">person</span>
-</div>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-[#181411] dark:text-gray-200 text-sm font-semibold leading-normal" for="email">Correo electrónico</label>
-<div class="relative">
-<input class="form-input flex w-full rounded-lg border border-[#e6e0db] dark:border-[#4a3b2a] bg-white dark:bg-[#1f160e] text-[#181411] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 focus:border-primary h-12 pl-10 pr-4 text-base font-normal placeholder:text-[#a08c7a] dark:placeholder:text-[#6b5847] transition-all" id="email" placeholder="nombre@ejemplo.com" type="email"/>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#a08c7a] text-[20px]">mail</span>
-</div>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-[#181411] dark:text-gray-200 text-sm font-semibold leading-normal" for="password">Contraseña</label>
-<div class="relative">
-<input class="form-input flex w-full rounded-lg border border-[#e6e0db] dark:border-[#4a3b2a] bg-white dark:bg-[#1f160e] text-[#181411] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 focus:border-primary h-12 pl-10 pr-10 text-base font-normal placeholder:text-[#a08c7a] dark:placeholder:text-[#6b5847] transition-all" id="password" placeholder="••••••••" type="password"/>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#a08c7a] text-[20px]">lock</span>
-<button class="absolute right-3 top-1/2 -translate-y-1/2 text-[#a08c7a] hover:text-primary transition-colors focus:outline-none" type="button">
-<span class="material-symbols-outlined text-[20px]">visibility</span>
-</button>
-</div>
-</div>
-<button class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-base h-12 rounded-lg transition-colors shadow-sm hover:shadow-md flex items-center justify-center mt-2" type="submit">
-                    Continuar
-                </button>
-</form>
-<div class="text-center mt-2">
-<p class="text-[#5e4e3e] dark:text-[#b09b88] text-sm">
-                    ¿Ya tienes una cuenta? <a class="text-primary hover:text-primary-dark font-semibold hover:underline" href="#">Iniciar sesión</a>
-</p>
-</div>
-</div>
-</div>
-<div class="fixed inset-0 -z-10 pointer-events-none opacity-40 dark:opacity-10" data-alt="Abstract soft orange gradients in the background" style="background: radial-gradient(circle at 15% 50%, #db700620 0%, transparent 25%), radial-gradient(circle at 85% 30%, #db700615 0%, transparent 20%);">
-</div>
+<html lang="es" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro - Paso 1: Cuenta</title>
 
-</body></html>
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="crearCuenta.css" />
+</head>
+
+<body class="page">
+
+  <div class="card">
+    <div class="steps">
+      <div class="step active"></div>
+      <div class="step"></div>
+      <div class="step"></div>
+    </div>
+
+    <button class="close-btn">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <div class="content">
+      <header>
+        <h1>Crear cuenta</h1>
+        <h2>Únete a la comunidad de Kin Conecta</h2>
+      </header>
+
+      <form class="form">
+        <div class="field">
+          <label for="fullname">Nombre Completo</label>
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined icon">person</span>
+            <input id="fullname" type="text" placeholder="Juan Pérez" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined icon">mail</span>
+            <input id="email" type="email" placeholder="nombre@ejemplo.com" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined icon">lock</span>
+            <input id="password" type="password" placeholder="••••••••" />
+            <button type="button" class="eye">
+              <span class="material-symbols-outlined">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="submit-btn" type="submit">Continuar</button>
+      </form>
+
+      <p class="login-text">
+        ¿Ya tienes una cuenta?
+        <a href="#">Iniciar sesión</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="background-glow"></div>
+</body>
+</html>
