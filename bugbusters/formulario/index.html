@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Match Viajero ↔ Guía | Onboarding</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <h1>Match Viajero ↔ Guía</h1>
+          <p>Onboarding progresivo: rápido, visual y sin fatiga</p>
+        </div>
+      </div>
+
+      <div class="role-tabs" role="tablist" aria-label="Selector de formulario">
+        <button class="tab active" data-role="traveler" role="tab" aria-selected="true">Viajero</button>
+        <button class="tab" data-role="guide" role="tab" aria-selected="false">Guía</button>
+      </div>
+    </header>
+
+    <div class="overlay">
+      <section class="card" aria-live="polite">
+        <div class="card-accent"></div>
+        <button class="close-btn" id="btnClose" aria-label="Cerrar">✕</button>
+
+        <div class="stepper" id="stepper"></div>
+
+        <div class="card-head">
+          <h2 id="formTitle">Completa tu Perfil</h2>
+          <p id="formSubtitle">Ayúdanos a personalizar tu experiencia</p>
+        </div>
+
+        <form id="profileForm" autocomplete="off">
+          <div id="stepsContainer"></div>
+
+          <div class="footer">
+            <button type="button" class="btn ghost" id="btnBack">Atrás</button>
+            <div class="footer-right">
+              <button type="button" class="btn ghost" id="btnSave">Guardar</button>
+              <button type="button" class="btn primary" id="btnNext">Siguiente</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section class="result" id="resultPanel" aria-hidden="true">
+        <div class="result-card">
+          <div class="result-head">
+            <h3>✅ Perfil listo</h3>
+            <button class="close-btn" id="btnCloseResult" aria-label="Cerrar">✕</button>
+          </div>
+          <p class="muted">Este JSON es lo que puedes enviar a tu API para hacer el matching.</p>
+          <pre id="resultJson"></pre>
+          <div class="result-actions">
+            <button class="btn ghost" id="btnCopy">Copiar JSON</button>
+            <button class="btn primary" id="btnRestart">Editar respuestas</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="mini">
+      <span class="pill">1 paso = 1 decisión</span>
+      <span class="pill">Chips / Sliders / Likert</span>
+      <span class="pill">Sin religión/política/género</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

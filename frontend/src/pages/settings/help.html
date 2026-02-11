@@ -35,33 +35,33 @@
             <h1 class="brand__title">Kin Conecta</h1>
           </div>
 
-          <nav class="nav">
-            <a class="nav__item" href="#">
-              <span class="material-symbols-outlined nav__icon">home</span>
-              <span class="nav__text">Inicio</span>
-            </a>
+    <nav class="nav">
+    <a class="nav__item" href="../Dashboard/turista/login.html">
+        <span class="material-symbols-outlined nav__icon">home</span>
+        <span class="nav__text">Inicio</span>
+    </a>
 
-            <a class="nav__item" href="#">
-              <span class="material-symbols-outlined nav__icon">explore</span>
-              <span class="nav__text">Explorar</span>
-            </a>
+    <a class="nav__item" href="../Dashboard/turista/login.html"">
+        <span class="material-symbols-outlined nav__icon">explore</span>
+        <span class="nav__text">Explorar</span>
+    </a>
 
-            <a class="nav__item" href="#">
-              <span class="material-symbols-outlined nav__icon">favorite</span>
-              <span class="nav__text">Favoritos</span>
-            </a>
+    <a class="nav__item" href="#">
+        <span class="material-symbols-outlined nav__icon">favorite</span>
+        <span class="nav__text">Favoritos</span>
+    </a>
 
-            <a class="nav__item" href="#">
-              <span class="material-symbols-outlined nav__icon">map</span>
-              <span class="nav__text">Mis Viajes</span>
-            </a>
+    <a class="nav__item" href="../Dashboard/turista/trips.html">
+        <span class="material-symbols-outlined nav__icon">map</span>
+        <span class="nav__text">Mis Viajes</span>
+    </a>
 
-            <a class="nav__item" href="#">
-              <span class="material-symbols-outlined nav__icon">chat_bubble</span>
-              <span class="nav__text">Mensajes</span>
-              <span class="nav__badge">3</span>
-            </a>
-          </nav>
+    <a class="nav__item" href="../Dashboard/turista/messages.html">
+        <span class="material-symbols-outlined nav__icon">chat_bubble</span>
+        <span class="nav__text">Mensajes</span>
+        <span class="nav__badge">3</span>
+    </a>
+    </nav>
         </div>
 
         <!-- ver el menu de opciones cuando seleccionas al usuario -->
@@ -170,14 +170,7 @@
                 Encuentra respuestas rápidas sobre tus reservas, pagos, seguridad y todo lo que necesitas saber.
               </p>
 
-              <div class="search">
-                <span class="material-symbols-outlined search__icon">search</span>
-                <input
-                  class="search__input"
-                  type="text"
-                  placeholder="Buscar un tema (ej. cancelar reserva, reembolso...)"
-                />
-              </div>
+
             </div>
 
             <!-- GRID FAQ -->
@@ -343,12 +336,169 @@
                   problema.
                 </p>
 
-                <button class="btn btn--primary" type="button">
+                <button class="btn btn--primary" type="button" data-support-open>
                   Contactar Soporte
                   <span class="material-symbols-outlined btn__icon btn__icon--end">arrow_forward</span>
                 </button>
               </div>
             </section>
+
+            <!-- Seccion de contactar soporte -->
+                            <!-- Support Modal -->
+                <div class="modal" data-support-modal aria-hidden="true">
+                <div class="modal__backdrop" data-support-close></div>
+
+                <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Contactar soporte">
+                    <button class="modal__close" type="button" aria-label="Cerrar" data-support-close>
+                    <span class="material-symbols-outlined">close</span>
+                    </button>
+
+                    <div class="support">
+                    <!-- Header -->
+                    <div class="support__header">
+                        <div class="support__icon">
+                        <span class="material-symbols-outlined support__icon-symbol">support_agent</span>
+                        </div>
+
+                        <h2 class="support__title">Contactar Soporte</h2>
+                        <p class="support__subtitle">
+                        Nuestro equipo de soporte está disponible todos los días de 8:00 a 22:00
+                        </p>
+                    </div>
+
+                    <!-- Body layout (left info + form) -->
+                    <div class="support__body">
+                        <!-- Left card -->
+                        <aside class="support__info">
+                        <p class="support__eyebrow">PONTE EN CONTACTO</p>
+                        <h3 class="support__info-title">Estamos aquí para ayudarte.</h3>
+                        <p class="support__info-text">
+                            ¿Tienes alguna pregunta sobre Kin Conecta? Envíanos un mensaje y te responderemos lo antes posible.
+                        </p>
+
+                        <div class="support__meta">
+                            <div class="support__meta-item">
+                            <div class="support__meta-icon">
+                                <span class="material-symbols-outlined">mail</span>
+                            </div>
+                            <div class="support__meta-content">
+                                <p class="support__meta-label">Email</p>
+                                <p class="support__meta-value">hola@kinconecta.com</p>
+                            </div>
+                            </div>
+
+                            <div class="support__meta-item">
+                            <div class="support__meta-icon">
+                                <span class="material-symbols-outlined">schedule</span>
+                            </div>
+                            <div class="support__meta-content">
+                                <p class="support__meta-label">Horario</p>
+                                <p class="support__meta-value">Lun–Dom, 8:00–22:00</p>
+                            </div>
+                            </div>
+
+                            <div class="support__meta-item">
+                            <div class="support__meta-icon">
+                                <span class="material-symbols-outlined">location_on</span>
+                            </div>
+                            <div class="support__meta-content">
+                                <p class="support__meta-label">Oficina</p>
+                                <p class="support__meta-value">Ciudad de México, México</p>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="support__social">
+                            <p class="support__social-title">Síguenos en redes</p>
+                            <div class="support__social-row">
+                            <a class="support__social-btn" href="#" aria-label="LinkedIn">in</a>
+                            <a class="support__social-btn" href="#" aria-label="Twitter">tw</a>
+                            <a class="support__social-btn" href="#" aria-label="Instagram">ig</a>
+                            </div>
+                        </div>
+                        </aside>
+
+                        <!-- Right form -->
+                        <section class="support__form">
+                        <h3 class="support__form-title">Hablemos</h3>
+                        <p class="support__form-subtitle">Cuéntanos qué tienes en mente y comencemos.</p>
+
+                        <form class="form" data-support-form>
+                            <div class="form__row">
+                            <div class="form__field">
+                                <label class="form__label" for="fullName">Nombre completo</label>
+                                <div class="form__input-wrap">
+                                <span class="material-symbols-outlined form__input-icon">person</span>
+                                <input class="form__input" id="fullName" name="fullName" placeholder="Tu nombre" required />
+                                </div>
+                            </div>
+
+                            <div class="form__field">
+                                <label class="form__label" for="email">Correo electrónico</label>
+                                <div class="form__input-wrap">
+                                <span class="material-symbols-outlined form__input-icon">mail</span>
+                                <input class="form__input" id="email" name="email" type="email" placeholder="tu@email.com" required />
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="form__field">
+                            <label class="form__label" for="subject">Asunto</label>
+                            <div class="form__select-wrap">
+                                <span class="material-symbols-outlined form__input-icon">sell</span>
+                                <select class="form__select" id="subject" name="subject" required>
+                                <option value="" selected disabled>Selecciona una categoría</option>
+                                <option>Reservas y Viajes</option>
+                                <option>Pagos y Facturación</option>
+                                <option>Cuenta y Seguridad</option>
+                                <option>Verificación de Guías</option>
+                                <option>Otro</option>
+                                </select>
+                                <span class="material-symbols-outlined form__select-chevron">expand_more</span>
+                            </div>
+                            </div>
+
+                            <div class="form__field">
+                            <label class="form__label" for="message">Mensaje</label>
+                            <textarea
+                                class="form__textarea"
+                                id="message"
+                                name="message"
+                                placeholder="Escribe tu mensaje aquí..."
+                                required
+                            ></textarea>
+                            </div>
+
+                            <div class="form__field">
+                            <label class="form__label" for="file">Adjuntar archivo (opcional)</label>
+                            <label class="dropzone" for="file">
+                                <input class="dropzone__input" id="file" type="file" />
+                                <span class="material-symbols-outlined dropzone__icon">upload_file</span>
+                                <span class="dropzone__title">Haz clic o arrastra una imagen o documento</span>
+                                <span class="dropzone__hint">PNG, JPG o PDF</span>
+                            </label>
+                            </div>
+
+                            <button class="form__submit" type="submit">
+                            Enviar mensaje
+                            <span class="material-symbols-outlined">send</span>
+                            </button>
+                        </form>
+                        </section>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Toast -->
+                <div class="toast" data-toast aria-hidden="true">
+                <span class="material-symbols-outlined toast__icon">check_circle</span>
+                <span class="toast__text">¡Mensaje enviado con éxito!</span>
+                <button class="toast__close" type="button" aria-label="Cerrar toast" data-toast-close>
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                </div>
+
 
             <!-- FOOTER LINKS -->
             <footer class="footer-links">
@@ -362,6 +512,66 @@
         </section>
       </main>
     </div>
+
+    <!-- JavaScript seccion de contactar soporte -->
+            <script>
+    (function () {
+        const openBtn = document.querySelector("[data-support-open]");
+        const modal = document.querySelector("[data-support-modal]");
+        const closeEls = document.querySelectorAll("[data-support-close]");
+        const form = document.querySelector("[data-support-form]");
+
+        const toast = document.querySelector("[data-toast]");
+        const toastClose = document.querySelector("[data-toast-close]");
+
+        if (!openBtn || !modal) return;
+
+        function openModal() {
+        modal.classList.add("modal--open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+        modal.classList.remove("modal--open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        }
+
+        function showToast() {
+        if (!toast) return;
+        toast.classList.add("toast--show");
+        toast.setAttribute("aria-hidden", "false");
+
+        window.clearTimeout(showToast._t);
+        showToast._t = window.setTimeout(() => {
+            toast.classList.remove("toast--show");
+            toast.setAttribute("aria-hidden", "true");
+        }, 2800);
+        }
+
+        openBtn.addEventListener("click", openModal);
+        closeEls.forEach((el) => el.addEventListener("click", closeModal));
+
+        document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+        });
+
+        toastClose?.addEventListener("click", () => {
+        toast.classList.remove("toast--show");
+        toast.setAttribute("aria-hidden", "true");
+        });
+
+        // Demo submit (no backend): muestra toast y cierra modal
+        form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        showToast();
+        closeModal();
+        form.reset();
+        });
+    })();
+    </script>
+
 
     <!-- JavaScript para desplegar el menu de perfil -->
         <script>
