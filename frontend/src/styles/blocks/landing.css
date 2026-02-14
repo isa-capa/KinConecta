@@ -61,7 +61,7 @@
 .landing-search {
   position: absolute;
   left: 50%;
-  bottom: 1.2rem;
+  bottom: 1.9rem;
   transform: translateX(-50%);
   z-index: 20;
   width: min(760px, 92%);
@@ -164,9 +164,13 @@
 }
 
 .landing-hero__image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: cover;
+  object-position: center;
 }
 
 .landing-hero__glow {
@@ -231,6 +235,11 @@
 }
 
 @media (max-width: 720px) {
+  .landing-search {
+    bottom: 1.45rem;
+    width: min(740px, 94%);
+  }
+
   .landing-hero__stats {
     grid-template-columns: 1fr;
   }
@@ -279,103 +288,58 @@
   font-weight: 700;
 }
 
-.experience-map {
+.experiences-mosaic {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 1.5fr) minmax(0, 1.5fr);
+  grid-template-areas:
+    "map intro intro"
+    "map gastro aventura"
+    "note cultura cultura";
+  align-items: stretch;
+}
+
+.experiences-mosaic__map-card {
+  grid-area: map;
   position: relative;
-  margin-bottom: 1rem;
-  border-radius: 1.45rem;
   overflow: hidden;
+  border-radius: 1.35rem;
   border: 1px solid var(--color-border);
+  background: #dbe8ee;
   box-shadow: var(--shadow-soft);
-  background: #dde9ee;
+  min-height: 360px;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
 }
 
-.experience-map__image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.experience-map__still {
-  position: absolute;
-  inset: 0;
+.experiences-mosaic__map-image {
   width: 100%;
   height: 100%;
-  display: none;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.experience-map--still .experience-map__still {
   display: block;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.28s ease;
 }
 
-.experience-map--scrub-ready .experience-map__still {
-  display: block;
-}
-
-.experience-map--scrub-ready .experience-map__image {
-  opacity: 0;
-}
-
-.experience-map__veil {
+.experiences-mosaic__map-card::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(7, 80, 86, 0.2) 0%, rgba(7, 80, 86, 0) 45%),
-    linear-gradient(0deg, rgba(22, 35, 42, 0.3) 0%, rgba(22, 35, 42, 0) 65%);
-  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 80, 86, 0.1) 0%,
+    rgba(22, 35, 42, 0.08) 100%
+  );
   pointer-events: none;
 }
 
-.experience-map__caption {
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 0.9rem;
-  z-index: 3;
-  padding: 0.7rem 0.85rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(6px);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.22s ease;
-}
-
-.experience-map__title {
-  font-size: 0.95rem;
-  font-weight: 900;
-  color: var(--color-ink);
-}
-
-.experience-map__text {
-  margin-top: 0.15rem;
-  font-size: 0.83rem;
-  font-weight: 700;
-  color: var(--color-text-muted);
-}
-
-.landing-experiences {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 900px) {
-  .landing-experiences {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.landing-experiences__card {
-  border-radius: 1.4rem;
+.experiences-mosaic__card {
   border: 1px solid var(--color-border);
-  background: var(--color-surface-2);
-  padding: 1.5rem;
-  display: grid;
-  gap: 0.65rem;
-  font-weight: 700;
+  border-radius: 1.2rem;
+  background: #ffffff;
+  padding: 1.1rem 1.15rem;
   transition:
     transform 0.2s ease,
     box-shadow 0.22s ease,
@@ -383,22 +347,112 @@
     background-color 0.22s ease;
 }
 
-.landing-experiences__card .material-symbols-outlined {
-  font-size: 1.5rem;
+.experiences-mosaic__card .material-symbols-outlined {
+  font-size: 1.4rem;
   color: var(--color-primary);
   transition:
     transform 0.2s ease,
     color 0.2s ease;
 }
 
-.landing-experiences__title {
-  font-size: 1.2rem;
-  font-weight: 900;
+.experiences-mosaic__card--intro {
+  grid-area: intro;
 }
 
-.landing-experiences__text {
+.experiences-mosaic__card--gastro {
+  grid-area: gastro;
+}
+
+.experiences-mosaic__card--aventura {
+  grid-area: aventura;
+}
+
+.experiences-mosaic__card--cultura {
+  grid-area: cultura;
+}
+
+.experiences-mosaic__title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--color-ink);
+}
+
+.experiences-mosaic__subtitle {
+  margin-top: 0.45rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  font-weight: 700;
+}
+
+.experiences-mosaic__card-title {
+  margin-top: 0.45rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--color-ink);
+}
+
+.experiences-mosaic__card-text {
+  margin-top: 0.35rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.experiences-mosaic__note-card {
+  grid-area: note;
+  border: 1px dashed rgba(7, 80, 86, 0.28);
+  border-radius: 1.2rem;
+  background: #ffffff;
+  padding: 1rem 1.1rem;
+  transition:
+    transform 0.2s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.experiences-mosaic__note-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--color-sea);
+}
+
+.experiences-mosaic__note-text {
+  margin-top: 0.25rem;
   color: var(--color-text-muted);
   line-height: 1.6;
+  font-weight: 700;
+}
+
+@media (max-width: 1080px) {
+  .experiences-mosaic {
+    grid-template-columns: minmax(210px, 0.95fr) minmax(0, 1.2fr);
+    grid-template-areas:
+      "map intro"
+      "map gastro"
+      "aventura cultura"
+      "note note";
+  }
+}
+
+@media (max-width: 720px) {
+  .experiences-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "intro"
+      "map"
+      "gastro"
+      "aventura"
+      "cultura"
+      "note";
+  }
+
+  .experiences-mosaic__map-card {
+    min-height: 230px;
+  }
+
+  .experiences-mosaic__title {
+    font-size: 1.55rem;
+  }
 }
 
 .landing-steps {
@@ -597,7 +651,7 @@
     left: auto;
     bottom: auto;
     transform: none;
-    margin-top: 0.9rem;
+    margin-top: 0.45rem;
     width: 100%;
   }
 
@@ -616,7 +670,10 @@
   }
 
   .landing-hero__image {
-    height: 320px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .landing-hero__stats {
@@ -624,11 +681,6 @@
     padding: 0 0 0.4rem;
   }
 
-  .experience-map__caption {
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.75rem;
-  }
 }
 
 .match-flow {
@@ -780,6 +832,26 @@
   border-left: 1px solid var(--color-border);
 }
 
+.comparison__cell--status {
+  display: flex;
+  gap: 0.45rem;
+  align-items: flex-start;
+}
+
+.comparison__cell-icon {
+  font-size: 1.1rem;
+  margin-top: 0.05rem;
+  flex-shrink: 0;
+}
+
+.comparison__cell-icon--kin {
+  color: #2e7d32;
+}
+
+.comparison__cell-icon--trad {
+  color: #c62828;
+}
+
 .comparison__cell--feature {
   color: var(--color-ink);
   font-weight: 900;
@@ -801,7 +873,132 @@
   flex-wrap: wrap;
 }
 
+.comparison__mobile {
+  display: none;
+  margin-top: 1rem;
+  gap: 0.75rem;
+}
+
+.comparison__mobile-card {
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: #ffffff;
+  padding: 0.9rem 1rem;
+}
+
+.comparison__mobile-card--kin {
+  border-color: rgba(46, 125, 50, 0.26);
+}
+
+.comparison__mobile-card--trad {
+  border-color: rgba(198, 40, 40, 0.22);
+}
+
+.comparison__mobile-title {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--color-ink);
+}
+
+.comparison__mobile-list {
+  margin-top: 0.65rem;
+  display: grid;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.comparison__mobile-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.45;
+}
+
+.comparison__mobile-item .material-symbols-outlined {
+  font-size: 1.15rem;
+  margin-top: 0.05rem;
+}
+
+.comparison__mobile-item--kin .material-symbols-outlined {
+  color: #2e7d32;
+}
+
+.comparison__mobile-item--trad .material-symbols-outlined {
+  color: #c62828;
+}
+
+.comparison-layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+@media (min-width: 980px) {
+  .comparison-layout {
+    grid-template-columns: minmax(0, 1.85fr) minmax(300px, 1.15fr);
+  }
+}
+
+.comparison-layout__media-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  min-height: 300px;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.comparison-layout__aside {
+  display: grid;
+  gap: 0.8rem;
+  align-content: start;
+}
+
+.comparison-layout__media-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.28s ease;
+}
+
+.comparison-layout__note-card {
+  border: 1px solid var(--color-border);
+  border-radius: 1.2rem;
+  background: #ffffff;
+  padding: 0.95rem 1rem;
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.comparison-layout__note-text {
+  color: var(--color-sea);
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 @media (hover: hover) {
+  .experiences-mosaic__map-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(242, 159, 5, 0.4);
+    box-shadow: var(--shadow-card);
+  }
+
+  .experiences-mosaic__map-card:hover .experiences-mosaic__map-image {
+    transform: scale(1.04);
+  }
+
   .landing-search__inner:hover {
     transform: translateY(-1px);
     border-color: rgba(242, 159, 5, 0.35);
@@ -825,21 +1022,22 @@
     box-shadow: var(--shadow-soft);
   }
 
-  .experience-map:hover .experience-map__caption {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .landing-experiences__card:hover {
+  .experiences-mosaic__card:hover {
     transform: translateY(-4px);
     border-color: var(--color-accent);
     background: #ffffff;
     box-shadow: var(--shadow-card);
   }
 
-  .landing-experiences__card:hover .material-symbols-outlined {
+  .experiences-mosaic__card:hover .material-symbols-outlined {
     transform: scale(1.08);
     color: var(--color-primary-hover);
+  }
+
+  .experiences-mosaic__note-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(242, 159, 5, 0.38);
+    box-shadow: var(--shadow-soft);
   }
 
   .landing-steps__item:hover {
@@ -903,6 +1101,22 @@
     box-shadow: var(--shadow-soft);
   }
 
+  .comparison-layout__media-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(242, 159, 5, 0.4);
+    box-shadow: var(--shadow-card);
+  }
+
+  .comparison-layout__media-card:hover .comparison-layout__media-image {
+    transform: scale(1.04);
+  }
+
+  .comparison-layout__note-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(242, 159, 5, 0.36);
+    box-shadow: var(--shadow-card);
+  }
+
   .comparison__row:not(.comparison__row--head):hover .comparison__cell {
     background: #fbfdfe;
   }
@@ -914,6 +1128,18 @@
 }
 
 @media (max-width: 760px) {
+  .comparison-layout__media-card {
+    min-height: 260px;
+  }
+
+  .comparison__table {
+    display: none;
+  }
+
+  .comparison__mobile {
+    display: grid;
+  }
+
   .comparison__row {
     grid-template-columns: 1fr;
   }
