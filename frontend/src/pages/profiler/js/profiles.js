@@ -19,7 +19,8 @@ const state = {
   }
 };
 
-const STORAGE_KEY = "match_profile_v1";
+const STORAGE_KEY = "match_profile_v2";
+
 
 //LENGUAGES
 const LANGUAGES_WORLD = [
@@ -190,7 +191,7 @@ const FORMS = {
       {
         id: "expertise",
         title: "Áreas de experiencia",
-        hint: "Selecciona varias",
+        hint: "Selecciona 6 experiencias",
         type: "chips",
         key: "expertise",
         multi: true,
@@ -221,10 +222,13 @@ const FORMS = {
             options: ["Nuevo (0-6 meses)", "Intermedio (6-24 meses)", "Avanzado (2+ años)", "Experto (5+ años)"]
           },
           {
-            type: "tags",
+            type: "multiselect",
             key: "languages",
             label: "Idiomas que hablas",
-            placeholder: "Ej. Español, Inglés, Francés"
+            hint: "Selecciona uno o varios",
+            placeholder: "Buscar idioma…",
+            options: LANGUAGES_WORLD,
+            max: 8
           }
         ]
       },
@@ -351,16 +355,34 @@ function loadFromStorage(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(!raw) return;
+
     const parsed = JSON.parse(raw);
+
+    // 1) Estado del UI (tu lógica actual)
     if(parsed?.answers) state.answers = parsed.answers;
     if(parsed?.role) state.role = parsed.role;
+
+    // 2) Estado del controller (Task 4: items + currentId)
+    if(typeof parsed?.controller?.currentId === "number"){
+      profilesController.currentId = parsed.controller.currentId;
+    }
+    if(Array.isArray(parsed?.controller?.items)){
+      profilesController.items = parsed.controller.items;
+    }
   }catch(e){}
 }
 
 function saveToStorage(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    // 1) Tu UI actual
     role: state.role,
-    answers: state.answers
+    answers: state.answers,
+
+    // 2) El controller (lo que pide Task 4)
+    controller: {
+      currentId: profilesController.currentId,
+      items: profilesController.items
+    }
   }));
 }
 
@@ -866,13 +888,18 @@ function back(){
 function finish(){
   saveToStorage();
 
+  // 1) Creamos el item "perfil" con ID único (Task 4)
+  const createdAt = new Date().toISOString();
+  const newProfile = profilesController.addItem(state.role, currentAnswers(), createdAt);
+
+  // 2) Guardamos otra vez para persistir items + currentId
+  saveToStorage();
+
+  // 3) Lo que muestras en pantalla (puedes mostrar solo el último o todos)
   const payload = {
-    role: state.role,
-    answers: currentAnswers(),
-    meta: {
-      createdAt: new Date().toISOString(),
-      version: "v1"
-    }
+    lastProfileCreated: newProfile,
+    allProfilesStored: profilesController.getItems(),
+    meta: { version: "v2" }
   };
 
   resultJson.textContent = JSON.stringify(payload, null, 2);
@@ -954,3 +981,48 @@ $$(".tab").forEach(x => x.classList.toggle("active", x.dataset.role === state.ro
 $$(".tab").forEach(x => x.setAttribute("aria-selected", x.dataset.role === state.role ? "true" : "false"));
 
 render();
+
+/* ==========================================================
+   TASK 8 - Crear modelo desde formulario (Front End)
+   - Valida con alertas
+   - Crea JSON
+   - Guarda con profilesController.addItem()
+   ========================================================== */
+
+const createModelForm = document.getElementById("createModelForm");
+const roleInput = document.getElementById("roleInput");
+const nameInput = document.getElementById("nameInput");
+const imgInput = document.getElementById("imgInput");
+const descInput = document.getElementById("descInput");
+
+const createPanel = document.getElementById("createPanel");
+const btnCloseCreate = document.getElementById("btnCloseCreate");
+
+function isEmpty(v){
+  return v === null || v === undefined || String(v).trim() === "";
+}
+
+function isValidUrl(url){
+  try { new URL(url); return true; } catch { return false; }
+}
+
+
+
+function buildJsonFromForm(){
+  const role = roleInput.value;
+  const model = {
+    name: nameInput.value.trim(),
+    img: imgInput.value.trim(),
+    description: descInput.value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  return { role, model };
+}
+
+if(btnCloseCreate && createPanel){
+  btnCloseCreate.addEventListener("click", () => {
+    createPanel.style.display = "none";
+  });
+}
+

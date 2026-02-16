@@ -629,3 +629,130 @@ label{
 .hint{
   font-weight: 400;
 }
+
+/* ==========================
+   TASK 8 - Create Panel
+   ========================== */
+.create-panel{
+  padding: 14px 24px 10px;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  background: rgba(255,255,255,.9);
+  border-radius: 0 0 0 0; /* no cambia tu card */
+}
+
+.create-head{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.create-title{
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.close-btn.sm{
+  position: static;      /* para que no sea absolute aquí */
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+}
+
+.create-form{
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-grid{
+  display:grid;
+  grid-template-columns: 180px 1fr 1fr;
+  gap: 10px;
+  align-items: end;
+}
+
+.create-field label{
+  display:block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.create-desc{
+  grid-column: 1 / -1;
+}
+
+.create-btn{
+  width: 110px;
+  min-width: 110px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+/* responsive */
+@media (max-width: 720px){
+  .create-panel{ padding: 12px 16px 10px; }
+  .create-grid{ grid-template-columns: 1fr; }
+  .create-btn{ width: 100%; }
+}
+
+/* ==========================
+   TASK 8 - Validation Cards
+   ========================== */
+
+/* ===== Fix: errores no se salen del grid ===== */
+.create-field{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* El select se ve como input */
+#createPanel select{
+  width: 100%;
+}
+
+/* Reservar espacio del error sin romper layout */
+.field-error{
+  display: block;
+  min-height: 34px;          /* reserva espacio */
+  padding: 8px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+
+  /* Importante para que no empuje raro */
+  box-sizing: border-box;
+}
+
+/* cuando hay error */
+.field-error.show{
+  background: rgba(216, 0, 0, 0.06);
+  border-color: rgba(216, 0, 0, 0.18);
+  color: #8b0000;
+}
+
+/* Mantén el grid como 3 columnas */
+.create-grid{
+  display:grid;
+  grid-template-columns: 180px 1fr 1fr;
+  gap: 14px;
+  align-items: start;  /* clave: evita que "estire" filas */
+}
+
+/* La descripción ocupa toda la fila */
+.create-desc{
+  grid-column: 1 / -1;
+  margin-top: 6px;
+}
+
+/* Responsive */
+@media (max-width: 720px){
+  .create-grid{ grid-template-columns: 1fr; }
+}

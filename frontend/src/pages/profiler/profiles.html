@@ -30,27 +30,76 @@
 
   <button class="close-btn" id="btnClose" aria-label="Cerrar">✕</button>
 
-  <div class="stepper" id="stepper"></div>
+  <!-- TAREA 8 -->
+  <!-- Formulario creación de perfil -->
+<section class="create-panel" id="createPanel" aria-label="Crear perfil">
+          <div class="create-head">
+            <div>
+              <div class="create-kicker">Elige tu perfil</div>
+              <div class="create-title">Completa los datos para crear</div>
+            </div>
+          </div>
 
-  <div class="card-head">
-    <h2 id="formTitle">Completa tu Perfil</h2>
-    <p id="formSubtitle">Ayúdanos a personalizar tu experiencia</p>
-  </div>
+          <form id="createModelForm" class="create-form" novalidate>
+            <div class="create-grid">
+              <div class="create-field">
+                <label for="roleInput">Tipo de usuario</label>
+                <select id="roleInput">
+                  <option value="">Selecciona…</option>
+                  <option value="traveler">Turista</option>
+                  <option value="guide">Guía</option>
+                </select>
+                <div class="field-error" id="roleError"></div>
+              </div>
 
-  <form id="profileForm" autocomplete="off">
-    <div id="stepsContainer"></div>
+              <div class="create-field">
+                <label for="nameInput">Nombre</label>
+                <input id="nameInput" class="input" type="text" placeholder="Ej. Ana Pérez" />
+                <div class="field-error" id="nameError"></div>
+              </div>
 
-    <div class="footer">
-      <button type="button" class="btn ghost" id="btnBack">Atrás</button>
-      <div class="footer-right">
-        <button type="button" class="btn ghost" id="btnSave">Guardar</button>
-        <button type="button" class="btn primary" id="btnNext">Siguiente</button>
-      </div>
-    </div>
-  </form>
-</section>
+              <div class="create-field">
+                <label for="imgInput">Imagen (URL)</label>
+                <input id="imgInput" class="input" type="url" placeholder="https://..." />
+                <div class="field-error" id="imgError"></div>
+              </div>
+
+              <div class="create-field create-desc">
+                <label for="descInput">Descripción (opcional)</label>
+                <textarea id="descInput" class="input" rows="3" placeholder="Describe el perfil..."></textarea>
+                <div class="field-error" id="descError"></div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn ghost create-btn">Crear</button>
+          </form>
+        </section>
+
+            <!-- ==========================
+            STEPPER + FORM WIZARD
+            ========================== -->
+        <div class="stepper" id="stepper"></div>
+
+        <div class="card-head">
+          <h2 id="formTitle">Completa tu Perfil</h2>
+          <p id="formSubtitle">Ayúdanos a personalizar tu experiencia</p>
+        </div>
+
+        <form id="profileForm" autocomplete="off">
+          <div id="stepsContainer"></div>
+
+          <div class="footer">
+            <button type="button" class="btn ghost" id="btnBack">Atrás</button>
+            <div class="footer-right">
+              <button type="button" class="btn ghost" id="btnSave">Guardar</button>
+              <button type="button" class="btn primary" id="btnNext">Siguiente</button>
+            </div>
+          </div>
+        </form>
+      </section>
 
 
+      <!-- RESULT PANEL -->
       <section class="result" id="resultPanel" aria-hidden="true">
         <div class="result-card">
           <div class="result-head">
@@ -66,14 +115,14 @@
         </div>
       </section>
     </div>
-
-    <footer class="mini">
-      <span class="pill">1 paso = 1 decisión</span>
-      <span class="pill">Chips / Sliders / Likert</span>
-      <span class="pill">Sin religión/política/género</span>
-    </footer>
   </div>
 
-  <script src="profiles.js"></script>
+  </div>
+
+<script src="./js/ProfilesController.js"></script>
+<script src="./js/profiles.js"></script>
+<script src="./js/createForm.js"></script>
+<script src="./js/roleSync.js"></script>
+
 </body>
 </html>

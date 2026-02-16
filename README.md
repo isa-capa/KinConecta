@@ -85,6 +85,20 @@ Este proyecto fue desarrollado por el equipo **Bugbusters** como parte del Proye
 | **Andrea Meneses** |  / | [@AndreaMeneses13](https://github.com/AndreaMeneses13) |
 | **Juan Ariel Alarcón** | /  | [@JuanAG1003](https://github.com/JuanAG1003) |
 
+---
+## 🧠 Perfilador: compatibilidad entre Turistas y Guías
+
+Este perfilador es la base de un sistema más avanzado que tendrá como finalidad:
+
+- Analizar compatibilidad entre Turistas y Guías.
+- Generar recomendaciones personalizadas.
+- Optimizar experiencias de viaje.
+- Aumentar la satisfacción y seguridad de ambos perfiles.
+
+El algoritmo de matching estará basado en un **estudio propio** que realizamos sobre compatibilidad de experiencia, expectativas, ritmo, intereses y logística.
+
+📄 Puedes consultar el estudio completo aquí:
+👉 **[https://drive.google.com/file/d/1HRoivtYmzMpvEKDGXajMlrmqS3sV8rck/view?usp=sharing]**
 
 ---
 ⌨️ con ❤️ por el equipo **Bugbusters** 😊.
