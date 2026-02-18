@@ -1,173 +1,160 @@
 <!DOCTYPE html>
-<html lang="es" class="light">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Turista - Kin Conecta</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Perfil de Turista - Kin Conecta</title>
 
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="profileTourist.css">
+<!-- Styles -->
+<link rel="stylesheet" href="profileTourist.css">
+
 </head>
 
-<body class="app-body">
-<div class="app-layout">
+<body class="app">
 
-    <!-- SIDEBAR -->
+    
+
+<header class="navbar">
+  <div class="navbar__inner">
+    <a href="#" class="navbar__brand">
+      <span class="navbar__icon material-symbols-outlined">travel_explore</span>
+      <span class="navbar__name">Kin Conecta</span>
+    </a>
+
+    <nav class="navbar__links">
+      <a href="#" class="navbar__link">Explorar</a>
+      <a href="#" class="navbar__link">Guías</a>
+      <a href="#" class="navbar__link navbar__link--active">Mis Viajes</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <div class="navbar-search">
+        <span class="navbar-search__icon material-symbols-outlined">search</span>
+        <input type="text" class="navbar-search__field" placeholder="Buscar destino o guía…">
+      </div>
+
+      <button class="navbar__btn-notif">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="navbar__notif-dot"></span>
+      </button>
+
+      <div class="navbar__avatar avatar avatar--small"
+        style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuCT_Smq8jHITd9xtiC7XztQNqzadIzEC2bTxxosvA_cuVjM0cJPkN-c4KlA6KzlnqhBnmeF66Bq9pWGjGhiQiRATa_aK78WGMXgZv4dPe2oa36Fcp9IeQK-nsA1bAZRno8An_UiDtWNhVg-3nTNDzX-XpJyoqUyXljoWFd0pYFBnz-MChd0rhtF21K4xEgUQnbzJXnvs_trrdPi_flcEDpIY-fVHSIEGpws9fr441aF30iOs5ZL5BeZUWc3kCcAs7qD9wZ-8A00UBps')">
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+
+  <section class="profile-header">
+    <div class="profile-header__cover"
+      style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuAg7v3z1R6Sm_rgEyKoWoWlRattBrGv8larwdiisnEWEpX073MFuXMn7YhfrBBVIFKmUMUFB49EtF-FEcwYQ3QLLtHNzDyGLyGOWfLvzmzNC7XtQLz-izXqb8S_9-0Wvgn2Z6ovUdu-roD7xGUMGIKWp1jluwQ7qoW2VCz6qMw_S9AWZea7StIJh6FIwB4mSeiR0_gMXdAk7RRXEo3BexJjJODry1PpI13_ENZIl8MKtS2U9FZphBp0Q-XSKZvjlncUfBDvuluUnBwT')">
+      <button class="profile-header__edit-btn">
+        <span class="material-symbols-outlined">edit</span>Editar portada
+      </button>
+    </div>
+
+    <div class="profile-header__info">
+      <div class="profile-header__avatar avatar avatar--large"
+        style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuACIV4z9aKOdmVRf2L3D6D0R-Muinj2hFn9dMmyE3nsrRVHyn4g0pK0R5g54ojBxkL9sicHwLn3L_aDJKT6HEEzeQ-CrL5Y41-sQ24VmFjYEUr1vgjXXg7CyvJ4reiFATNwx8SwuTEVgJ4nzZXlqYryMRvnDZQHvE-5902LDeQyfCjUbTT78MyvipzNwsBT59yy0MOQUQPWdcapOfH243ibt5QguU4N80VGSzvM9sl_stqkIVL5OBfXdR8sCu8uaZ5lfQQoRCLYSO3H')">
+      </div>
+
+      <div class="profile-header__details">
+        <h1 class="profile-header__name">Sofia Ramirez</h1>
+        <p class="profile-header__location">
+          <span class="material-symbols-outlined">location_on</span>
+          Ciudad de México
+        </p>
+        <p class="profile-header__member-since">
+          <span class="material-symbols-outlined">calendar_month</span>
+          Miembro desde Ene 2023
+        </p>
+      </div>
+
+      <span class="profile-header__badge badge badge--primary">
+        <span class="material-symbols-outlined">verified</span>
+        Viajero frecuente
+      </span>
+    </div>
+
+    <button class="btn btn--primary profile-header__edit-profile">
+      <span class="material-symbols-outlined">edit_square</span>
+      Editar Perfil
+    </button>
+  </section>
+
+  <nav class="tabs">
+    <a class="tabs__item tabs__item--active">Sobre mí</a>
+    <a class="tabs__item">Viajes</a>
+    <a class="tabs__item">Reseñas</a>
+    <a class="tabs__item">Fotos</a>
+    <a class="tabs__item">Configuración</a>
+  </nav>
+
+  <section class="layout">
     <aside class="sidebar">
-        <div class="sidebar-top">
+      <div class="sidebar__card card">
+        <h3 class="card__title">Bio</h3>
+        <p class="card__text">Amante de la naturaleza y la comida callejera...</p>
+      </div>
 
-            <div class="brand">
-                <div class="brand-icon">
-                    <span class="material-symbols-outlined">travel_explore</span>
-                </div>
-                <h1>Kin Conecta</h1>
-            </div>
-
-            <nav class="sidebar-nav">
-                <a class="nav-item active" href="#">
-                    <span class="material-symbols-outlined fill-1">home</span>
-                    <span>Inicio</span>
-                </a>
-
-                <a class="nav-item" href="#">
-                    <span class="material-symbols-outlined">explore</span>
-                    <span>Explorar</span>
-                </a>
-
-                <a class="nav-item" href="#">
-                    <span class="material-symbols-outlined">favorite</span>
-                    <span>Favoritos</span>
-                </a>
-
-                <a class="nav-item" href="#">
-                    <span class="material-symbols-outlined">map</span>
-                    <span>Mis Viajes</span>
-                </a>
-
-                <a class="nav-item" href="#">
-                    <span class="material-symbols-outlined">chat_bubble</span>
-                    <span>Mensajes</span>
-                    <span class="badge">3</span>
-                </a>
-
-                <a class="nav-item" href="#">
-                    <span class="material-symbols-outlined">star</span>
-                    <span>Reseñas</span>
-                </a>
-            </nav>
+      <div class="sidebar__card card sidebar__card--tags">
+        <h3 class="card__title">Intereses</h3>
+        <div class="tags">
+          <span class="tags__item">#Aventura</span>
+          <span class="tags__item">#Gastronomía</span>
+          <span class="tags__item">#Playa</span>
+          <span class="tags__item">#Fotografía</span>
         </div>
-
-        <!-- USER -->
-        <div class="sidebar-user">
-            <button class="user-card">
-                <div class="avatar" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfFmC8OK9sh1n8CUEtELdkqASvpoFFqWQAouhYn008y4afi1bJYJhAbWL6ocr3ry8sMosNXuBdKEQ4Xosr396hZtP6ZaFuICC-t4XHHC43D4SeE8TORCCeWTg1jTy1v3E0gANzhZXLX7uYmPsNgFn6H7xbwIyKJ2O38xPWS-HuvbdDK5eQJu2AALZyyngWIjHHvc2__vb_wNPYP_XZvsCf2J2hHkxm7_Ayfw0COww9QOtmyH0kQ8p-VSvB5aBodPhyW_EiLkb9hg4L')"></div>
-
-                <div class="user-info">
-                    <p class="user-name">Alejandro M.</p>
-                    <p class="user-role">Turista Premium</p>
-                </div>
-
-                <span class="material-symbols-outlined expand">expand_less</span>
-            </button>
-        </div>
+      </div>
     </aside>
 
-    <!-- MAIN -->
-    <main class="main-content">
-        <!-- HEADER -->
-        <header class="topbar">
-            <div class="search-box">
-                <span class="material-symbols-outlined">search</span>
-                <input type="text" placeholder="Buscar destinos, guías...">
-            </div>
+    <section class="trips-section">
+      <h2 class="trips-section__title">Historial de Viajes</h2>
 
-            <div class="topbar-actions">
-                <button class="icon-btn">
-                    <span class="material-symbols-outlined">notifications</span>
-                    <span class="dot"></span>
-                </button>
+      <div class="trips">
+        <article class="trip-card">
+          <div class="trip-card__image"
+            style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2d49jUyc99EbqprvCnne3STh3POiPdpjf0EJyD4lnsRcKpSDfqTf4_bVL_WiV4C6yrBM8wGF9AAFADy95DCZeho-wHuuYPW4yZkFoMLrYGumsgPW6WWU1_1cv7P0dMhdQONegX_M50i2tadQ841EIuZ-eD_YQ07Z0baFz3Kx0nwrR6op1HMxHRx3aLzF2GOx14jGTw1Ck0qAcUEQ1KcGhA2uL47jZQjCW9NzqTuQQ5EHxpOQVcZvSaZtPitiVMelaSVoUewRZmBv1')">
+          </div>
+          <div class="trip-card__body">
+            <h3 class="trip-card__title">Senderismo Nevado de Toluca</h3>
+            <p class="trip-card__meta">
+              <span class="material-symbols-outlined">calendar_today</span>14 Oct
+            </p>
+          </div>
+        </article>
 
-                <button class="icon-btn">
-                    <span class="material-symbols-outlined">chat</span>
-                </button>
+        <article class="trip-card">
+          <div class="trip-card__image"
+            style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhJb0KSZf54rKnsV1qBVi8SUarg1kuhEsmzVF-Ry0rPh7vSGB_wKGcL5B9ub3kWJv7T42pyy3g7gKVOls38s-VfKF5zGXAmNAPs-gUdTjX6Y9PLktkguoyQne_MtiH4CunkEqijexNuPbyQA2gCvHSU_aD3dyTy_T40X3-XeUz3XEYdpZQzI1QU4ZIE-EGMbi72N5Oo7L_n22velmSvk4Z22OX2hSyQAEDX_rLBesr9PxG0_n3iRZ8jrrzCQilK5u0RxeasGXj2T4A')">
+          </div>
+          <div class="trip-card__body">
+            <h3 class="trip-card__title">Ruta del Tequila</h3>
+            <p class="trip-card__meta">
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+              <span class="material-symbols-outlined">star</span>
+            </p>
+          </div>
+        </article>
+      </div>
 
-                <div class="divider"></div>
-
-                <button class="primary-outline">
-                    <span class="material-symbols-outlined">add_circle</span>
-                    Nuevo Viaje
-                </button>
-            </div>
-        </header>
-            <section class="dashboard-content">
-
-        <!-- VIAJE ACTIVO -->
-        <section class="trip-card">
-            <div class="trip-image" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuD38i8s-uwg9YG-jHvz2FKnTKIgurlBKrjDv_uNIHaTMTg7hXUa1-2pBsFyjd2FcQ7iZKKWR8C-su9mxrdYGZtuZ8PZNne3CUVD-N0CPWU7BJOqnIwIJzGWopvDd8fqVkQEOLUvUnEMzhKesbZ_R1JnnZb4eTFW7NIwO6ZgwiVfAEmVKVDSoOwat_B3osoWT1SaQPSCsk5A47dZlByH88JXkDWS555UWcR4uIQpMn4VQTiqcJdg6GL3H7prKlkPydt8mkjo8JOQexJ6')">
-                <div class="trip-overlay">
-                    <span class="trip-location">Cusco, Perú</span>
-                </div>
-            </div>
-
-            <div class="trip-info">
-                <div class="trip-header">
-                    <h3>Aventura en los Andes</h3>
-                    <span class="trip-status">Confirmado</span>
-                </div>
-
-                <p class="trip-date">15 Oct - 20 Oct, 2023</p>
-
-                <div class="trip-guide">
-                    <div class="guide-avatar" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBlYm4HsCs81h02e-xY34x1aLfdrge09n0dj1q7GHdaz-chnb7V4EUC6YUak84FIHCLkugdhG_BF5nBj_e91SCG8yniWQQJ4phi5qqK6lfef0p_4LsAujNHPaQjQsioSrDd2IrV-_0nRVZY9KrjDT4SbOKOor58iyQ62T1IbFzZ2aXXwjTH1hriGvzC2rQ185DSb8ybK55IoWoRdKGUxCcMyHcf-chxIpILE1j1B9RJ4dyzvFYv3F6s-XdkybsS7FSDSQd0J4BXgJ9j')"></div>
-                    <div>
-                        <small>Tu guía</small>
-                        <strong>Maria Lopez</strong>
-                    </div>
-                </div>
-
-                <div class="trip-actions">
-                    <button class="btn-primary">Ver Detalles</button>
-                    <button class="btn-secondary">Gestionar</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- RECOMENDADOS -->
-        <section>
-            <h2 class="section-title">Recomendados para ti</h2>
-
-            <div class="card-grid">
-                <div class="guide-card">
-                    <div class="guide-photo" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVVwzL0hj3qjOwJZ612Qb-fQVDWLJKn1ESB5u8V7q9ciXgwxdqIJ-LacekuGSKlJkltE2k3Scdx5r92Kqtjp3jRd2ndJCiL-ga-qWK4bRxHKE2NYDE6FHIFsmXIK3sC5RbZSTbsO2au_VJtKskEk3VbOMFFXm7P9m1enGmOrFo_BqO7TrYjSHus3Go-cbLNn5R4IxThxSnsRI77e_RcMB3YQF6CJMbD3hEYhJAvp9DJQJdgyXt_5u0rbVMqImwGdvYiXKbZ9BAGlLo')"></div>
-
-                    <div class="guide-info">
-                        <h4>Ana García</h4>
-                        <p>Especialista en rutas y cultura local.</p>
-
-                        <div class="guide-footer">
-                            <span class="price">€25/h</span>
-                            <button class="btn-outline">Contactar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+      <div class="review-card card">
+        <h3 class="card__title">Última Reseña</h3>
+        <p class="review-card__text">“Experiencia increíble, guía excelente y lugares auténticos.”</p>
+      </div>
     </section>
+  </section>
 
+</main>
 
-        <!-- CONTENIDO -->
-        <section class="content">
-            <h1 class="greeting">Hola, Alejandro! 👋</h1>
-            <p class="subtitle">¿A dónde quieres ir hoy? Tu aventura comienza aquí.</p>
-        </section>
-
-    </main>
-
-</div>
 </body>
 </html>
