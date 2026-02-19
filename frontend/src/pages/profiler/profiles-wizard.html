@@ -18,10 +18,10 @@
         </div>
       </div>
 
-      <div class="role-tabs" role="tablist" aria-label="Selector de formulario">
-        <button class="tab active" data-role="traveler" role="tab" aria-selected="true">Viajero</button>
-        <button class="tab" data-role="guide" role="tab" aria-selected="false">Guía</button>
-      </div>
+      <!-- <div class="role-tabs" role="tablist" aria-label="Selector de formulario"> -->
+        <!-- <button class="tab active" data-role="traveler" role="tab" aria-selected="true">Viajero</button> -->
+        <!-- <button class="tab" data-role="guide" role="tab" aria-selected="false">Guía</button> -->
+      <!-- </div> -->
     </header>
 
     <div class="overlay">
@@ -30,50 +30,6 @@
 
   <button class="close-btn" id="btnClose" aria-label="Cerrar">✕</button>
 
-  <!-- TAREA 8 -->
-  <!-- Formulario creación de perfil -->
-<section class="create-panel" id="createPanel" aria-label="Crear perfil">
-          <div class="create-head">
-            <div>
-              <div class="create-kicker">Elige tu perfil</div>
-              <div class="create-title">Completa los datos para crear</div>
-            </div>
-          </div>
-
-          <form id="createModelForm" class="create-form" novalidate>
-            <div class="create-grid">
-              <div class="create-field">
-                <label for="roleInput">Tipo de usuario</label>
-                <select id="roleInput">
-                  <option value="">Selecciona…</option>
-                  <option value="traveler">Turista</option>
-                  <option value="guide">Guía</option>
-                </select>
-                <div class="field-error" id="roleError"></div>
-              </div>
-
-              <div class="create-field">
-                <label for="nameInput">Nombre</label>
-                <input id="nameInput" class="input" type="text" placeholder="Ej. Ana Pérez" />
-                <div class="field-error" id="nameError"></div>
-              </div>
-
-              <div class="create-field">
-                <label for="imgInput">Imagen (URL)</label>
-                <input id="imgInput" class="input" type="url" placeholder="https://..." />
-                <div class="field-error" id="imgError"></div>
-              </div>
-
-              <div class="create-field create-desc">
-                <label for="descInput">Descripción (opcional)</label>
-                <textarea id="descInput" class="input" rows="3" placeholder="Describe el perfil..."></textarea>
-                <div class="field-error" id="descError"></div>
-              </div>
-            </div>
-
-            <button type="submit" class="btn ghost create-btn">Crear</button>
-          </form>
-        </section>
 
             <!-- ==========================
             STEPPER + FORM WIZARD
@@ -120,9 +76,11 @@
   </div>
 
 <script src="./js/ProfilesController.js"></script>
+<script src="./js/storage.js"></script>
 <script src="./js/profiles.js"></script>
-<script src="./js/createForm.js"></script>
 <script src="./js/roleSync.js"></script>
+
+
 
 </body>
 </html>

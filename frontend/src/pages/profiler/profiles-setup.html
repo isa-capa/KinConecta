@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crear perfil</title>
+  <link rel="stylesheet" href="profiles.css"/>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <h1>Match Viajero ↔ Guía</h1>
+          <p>Onboarding progresivo: rápido, visual y sin fatiga</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="overlay">
+      <section class="card">
+        <div class="card-accent"></div>
+
+      <section class="create-panel" id="createPanel" aria-label="Crear perfil">
+        <div class="create-head">
+          <div>
+            <div class="create-kicker">Elige tu perfil</div>
+            <div class="create-title">Completa los datos para crear</div>
+          </div>
+        </div>
+
+        <form id="createModelForm" class="create-form" novalidate>
+          <div class="create-grid">
+            <div class="create-field">
+              <label for="roleInput">Tipo de usuario</label>
+              <select id="roleInput">
+                <option value="">Selecciona…</option>
+                <option value="traveler">Turista</option>
+                <option value="guide">Guía</option>
+              </select>
+              <div class="field-error" id="roleError"></div>
+            </div>
+
+            <div class="create-field">
+              <label for="nameInput">Nombre</label>
+              <input id="nameInput" class="input" type="text" placeholder="Ej. Ana Pérez" />
+              <div class="field-error" id="nameError"></div>
+            </div>
+
+            <div class="create-field">
+              <label for="imgInput">Imagen (URL)</label>
+              <input id="imgInput" class="input" type="url" placeholder="https://..." />
+              <div class="field-error" id="imgError"></div>
+            </div>
+
+            <div class="create-field create-desc">
+              <label for="descInput">Descripción (opcional)</label>
+              <textarea id="descInput" class="input" rows="3" placeholder="Describe el perfil..."></textarea>
+              <div class="field-error" id="descError"></div>
+            </div>
+
+        <div class="create-field">
+            <label for="emailInput">Correo electrónico</label>
+            <input id="emailInput" class="input" type="email" placeholder="ej. correo@dominio.com" />
+            <div class="field-error" id="emailError"></div>
+        </div>
+
+<div class="create-field">
+  <label for="passwordInput">Contraseña</label>
+
+  <div class="pw-wrap">
+    <input id="passwordInput" class="input" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" />
+    <button type="button" class="pw-toggle" id="togglePassword" aria-label="Mostrar contraseña">👁</button>
+  </div>
+
+  <div class="pw-meter">
+    <div class="pw-bar" id="pwBar"></div>
+  </div>
+  <div class="pw-strength" id="pwStrengthText">Fuerza: —</div>
+
+  <div class="field-error" id="passwordError"></div>
+</div>
+
+
+<div class="create-field">
+  <label for="confirmPasswordInput">Confirmar contraseña</label>
+
+  <div class="pw-wrap">
+    <input id="confirmPasswordInput" class="input" type="password" placeholder="Repite tu contraseña" autocomplete="new-password" />
+    <button type="button" class="pw-toggle" id="toggleConfirmPassword" aria-label="Mostrar contraseña confirmación">👁</button>
+  </div>
+
+  <div class="field-error" id="confirmPasswordError"></div>
+</div>
+
+
+        <div class="create-field">
+  <label for="countryCodeInput">Clave LADA</label>
+  <select id="countryCodeInput">
+    <option value="">Selecciona…</option>
+    <option value="+52">+52 (MX)</option>
+    <option value="+1">+1 (US/CA)</option>
+    <option value="+34">+34 (ES)</option>
+    <option value="+57">+57 (CO)</option>
+    <option value="+51">+51 (PE)</option>
+    <option value="+54">+54 (AR)</option>
+    <option value="+56">+56 (CL)</option>
+  </select>
+  <div class="field-error" id="countryCodeError"></div>
+</div>
+
+<div class="create-field">
+  <label for="phoneInput">Teléfono</label>
+  <input id="phoneInput" class="input" type="tel" inputmode="numeric" placeholder="Ej. 5512345678" />
+  <div class="field-error" id="phoneError"></div>
+</div>
+
+
+        <div class="create-field">
+            <label for="dobInput">Fecha de nacimiento</label>
+            <input id="dobInput" class="input" type="date" />
+            <div class="field-error" id="dobError"></div>
+        </div>
+
+          <button type="submit" class="btn ghost create-btn">Crear y continuar</button>
+        </form>
+      </section>
+    </section>
+  </div>
+
+  <script src="./js/ProfilesController.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/setup.js"></script>
+</body>
+</html>
