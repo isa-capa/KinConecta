@@ -104,8 +104,41 @@ form.addEventListener("submit", (e) => {
 
   const { role, model } = buildJsonFromForm();
 
+  // 1) crear perfil base
+  const created = profilesController.createProfile(role, model);
+
+  state.currentProfileId = created.id;
+saveToStorage();
+
+console.log("✅ Perfil base creado:", created);
+console.log("🆔 currentProfileId:", state.currentProfileId);
+console.log("🧠 state:", state);
+console.table(profilesController.items);
+
+  // 3) cambiar al wizard de ese rol
+  if (typeof setRole === "function") {
+    document.querySelectorAll(".tab").forEach(t => {
+      const isActive = t.dataset.role === role;
+      t.classList.toggle("active", isActive);
+      t.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+    setRole(role);
+  } else {
+    state.role = role;
+    state.stepIndex = 0;
+    render();
+  }
+
+  saveToStorage();
+  form.reset();
+  clearAllErrors();
+});
+
   // Guardar en controller
-  const saved = profilesController.addItem(role, model);
+  const created = profilesController.createProfile(role, model);
+  state.currentProfileId = created.id;   //  guardamos el perfil que estamos armando
+  saveToStorage(); //ID
+
   console.log("✅ JSON creado:", model);
   console.log("✅ Guardado:", saved);
   console.table(profilesController.items);
@@ -132,5 +165,5 @@ form.addEventListener("submit", (e) => {
   clearAllErrors();
 });
 
-})();
+
 

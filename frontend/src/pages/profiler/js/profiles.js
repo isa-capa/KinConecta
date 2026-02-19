@@ -1,50 +1,43 @@
 /* ==========================================================
-   Match Forms (Traveler & Guide)
-   - Chips multi-select
-   - Tag input for languages
-   - Slider + Likert
-   - Steps + progress
-   - LocalStorage save
+   profiles.js (Wizard) - Pantalla 2
+   Requiere:
+   - ProfilesController.js (crea window.profilesController)
+   - storage.js (loadAppState / saveAppState)
    ========================================================== */
 
+/* ---------------------------- Helpers DOM ----------------------------- */
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
+/* ---------------------------- State global ----------------------------- */
 const state = {
   role: "traveler",
   stepIndex: 0,
-  answers: {
-    traveler: {},
-    guide: {}
-  }
+  answers: { traveler: {}, guide: {} },
+  currentProfileId: null
 };
 
-const STORAGE_KEY = "match_profile_v2";
+// Carga state + controller desde localStorage
+if (typeof loadAppState === "function") {
+  loadAppState(state, profilesController);
+} else {
+  console.warn("⚠️ Falta storage.js (loadAppState/saveAppState).");
+}
 
-
-//LENGUAGES
+/* ---------------------------- Constants ----------------------------- */
 const LANGUAGES_WORLD = [
-    "Español","Inglés","Francés","Alemán","Italiano","Portugués","Neerlandés","Sueco","Noruego","Danés",
-    "Finés","Polaco","Checo","Eslovaco","Húngaro","Rumano","Búlgaro","Griego","Turco","Ruso","Ucraniano",
-    "Serbio","Croata","Bosnio","Esloveno","Albanés","Macedonio","Lituano","Letón","Estonio","Irlandés",
-    "Galés","Catalán","Euskera","Gallego",
-
-    "Árabe","Hebreo","Persa (Farsi)","Kurdo","Urdu","Hindi","Bengalí","Punjabi","Gujarati","Maratí","Tamil",
-    "Telugu","Kannada","Malayalam","Sinhala","Nepalí",
-
-    "Chino (Mandarín)","Cantonés","Japonés","Coreano","Tailandés","Vietnamita","Indonesio","Malayo","Filipino (Tagalog)",
-    "Birmano","Jemer (Camboyano)","Laosiano","Mongol",
-
-    "Suajili","Amárico","Hausa","Yoruba","Igbo","Somalí","Zulu","Xhosa","Afrikáans",
-
-    "Quechua","Guaraní","Náhuatl","Maya (Yucateco)","Aymara"
+  "Español","Inglés","Francés","Alemán","Italiano","Portugués","Neerlandés","Sueco","Noruego","Danés",
+  "Finés","Polaco","Checo","Eslovaco","Húngaro","Rumano","Búlgaro","Griego","Turco","Ruso","Ucraniano",
+  "Serbio","Croata","Bosnio","Esloveno","Albanés","Macedonio","Lituano","Letón","Estonio","Irlandés",
+  "Galés","Catalán","Euskera","Gallego",
+  "Árabe","Hebreo","Persa (Farsi)","Kurdo","Urdu","Hindi","Bengalí","Punjabi","Gujarati","Maratí","Tamil",
+  "Telugu","Kannada","Malayalam","Sinhala","Nepalí",
+  "Chino (Mandarín)","Cantonés","Japonés","Coreano","Tailandés","Vietnamita","Indonesio","Malayo","Filipino (Tagalog)",
+  "Birmano","Jemer (Camboyano)","Laosiano","Mongol",
+  "Suajili","Amárico","Hausa","Yoruba","Igbo","Somalí","Zulu","Xhosa","Afrikáans",
+  "Quechua","Guaraní","Náhuatl","Maya (Yucateco)","Aymara"
 ];
 
-
-/* ----------------------------
-   QUESTIONS (Neutral & safe)
-   Excludes: religion, politics, gender, discriminatory
------------------------------ */
 const FORMS = {
   traveler: {
     title: "Completa tu Perfil",
@@ -66,22 +59,8 @@ const FORMS = {
         hint: "",
         type: "group",
         fields: [
-        {
-      type: "select",
-      key: "travelStyle",
-      label: "Estilo de viaje",
-      placeholder: "Selecciona tu estilo de viaje",
-      options: ["Económico", "Mid-range", "Premium", "Lujo", "Me adapto"]
-    },
-            {
-        type: "multiselect",
-        key: "languages",
-        label: "Idiomas que hablas",
-        hint: "Selecciona uno o varios",
-        placeholder: "Buscar idioma…",
-        options: LANGUAGES_WORLD,
-        max: 8
-    },
+          { type: "select", key: "travelStyle", label: "Estilo de viaje", placeholder: "Selecciona tu estilo de viaje", options: ["Económico", "Mid-range", "Premium", "Lujo", "Me adapto"] },
+          { type: "multiselect", key: "languages", label: "Idiomas que hablas", hint: "Selecciona uno o varios", placeholder: "Buscar idioma…", options: LANGUAGES_WORLD, max: 8 }
         ]
       },
       {
@@ -90,21 +69,8 @@ const FORMS = {
         hint: "Así ajustamos el guía ideal",
         type: "group",
         fields: [
-          {
-            type: "range",
-            key: "pace",
-            label: "¿Qué tan activo quieres que sea el viaje?",
-            minLabel: "Relax",
-            maxLabel: "Muy activo",
-            min: 0, max: 10, step: 1, default: 5
-          },
-          {
-            type: "select",
-            key: "groupPreference",
-            label: "¿Cómo prefieres viajar?",
-            placeholder: "Selecciona una opción",
-            options: ["Solo/Privado", "Pareja", "Familia", "Grupo pequeño (3-6)", "Grupo mediano (7-12)", "Me adapto"]
-          }
+          { type: "range", key: "pace", label: "¿Qué tan activo quieres que sea el viaje?", minLabel: "Relax", maxLabel: "Muy activo", min: 0, max: 10, step: 1, default: 5 },
+          { type: "select", key: "groupPreference", label: "¿Cómo prefieres viajar?", placeholder: "Selecciona una opción", options: ["Solo/Privado", "Pareja", "Familia", "Grupo pequeño (3-6)", "Grupo mediano (7-12)", "Me adapto"] }
         ]
       },
       {
@@ -113,15 +79,7 @@ const FORMS = {
         hint: "Preferencias que cambian el match",
         type: "group",
         fields: [
-          {
-            type: "chips",
-            key: "foodPrefs",
-            label: "Preferencias de comida",
-            hint: "Selecciona 5",
-            multi: true,
-            max: 5,
-            options: ["Todo", "Vegetariano", "Vegano", "Sin gluten", "Sin lácteos", "Mariscos sí", "Mariscos no", "Picante sí", "Picante no"]
-          },
+          { type: "chips", key: "foodPrefs", label: "Preferencias de comida", hint: "Selecciona 5", multi: true, max: 5, options: ["Todo", "Vegetariano", "Vegano", "Sin gluten", "Sin lácteos", "Mariscos sí", "Mariscos no", "Picante sí", "Picante no"] },
           {
             type: "likert",
             key: "planningLevel",
@@ -142,20 +100,8 @@ const FORMS = {
         hint: "",
         type: "group",
         fields: [
-          {
-            type: "select",
-            key: "transport",
-            label: "Transporte preferido",
-            placeholder: "Selecciona una opción",
-            options: ["Caminar", "Transporte público", "Auto privado", "Taxi/Uber", "Me adapto"]
-          },
-          {
-            type: "select",
-            key: "photoVibe",
-            label: "Fotos durante el tour",
-            placeholder: "Selecciona una opción",
-            options: ["Me encanta (muchas fotos)", "Algunas fotos", "Pocas fotos", "Prefiero no"]
-          }
+          { type: "select", key: "transport", label: "Transporte preferido", placeholder: "Selecciona una opción", options: ["Caminar", "Transporte público", "Auto privado", "Taxi/Uber", "Me adapto"] },
+          { type: "select", key: "photoVibe", label: "Fotos durante el tour", placeholder: "Selecciona una opción", options: ["Me encanta (muchas fotos)", "Algunas fotos", "Pocas fotos", "Prefiero no"] }
         ]
       },
       {
@@ -164,21 +110,8 @@ const FORMS = {
         hint: "Para una experiencia segura y cómoda",
         type: "group",
         fields: [
-          {
-            type: "chips",
-            key: "accessibility",
-            label: "Accesibilidad / Consideraciones",
-            hint: "Selecciona si aplica",
-            multi: true,
-            max: 4,
-            options: ["Movilidad reducida", "Rutas tranquilas", "Evitar multitudes", "Sombras/descansos", "Ninguna"]
-          },
-          {
-            type: "textarea",
-            key: "notes",
-            label: "Algo importante a considerar (opcional)",
-            placeholder: "Ej. prefiero empezar temprano, me gusta caminar poco, etc."
-          }
+          { type: "chips", key: "accessibility", label: "Accesibilidad / Consideraciones", hint: "Selecciona si aplica", multi: true, max: 4, options: ["Movilidad reducida", "Rutas tranquilas", "Evitar multitudes", "Sombras/descansos", "Ninguna"] },
+          { type: "textarea", key: "notes", label: "Algo importante a considerar (opcional)", placeholder: "Ej. prefiero empezar temprano, me gusta caminar poco, etc." }
         ]
       }
     ]
@@ -214,22 +147,8 @@ const FORMS = {
         hint: "Para match por expectativas",
         type: "group",
         fields: [
-          {
-            type: "select",
-            key: "experienceLevel",
-            label: "Nivel de experiencia",
-            placeholder: "Selecciona tu nivel",
-            options: ["Nuevo (0-6 meses)", "Intermedio (6-24 meses)", "Avanzado (2+ años)", "Experto (5+ años)"]
-          },
-          {
-            type: "multiselect",
-            key: "languages",
-            label: "Idiomas que hablas",
-            hint: "Selecciona uno o varios",
-            placeholder: "Buscar idioma…",
-            options: LANGUAGES_WORLD,
-            max: 8
-          }
+          { type: "select", key: "experienceLevel", label: "Nivel de experiencia", placeholder: "Selecciona tu nivel", options: ["Nuevo (0-6 meses)", "Intermedio (6-24 meses)", "Avanzado (2+ años)", "Experto (5+ años)"] },
+          { type: "multiselect", key: "languages", label: "Idiomas que hablas", hint: "Selecciona uno o varios", placeholder: "Buscar idioma…", options: LANGUAGES_WORLD, max: 8 }
         ]
       },
       {
@@ -238,20 +157,8 @@ const FORMS = {
         hint: "Para alinear vibras",
         type: "group",
         fields: [
-          {
-            type: "select",
-            key: "guideStyle",
-            label: "Estilo de guía",
-            placeholder: "Selecciona una opción",
-            options: ["Narrativo (muchas historias)", "Práctico (tips y logística)", "Flexible (me adapto)", "Aventura (reto/energía)", "Relax (sin prisa)"]
-          },
-          {
-            type: "select",
-            key: "groupSize",
-            label: "Tamaño de grupo ideal",
-            placeholder: "Selecciona una opción",
-            options: ["1-2", "3-6", "7-12", "12+", "Me adapto"]
-          }
+          { type: "select", key: "guideStyle", label: "Estilo de guía", placeholder: "Selecciona una opción", options: ["Narrativo (muchas historias)", "Práctico (tips y logística)", "Flexible (me adapto)", "Aventura (reto/energía)", "Relax (sin prisa)"] },
+          { type: "select", key: "groupSize", label: "Tamaño de grupo ideal", placeholder: "Selecciona una opción", options: ["1-2", "3-6", "7-12", "12+", "Me adapto"] }
         ]
       },
       {
@@ -260,23 +167,8 @@ const FORMS = {
         hint: "Preferencias operativas",
         type: "group",
         fields: [
-          {
-            type: "range",
-            key: "pace",
-            label: "Ritmo típico de tus tours",
-            minLabel: "Tranquilo",
-            maxLabel: "Intenso",
-            min: 0, max: 10, step: 1, default: 5
-          },
-          {
-            type: "chips",
-            key: "transportSupport",
-            label: "¿Qué ofreces en transporte?",
-            hint: "Selecciona si aplica",
-            multi: true,
-            max: 3,
-            options: ["Caminar", "Transporte público", "Auto propio", "Coordino chofer", "No incluyo transporte"]
-          }
+          { type: "range", key: "pace", label: "Ritmo típico de tus tours", minLabel: "Tranquilo", maxLabel: "Intenso", min: 0, max: 10, step: 1, default: 5 },
+          { type: "chips", key: "transportSupport", label: "¿Qué ofreces en transporte?", hint: "Selecciona si aplica", multi: true, max: 3, options: ["Caminar", "Transporte público", "Auto propio", "Coordino chofer", "No incluyo transporte"] }
         ]
       },
       {
@@ -285,24 +177,8 @@ const FORMS = {
         hint: "Mejora confianza del viajero",
         type: "group",
         fields: [
-          {
-            type: "chips",
-            key: "certs",
-            label: "Certificaciones / preparación",
-            hint: "Selecciona si aplica",
-            multi: true,
-            max: 4,
-            options: ["Primeros auxilios", "Guía certificado", "Protección civil", "Tour operator", "Ninguna"]
-          },
-          {
-            type: "chips",
-            key: "accessibility",
-            label: "Accesibilidad que puedes cubrir",
-            hint: "Selecciona varias",
-            multi: true,
-            max: 4,
-            options: ["Movilidad reducida", "Rutas tranquilas", "Evitar multitudes", "Paradas frecuentes", "No especializado"]
-          }
+          { type: "chips", key: "certs", label: "Certificaciones / preparación", hint: "Selecciona si aplica", multi: true, max: 4, options: ["Primeros auxilios", "Guía certificado", "Protección civil", "Tour operator", "Ninguna"] },
+          { type: "chips", key: "accessibility", label: "Accesibilidad que puedes cubrir", hint: "Selecciona varias", multi: true, max: 4, options: ["Movilidad reducida", "Rutas tranquilas", "Evitar multitudes", "Paradas frecuentes", "No especializado"] }
         ]
       },
       {
@@ -311,31 +187,17 @@ const FORMS = {
         hint: "Esto ayuda a cerrar el match",
         type: "group",
         fields: [
-          {
-            type: "select",
-            key: "photoVibe",
-            label: "Estilo con fotos",
-            placeholder: "Selecciona una opción",
-            options: ["Tomo fotos proactivamente", "Solo si me piden", "Pocas fotos", "No ofrezco fotos"]
-          },
-          {
-            type: "textarea",
-            key: "notes",
-            label: "Notas (opcional)",
-            placeholder: "Ej. disponibilidad, horarios, estilo personal, qué te encanta mostrar, etc."
-          }
+          { type: "select", key: "photoVibe", label: "Estilo con fotos", placeholder: "Selecciona una opción", options: ["Tomo fotos proactivamente", "Solo si me piden", "Pocas fotos", "No ofrezco fotos"] },
+          { type: "textarea", key: "notes", label: "Notas (opcional)", placeholder: "Ej. disponibilidad, horarios, estilo personal, qué te encanta mostrar, etc." }
         ]
       }
     ]
   }
 };
 
-/* ----------------------------
-   Rendering
------------------------------ */
+/* ---------------------------- DOM refs ----------------------------- */
 const stepperEl = $("#stepper");
 const stepsContainer = $("#stepsContainer");
-
 const formTitle = $("#formTitle");
 const formSubtitle = $("#formSubtitle");
 
@@ -351,66 +213,40 @@ const btnCloseResult = $("#btnCloseResult");
 const btnCopy = $("#btnCopy");
 const btnRestart = $("#btnRestart");
 
-function loadFromStorage(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return;
-
-    const parsed = JSON.parse(raw);
-
-    // 1) Estado del UI (tu lógica actual)
-    if(parsed?.answers) state.answers = parsed.answers;
-    if(parsed?.role) state.role = parsed.role;
-
-    // 2) Estado del controller (Task 4: items + currentId)
-    if(typeof parsed?.controller?.currentId === "number"){
-      profilesController.currentId = parsed.controller.currentId;
-    }
-    if(Array.isArray(parsed?.controller?.items)){
-      profilesController.items = parsed.controller.items;
-    }
-  }catch(e){}
+/* ---------------------------- Basic guards ----------------------------- */
+function ensureHasBaseProfileOrRedirect(){
+  if (!state.currentProfileId) {
+    alert("Primero crea el perfil (nombre/imagen/descripcion).");
+    window.location.href = "./profiles-setup.html";
+    return false;
+  }
+  return true;
 }
 
-function saveToStorage(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    // 1) Tu UI actual
-    role: state.role,
-    answers: state.answers,
+/* ---------------------------- State helpers ----------------------------- */
+function currentForm(){ return FORMS[state.role]; }
+function currentAnswers(){ return state.answers[state.role]; }
 
-    // 2) El controller (lo que pide Task 4)
-    controller: {
-      currentId: profilesController.currentId,
-      items: profilesController.items
-    }
-  }));
+function setAnswer(key, value){
+  currentAnswers()[key] = value;
+}
+function getAnswer(key, fallback){
+  const v = currentAnswers()[key];
+  return (v === undefined ? fallback : v);
 }
 
 function setRole(role){
   state.role = role;
   state.stepIndex = 0;
   render();
+  saveAppState(state, profilesController);
 }
 
-function currentForm(){
-  return FORMS[state.role];
-}
-
-function currentAnswers(){
-  return state.answers[state.role];
-}
-
-function setAnswer(key, value){
-  currentAnswers()[key] = value;
-}
-
-function getAnswer(key, fallback){
-  const v = currentAnswers()[key];
-  return (v === undefined ? fallback : v);
-}
-
+/* ---------------------------- Rendering ----------------------------- */
 function render(){
   const form = currentForm();
+  if (!form) return;
+
   formTitle.textContent = form.title;
   formSubtitle.textContent = form.subtitle;
 
@@ -434,11 +270,9 @@ function renderStepper(total){
 
 function renderStep(step, idx, total){
   stepsContainer.innerHTML = "";
-
   const wrap = document.createElement("div");
   wrap.className = "step active";
 
-  // Title row
   const field = document.createElement("div");
   field.className = "field";
 
@@ -450,7 +284,7 @@ function renderStep(step, idx, total){
 
   const hint = document.createElement("div");
   hint.className = "hint";
-  hint.textContent = step.hint || `Paso ${idx+1} de ${total}`;
+  hint.textContent = step.hint || `Paso ${idx + 1} de ${total}`;
 
   labelRow.appendChild(label);
   labelRow.appendChild(hint);
@@ -461,15 +295,9 @@ function renderStep(step, idx, total){
   } else if(step.type === "group"){
     const group = document.createElement("div");
     group.className = "field";
-
-    // fields may include chips inside
-    step.fields.forEach(f => {
-      group.appendChild(renderField(f));
-    });
-
+    step.fields.forEach(f => group.appendChild(renderField(f)));
     field.appendChild(group);
   } else {
-    // fallback
     const p = document.createElement("p");
     p.textContent = "Tipo de pregunta no soportado.";
     field.appendChild(p);
@@ -479,11 +307,11 @@ function renderStep(step, idx, total){
   stepsContainer.appendChild(wrap);
 }
 
+/* ---------------------------- Field renderers ----------------------------- */
 function renderField(f){
   const container = document.createElement("div");
   container.className = "field";
 
-  // label + hint
   const labelRow = document.createElement("div");
   labelRow.className = "label-row";
 
@@ -503,13 +331,13 @@ function renderField(f){
     wrap.className = "select-wrap";
 
     const sel = document.createElement("select");
-    sel.innerHTML = `<option value="">${f.placeholder || "Selecciona una opción"}</option>` +
-      f.options.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join("");
+    sel.innerHTML =
+      `<option value="">${escapeHtml(f.placeholder || "Selecciona una opción")}</option>` +
+      (f.options || []).map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join("");
 
-    const existing = getAnswer(f.key, "");
-    sel.value = existing || "";
-
+    sel.value = getAnswer(f.key, "") || "";
     sel.addEventListener("change", () => setAnswer(f.key, sel.value));
+
     wrap.appendChild(sel);
     container.appendChild(wrap);
   }
@@ -522,41 +350,6 @@ function renderField(f){
     ta.value = getAnswer(f.key, "");
     ta.addEventListener("input", () => setAnswer(f.key, ta.value));
     container.appendChild(ta);
-  }
-
-  if(f.type === "tags"){
-    const input = document.createElement("input");
-    input.className = "input";
-    input.placeholder = f.placeholder || "Escribe y presiona Enter";
-
-    const tagsWrap = document.createElement("div");
-    tagsWrap.className = "tags";
-
-    const existing = getAnswer(f.key, []);
-    if(!Array.isArray(existing)) setAnswer(f.key, []);
-    renderTags(tagsWrap, f.key);
-
-    input.addEventListener("keydown", (e) => {
-      if(e.key === "Enter"){
-        e.preventDefault();
-        const val = input.value.trim();
-        if(!val) return;
-        addTag(f.key, val);
-        input.value = "";
-        renderTags(tagsWrap, f.key);
-      }
-      if(e.key === "," ){
-        e.preventDefault();
-        const val = input.value.replace(",", "").trim();
-        if(!val) return;
-        addTag(f.key, val);
-        input.value = "";
-        renderTags(tagsWrap, f.key);
-      }
-    });
-
-    container.appendChild(input);
-    container.appendChild(tagsWrap);
   }
 
   if(f.type === "range"){
@@ -578,25 +371,23 @@ function renderField(f){
     slider.max = f.max;
     slider.step = f.step || 1;
 
-    const existing = getAnswer(f.key, f.default ?? f.min);
+    const existing = getAnswer(f.key, (f.default ?? f.min));
     slider.value = existing;
 
-    // pinta el relleno (verde) según el valor
     const setFill = () => {
-    const percent = ((slider.value - slider.min) * 100) / (slider.max - slider.min);
-        slider.style.setProperty("--fill", `${percent}%`);
+      const percent = ((slider.value - slider.min) * 100) / (slider.max - slider.min);
+      slider.style.setProperty("--fill", `${percent}%`);
     };
     setFill();
-
 
     const valueLine = document.createElement("div");
     valueLine.className = "hint";
     valueLine.textContent = `Valor: ${slider.value}`;
 
     slider.addEventListener("input", () => {
-        setAnswer(f.key, Number(slider.value));
-        valueLine.textContent = `Valor: ${slider.value}`;
-        setFill();
+      setAnswer(f.key, Number(slider.value));
+      valueLine.textContent = `Valor: ${slider.value}`;
+      setFill();
     });
 
     rangeWrap.appendChild(meta);
@@ -611,17 +402,18 @@ function renderField(f){
 
     const existing = getAnswer(f.key, null);
 
-    f.options.forEach(opt => {
+    (f.options || []).forEach(opt => {
       const b = document.createElement("button");
       b.type = "button";
       b.textContent = opt.label;
       if(existing === opt.value) b.classList.add("selected");
+
       b.addEventListener("click", () => {
         setAnswer(f.key, opt.value);
-        // rerender selection styles
         $$("button", wrap).forEach(x => x.classList.remove("selected"));
         b.classList.add("selected");
       });
+
       wrap.appendChild(b);
     });
 
@@ -632,122 +424,118 @@ function renderField(f){
     container.appendChild(renderChips(f.key, f.options, !!f.multi, f.max));
   }
 
-  //IF multiselect lenguage
   if(f.type === "multiselect"){
-  const existing = getAnswer(f.key, []);
-  if(!Array.isArray(existing)) setAnswer(f.key, []);
+    const existing = getAnswer(f.key, []);
+    if(!Array.isArray(existing)) setAnswer(f.key, []);
 
-  const ms = document.createElement("div");
-  ms.className = "ms";
+    const ms = document.createElement("div");
+    ms.className = "ms";
 
-  const header = document.createElement("button");
-  header.type = "button";
-  header.className = "ms-header";
+    const header = document.createElement("button");
+    header.type = "button";
+    header.className = "ms-header";
 
-  const count = document.createElement("span");
-  count.className = "ms-count";
+    const titleSpan = document.createElement("span");
+    const count = document.createElement("span");
+    count.className = "ms-count";
 
-  const caret = document.createElement("span");
-  caret.className = "ms-caret";
-  caret.textContent = "▾";
+    const caret = document.createElement("span");
+    caret.className = "ms-caret";
+    caret.textContent = "▾";
 
-  header.appendChild(document.createElement("span"));
-  header.appendChild(count);
-  header.appendChild(caret);
+    header.appendChild(titleSpan);
+    header.appendChild(count);
+    header.appendChild(caret);
 
-  const panel = document.createElement("div");
-  panel.className = "ms-panel";
+    const panel = document.createElement("div");
+    panel.className = "ms-panel";
 
-  const search = document.createElement("input");
-  search.type = "text";
-  search.className = "ms-search";
-  search.placeholder = f.placeholder || "Buscar…";
+    const search = document.createElement("input");
+    search.type = "text";
+    search.className = "ms-search";
+    search.placeholder = f.placeholder || "Buscar…";
 
-  const list = document.createElement("div");
-  list.className = "ms-list";
+    const list = document.createElement("div");
+    list.className = "ms-list";
 
-  panel.appendChild(search);
-  panel.appendChild(list);
+    panel.appendChild(search);
+    panel.appendChild(list);
 
-  ms.appendChild(header);
-  ms.appendChild(panel);
-  container.appendChild(ms);
+    ms.appendChild(header);
+    ms.appendChild(panel);
+    container.appendChild(ms);
 
-  const max = f.max ?? Infinity;
+    const max = f.max ?? Infinity;
 
-  function updateHeader(){
-    const arr = getAnswer(f.key, []);
-    const title = arr.length ? arr.join(", ") : (f.placeholderEmpty || "Selecciona idiomas");
-    header.children[0].textContent = title;
-    count.textContent = arr.length ? `(${arr.length})` : "";
-  }
-
-  function renderList(){
-    const q = (search.value || "").trim().toLowerCase();
-    const arr = getAnswer(f.key, []);
-    list.innerHTML = "";
-
-    const filtered = (f.options || []).filter(opt => opt.toLowerCase().includes(q));
-
-    filtered.forEach(opt => {
-      const row = document.createElement("label");
-      row.className = "ms-item";
-
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = arr.includes(opt);
-
-      cb.addEventListener("change", () => {
-        const current = getAnswer(f.key, []);
-        const has = current.includes(opt);
-
-        if(cb.checked && !has){
-          if(current.length >= max){
-            cb.checked = false;
-            return;
-          }
-          setAnswer(f.key, [...current, opt]);
-        } else if(!cb.checked && has){
-          setAnswer(f.key, current.filter(x => x !== opt));
-        }
-        updateHeader();
-      });
-
-      const text = document.createElement("span");
-      text.textContent = opt;
-
-      row.appendChild(cb);
-      row.appendChild(text);
-      list.appendChild(row);
-    });
-  }
-
-  function toggle(open){
-    ms.classList.toggle("open", open);
-    if(open){
-      search.value = "";
-      renderList();
-      setTimeout(() => search.focus(), 0);
+    function updateHeader(){
+      const arr = getAnswer(f.key, []);
+      titleSpan.textContent = arr.length ? arr.join(", ") : (f.placeholderEmpty || "Selecciona idiomas");
+      count.textContent = arr.length ? `(${arr.length})` : "";
     }
+
+    function renderList(){
+      const q = (search.value || "").trim().toLowerCase();
+      const arr = getAnswer(f.key, []);
+      list.innerHTML = "";
+
+      const filtered = (f.options || []).filter(opt => opt.toLowerCase().includes(q));
+      filtered.forEach(opt => {
+        const row = document.createElement("label");
+        row.className = "ms-item";
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = arr.includes(opt);
+
+        cb.addEventListener("change", () => {
+          const current = getAnswer(f.key, []);
+          const has = current.includes(opt);
+
+          if(cb.checked && !has){
+            if(current.length >= max){
+              cb.checked = false;
+              return;
+            }
+            setAnswer(f.key, [...current, opt]);
+          } else if(!cb.checked && has){
+            setAnswer(f.key, current.filter(x => x !== opt));
+          }
+
+          updateHeader();
+        });
+
+        const text = document.createElement("span");
+        text.textContent = opt;
+
+        row.appendChild(cb);
+        row.appendChild(text);
+        list.appendChild(row);
+      });
+    }
+
+    function toggle(open){
+      ms.classList.toggle("open", open);
+      if(open){
+        search.value = "";
+        renderList();
+        setTimeout(() => search.focus(), 0);
+      }
+    }
+
+    header.addEventListener("click", () => toggle(!ms.classList.contains("open")));
+    search.addEventListener("input", renderList);
+
+    document.addEventListener("click", (e) => {
+      if(!ms.contains(e.target)) toggle(false);
+    });
+
+    updateHeader();
   }
-
-  header.addEventListener("click", () => toggle(!ms.classList.contains("open")));
-  search.addEventListener("input", renderList);
-
-  // cerrar al click afuera
-  document.addEventListener("click", (e) => {
-    if(!ms.contains(e.target)) toggle(false);
-  });
-
-  updateHeader();
-}
 
   return container;
 }
 
-/* ----------------------------
-   Chips
------------------------------ */
+/* ---------------------------- Chips ----------------------------- */
 function renderChips(key, options, multi, max){
   const wrap = document.createElement("div");
   wrap.className = "chips";
@@ -756,7 +544,7 @@ function renderChips(key, options, multi, max){
   if(multi && !Array.isArray(existing)) setAnswer(key, []);
   if(!multi && Array.isArray(existing)) setAnswer(key, "");
 
-  options.forEach(opt => {
+  (options || []).forEach(opt => {
     const chip = document.createElement("div");
     chip.className = "chip";
     chip.textContent = opt;
@@ -769,17 +557,15 @@ function renderChips(key, options, multi, max){
         const arr = getAnswer(key, []);
         const already = arr.includes(opt);
 
-        // Special case: "Ninguna"
         const isNone = (opt.toLowerCase() === "ninguna" || opt.toLowerCase() === "no especializado");
         if(isNone){
           setAnswer(key, [opt]);
         } else {
-          // if "Ninguna" selected, remove it
           const cleaned = arr.filter(x => x.toLowerCase() !== "ninguna" && x.toLowerCase() !== "no especializado");
           if(already){
             setAnswer(key, cleaned.filter(x => x !== opt));
           } else {
-            if(max && cleaned.length >= max) return; // soft cap
+            if(max && cleaned.length >= max) return;
             setAnswer(key, [...cleaned, opt]);
           }
         }
@@ -787,8 +573,8 @@ function renderChips(key, options, multi, max){
         const current = getAnswer(key, "");
         setAnswer(key, current === opt ? "" : opt);
       }
-      // rerender chips selection
-      render();
+
+      render(); // rerender para pintar seleccionados
     });
 
     wrap.appendChild(chip);
@@ -802,58 +588,20 @@ function isChipSelected(key, opt, multi){
   return multi ? (Array.isArray(v) && v.includes(opt)) : (v === opt);
 }
 
-/* ----------------------------
-   Tags
------------------------------ */
-function addTag(key, value){
-  const arr = getAnswer(key, []);
-  const norm = value.trim();
-  if(!norm) return;
-  // prevent duplicates (case-insensitive)
-  const exists = arr.some(x => x.toLowerCase() === norm.toLowerCase());
-  if(exists) return;
-  setAnswer(key, [...arr, norm]);
-}
-
-function removeTag(key, value){
-  const arr = getAnswer(key, []);
-  setAnswer(key, arr.filter(x => x !== value));
-}
-
-function renderTags(tagsWrap, key){
-  tagsWrap.innerHTML = "";
-  const arr = getAnswer(key, []);
-  arr.forEach(tag => {
-    const el = document.createElement("span");
-    el.className = "tag";
-    el.innerHTML = `${escapeHtml(tag)} <button type="button" aria-label="Quitar ${escapeHtml(tag)}">✕</button>`;
-    $("button", el).addEventListener("click", () => {
-      removeTag(key, tag);
-      renderTags(tagsWrap, key);
-    });
-    tagsWrap.appendChild(el);
-  });
-}
-
-/* ----------------------------
-   Navigation + validation
------------------------------ */
+/* ---------------------------- Validation ----------------------------- */
 function validateStep(){
-  // Soft validation: only enforce that at least one key in this step is answered
   const step = currentForm().steps[state.stepIndex];
 
-  // If step is chips root
   if(step.type === "chips"){
     const v = getAnswer(step.key, step.multi ? [] : "");
     return step.multi ? (Array.isArray(v) && v.length > 0) : !!v;
   }
 
   if(step.type === "group"){
-    // consider it valid if at least one field has data
     return step.fields.some(f => {
       const v = getAnswer(f.key, null);
       if(Array.isArray(v)) return v.length > 0;
-      if(typeof v === "number") return true; // range always has a number once touched/default
+      if(typeof v === "number") return true;
       return v !== null && v !== undefined && String(v).trim() !== "";
     });
   }
@@ -861,10 +609,11 @@ function validateStep(){
   return true;
 }
 
+/* ---------------------------- Navigation ----------------------------- */
 function next(){
   const form = currentForm();
+
   if(!validateStep()){
-    // tiny shake feedback using focus ring
     $(".card").style.boxShadow = "0 12px 28px rgba(216,116,0,.20)";
     setTimeout(() => $(".card").style.boxShadow = "", 140);
     return;
@@ -873,7 +622,8 @@ function next(){
   if(state.stepIndex < form.steps.length - 1){
     state.stepIndex++;
     render();
-  }else{
+    saveAppState(state, profilesController);
+  } else {
     finish();
   }
 }
@@ -882,31 +632,36 @@ function back(){
   if(state.stepIndex > 0){
     state.stepIndex--;
     render();
+    saveAppState(state, profilesController);
   }
 }
 
+/* ---------------------------- Finish (UNIR TODO) ----------------------------- */
 function finish(){
-  saveToStorage();
+  // Si no hay perfil base, regresa a la pantalla 1
+  if (!ensureHasBaseProfileOrRedirect()) return;
 
-  // 1) Creamos el item "perfil" con ID único (Task 4)
-  const createdAt = new Date().toISOString();
-  const newProfile = profilesController.addItem(state.role, currentAnswers(), createdAt);
+  // Guardar estado UI
+  saveAppState(state, profilesController);
 
-  // 2) Guardamos otra vez para persistir items + currentId
-  saveToStorage();
+  // Actualizar el perfil creado en Pantalla 1 con answers del wizard
+  const updated = profilesController.updateProfile(state.currentProfileId, {
+    role: state.role,
+    answers: currentAnswers()
+  });
 
-  // 3) Lo que muestras en pantalla (puedes mostrar solo el último o todos)
-  const payload = {
-    lastProfileCreated: newProfile,
-    allProfilesStored: profilesController.getItems(),
-    meta: { version: "v2" }
-  };
+  saveAppState(state, profilesController);
 
+  console.log("✅ PERFIL COMPLETO LISTO:", updated);
+
+  const payload = { profile: updated, meta: { version: "v2" } };
   resultJson.textContent = JSON.stringify(payload, null, 2);
+
   resultPanel.classList.add("show");
   resultPanel.setAttribute("aria-hidden", "false");
 }
 
+/* ---------------------------- Result panel ----------------------------- */
 function closeResult(){
   resultPanel.classList.remove("show");
   resultPanel.setAttribute("aria-hidden", "true");
@@ -921,31 +676,28 @@ function escapeHtml(str){
     .replaceAll("'", "&#039;");
 }
 
-/* ----------------------------
-   Events
------------------------------ */
-btnNext.addEventListener("click", next);
-btnBack.addEventListener("click", back);
+/* ---------------------------- Events ----------------------------- */
+btnNext?.addEventListener("click", next);
+btnBack?.addEventListener("click", back);
 
-btnSave.addEventListener("click", () => {
-  saveToStorage();
+btnSave?.addEventListener("click", () => {
+  saveAppState(state, profilesController);
   btnSave.textContent = "Guardado ✓";
   setTimeout(() => btnSave.textContent = "Guardar", 900);
 });
 
-btnClose.addEventListener("click", () => {
-  // In una app real cerrarías modal o volverías a home
-  // Aquí solo guardamos.
-  saveToStorage();
+btnClose?.addEventListener("click", () => {
+  saveAppState(state, profilesController);
   alert("Guardado. Puedes cerrar esta pestaña.");
 });
 
-btnCloseResult.addEventListener("click", closeResult);
-resultPanel.addEventListener("click", (e) => {
+btnCloseResult?.addEventListener("click", closeResult);
+
+resultPanel?.addEventListener("click", (e) => {
   if(e.target === resultPanel) closeResult();
 });
 
-btnCopy.addEventListener("click", async () => {
+btnCopy?.addEventListener("click", async () => {
   try{
     await navigator.clipboard.writeText(resultJson.textContent);
     btnCopy.textContent = "Copiado ✓";
@@ -955,12 +707,12 @@ btnCopy.addEventListener("click", async () => {
   }
 });
 
-btnRestart.addEventListener("click", () => {
+btnRestart?.addEventListener("click", () => {
   closeResult();
   render();
 });
 
-// Tabs
+/* Tabs
 $$(".tab").forEach(t => {
   t.addEventListener("click", () => {
     $$(".tab").forEach(x => x.classList.remove("active"));
@@ -969,60 +721,49 @@ $$(".tab").forEach(t => {
     t.setAttribute("aria-selected", "true");
     setRole(t.dataset.role);
   });
-});
+});*/
 
-/* ----------------------------
-   Init
------------------------------ */
-loadFromStorage();
-
-// Mark active tab by storage role
-$$(".tab").forEach(x => x.classList.toggle("active", x.dataset.role === state.role));
-$$(".tab").forEach(x => x.setAttribute("aria-selected", x.dataset.role === state.role ? "true" : "false"));
-
-render();
-
-/* ==========================================================
-   TASK 8 - Crear modelo desde formulario (Front End)
-   - Valida con alertas
-   - Crea JSON
-   - Guarda con profilesController.addItem()
-   ========================================================== */
-
-const createModelForm = document.getElementById("createModelForm");
-const roleInput = document.getElementById("roleInput");
-const nameInput = document.getElementById("nameInput");
-const imgInput = document.getElementById("imgInput");
-const descInput = document.getElementById("descInput");
-
-const createPanel = document.getElementById("createPanel");
-const btnCloseCreate = document.getElementById("btnCloseCreate");
-
-function isEmpty(v){
-  return v === null || v === undefined || String(v).trim() === "";
-}
-
-function isValidUrl(url){
-  try { new URL(url); return true; } catch { return false; }
+function redirectToSetup(){
+  alert("Primero debes crear tu perfil base.");
+  window.location.href = "./profiles-setup.html";
 }
 
 
+/* ---------------------------- Init ----------------------------- */
+(function init(){
 
-function buildJsonFromForm(){
-  const role = roleInput.value;
-  const model = {
-    name: nameInput.value.trim(),
-    img: imgInput.value.trim(),
-    description: descInput.value.trim(),
-    createdAt: new Date().toISOString()
-  };
+  // 1️ Cargar estado desde storage
+  if (typeof loadAppState === "function") {
+    loadAppState(state, profilesController);
+  }
 
-  return { role, model };
-}
+  // 2️ Verificar que exista un profileId válido
+  const profileId = state.currentProfileId;
 
-if(btnCloseCreate && createPanel){
-  btnCloseCreate.addEventListener("click", () => {
-    createPanel.style.display = "none";
-  });
-}
+  if (!profileId) {
+    console.warn("⚠️ No existe currentProfileId. Redirigiendo a setup.");
+    redirectToSetup();
+    return;
+  }
+
+  // 3️ Verificar que el perfil realmente exista en el controller
+  const profileExists = profilesController.items?.some(p => p.id === profileId);
+
+  if (!profileExists) {
+    console.warn("⚠️ El perfil guardado no existe en controller. Redirigiendo.");
+    redirectToSetup();
+    return;
+  }
+
+  // 4️ Si todo está correcto, continuar
+  //$$(".tab").forEach(x => 
+  //  x.classList.toggle("active", x.dataset.role === state.role)
+  //);
+
+  //$$(".tab").forEach(x => 
+  //  x.setAttribute("aria-selected", x.dataset.role === state.role ? "true" : "false")
+  //);
+
+  render();
+})();
 
