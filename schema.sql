@@ -83,10 +83,7 @@ USE `kin_conecta`;
 --   support_tickets (1) ----< (N) support_ticket_attachments [fk_support_ticket_attachments_ticket]
 --   faq_categories (1) ----< (N) faq_items             [fk_faq_items_category]
 --
--- 10) Ingresos
---   users (guide) (1) ----< (N) income_transactions    [fk_income_transactions_guide]
---   trip_bookings (1) ----< (N) income_transactions    [fk_income_transactions_trip]
---   tours (1) ----< (N) income_transactions            [fk_income_transactions_tour]
+-- 10) Retiros (MVP sin pasarela de pagos)
 --   users (guide) (1) ----< (N) withdrawal_requests    [fk_withdrawal_requests_guide]
 --   users (admin/procesador) (1) ----< (N) withdrawal_requests [fk_withdrawal_requests_processed_by]
 --
@@ -96,7 +93,6 @@ USE `kin_conecta`;
 --
 -- 12) Tablas sin FK (independientes)
 --   contact_messages
---   newsletter_subscriptions
 --
 -- Nota:
 --   Este archivo incluye todas las entidades (tablas), atributos, PK/FK,
@@ -108,12 +104,10 @@ USE `kin_conecta`;
 -- ---------------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `newsletter_subscriptions`;
 DROP TABLE IF EXISTS `contact_messages`;
 DROP TABLE IF EXISTS `compatibility_answers`;
 DROP TABLE IF EXISTS `compatibility_profiles`;
 DROP TABLE IF EXISTS `withdrawal_requests`;
-DROP TABLE IF EXISTS `income_transactions`;
 DROP TABLE IF EXISTS `faq_items`;
 DROP TABLE IF EXISTS `faq_categories`;
 DROP TABLE IF EXISTS `support_ticket_attachments`;
@@ -861,41 +855,8 @@ CREATE TABLE `faq_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------
--- Ingresos (sin gateway/pasarela)
+-- Retiros (MVP sin pasarela de pagos)
 -- ---------------------------------------------------------
-CREATE TABLE `income_transactions` (
-  `transaction_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `guide_id` BIGINT UNSIGNED NOT NULL,
-  `trip_id` BIGINT UNSIGNED NULL,
-  `tour_id` BIGINT UNSIGNED NULL,
-  `txn_type` ENUM('booking_income','withdrawal','refund','adjustment') NOT NULL,
-  `amount` DECIMAL(10,2) NOT NULL,
-  `sign` ENUM('credit','debit') NOT NULL,
-  `status` ENUM('pending','completed','failed','cancelled') NOT NULL DEFAULT 'pending',
-  `description` VARCHAR(255) NULL,
-  `occurred_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`transaction_id`),
-  KEY `idx_income_transactions_guide_date` (`guide_id`, `occurred_at`),
-  KEY `idx_income_transactions_status` (`status`),
-  CONSTRAINT `fk_income_transactions_guide`
-    FOREIGN KEY (`guide_id`)
-    REFERENCES `users` (`user_id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_income_transactions_trip`
-    FOREIGN KEY (`trip_id`)
-    REFERENCES `trip_bookings` (`trip_id`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_income_transactions_tour`
-    FOREIGN KEY (`tour_id`)
-    REFERENCES `tours` (`tour_id`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
-  CONSTRAINT `chk_income_transactions_amount_positive`
-    CHECK (`amount` >= 0)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `withdrawal_requests` (
   `withdrawal_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -969,7 +930,7 @@ CREATE TABLE `compatibility_answers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------
--- Sitio público (contacto / newsletter)
+-- Sitio público (contacto)
 -- ---------------------------------------------------------
 CREATE TABLE `contact_messages` (
   `contact_message_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -983,16 +944,4 @@ CREATE TABLE `contact_messages` (
   PRIMARY KEY (`contact_message_id`),
   KEY `idx_contact_messages_status_created` (`status`, `created_at`),
   KEY `idx_contact_messages_email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `newsletter_subscriptions` (
-  `subscription_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(190) NOT NULL,
-  `source_page` VARCHAR(120) NULL,
-  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `unsubscribed_at` DATETIME NULL,
-  PRIMARY KEY (`subscription_id`),
-  UNIQUE KEY `uq_newsletter_email` (`email`),
-  KEY `idx_newsletter_active` (`is_active`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
