@@ -1,14 +1,14 @@
 /* =========================================================
-   Guia - Configuracion de Perfil
-   Base de lectura/actualizacion via API REST.
+   Guía - Configuración de Perfil
+   Base de lectura/actualización vía API REST.
    ========================================================= */
 
 const GuideProfileSettingsApp = (() => {
   const state = {
-    guideId: "guide_001", // TODO(AUTH): resolver guia autenticado real
+    guideId: "guide_001", // TODO(AUTH): resolver guía autenticado real
     profile: {
-      name: "Jose Rodriguez",
-      location: "Tulum, Mexico",
+      name: "José Rodríguez",
+      location: "Tulum, México",
       bio: "Apasionado por la historia maya y las aventuras naturales.",
       rating: 4.9,
       avatarUrl: "https://i.pravatar.cc/150?u=jose",

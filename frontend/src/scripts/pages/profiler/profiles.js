@@ -53,6 +53,30 @@ function notifyParentBackToRegister() {
   }
 }
 
+function resolveDashboardPathByRole(role) {
+  const normalizedRole = String(role || "").trim().toLowerCase();
+  const dashboardPath =
+    normalizedRole === "guide"
+      ? "Dashboard/guia/mainUserGuide.html"
+      : "Dashboard/turista/mainUserTourist.html";
+
+  const path = String(window.location.pathname || "").replace(/\\/g, "/").toLowerCase();
+  const pagesPrefix = path.includes("/frontend/src/pages/") ? "../" : "./frontend/src/pages/";
+  return `${pagesPrefix}${dashboardPath}`;
+}
+
+function redirectToDashboardByRole() {
+  if (isEmbeddedFlow && window.parent && window.parent !== window) {
+    window.parent.postMessage(
+      { type: "kc-onboarding-complete", role: state.role },
+      window.location.origin,
+    );
+    return;
+  }
+  const dashboardPath = resolveDashboardPathByRole(state.role);
+  window.location.href = dashboardPath;
+}
+
 /* ---------------------------- Constants ----------------------------- */
 const LANGUAGES_WORLD = [
   "Español","Inglés","Francés","Alemán","Italiano","Portugués","Neerlandés","Sueco","Noruego","Danés",
@@ -140,7 +164,7 @@ const FORMS = {
         type: "group",
         fields: [
           { type: "chips", key: "accessibility", label: "Accesibilidad / Consideraciones", hint: "Selecciona si aplica", multi: true, max: 4, options: ["Movilidad reducida", "Rutas tranquilas", "Evitar multitudes", "Sombras/descansos", "Ninguna"] },
-          { type: "textarea", key: "notes", label: "Algo importante a considerar (opcional)", placeholder: "Ej. prefiero empezar temprano, me gusta caminar poco, etc." }
+          { type: "textarea", key: "notes", label: "Algo importante a considerar (opcional)", placeholder: "Ej. prefiero empezar temprano, me gusta caminar poco, etc.", optional: true }
         ]
       }
     ]
@@ -217,7 +241,7 @@ const FORMS = {
         type: "group",
         fields: [
           { type: "select", key: "photoVibe", label: "Estilo con fotos", placeholder: "Selecciona una opción", options: ["Tomo fotos proactivamente", "Solo si me piden", "Pocas fotos", "No ofrezco fotos"] },
-          { type: "textarea", key: "notes", label: "Notas (opcional)", placeholder: "Ej. disponibilidad, horarios, estilo personal, qué te encanta mostrar, etc." }
+          { type: "textarea", key: "notes", label: "Notas (opcional)", placeholder: "Ej. disponibilidad, horarios, estilo personal, qué te encanta mostrar, etc.", optional: true }
         ]
       }
     ]
@@ -234,13 +258,8 @@ const btnBack = $("#btnBack");
 const btnNext = $("#btnNext");
 const btnSave = $("#btnSave");
 
-const resultPanel = $("#resultPanel");
-const resultJson = $("#resultJson");
-
 const btnClose = $("#btnClose");
-const btnCloseResult = $("#btnCloseResult");
-const btnCopy = $("#btnCopy");
-const btnRestart = $("#btnRestart");
+const stepFeedback = $("#stepFeedback");
 
 /* ---------------------------- Basic guards ----------------------------- */
 function ensureHasBaseProfileOrRedirect(){
@@ -256,8 +275,19 @@ function ensureHasBaseProfileOrRedirect(){
 function currentForm(){ return FORMS[state.role]; }
 function currentAnswers(){ return state.answers[state.role]; }
 
+function showStepFeedback(message){
+  if (!stepFeedback) return;
+  stepFeedback.textContent = String(message || "");
+  window.setTimeout(notifyParentToResize, 20);
+}
+
+function clearStepFeedback(){
+  showStepFeedback("");
+}
+
 function setAnswer(key, value){
   currentAnswers()[key] = value;
+  clearStepFeedback();
 }
 function getAnswer(key, fallback){
   const v = currentAnswers()[key];
@@ -281,6 +311,7 @@ function render(){
 
   renderStepper(form.steps.length);
   renderStep(form.steps[state.stepIndex], state.stepIndex, form.steps.length);
+  clearStepFeedback();
 
   btnBack.disabled = (state.stepIndex === 0 && !isEmbeddedFlow);
   btnNext.textContent = (state.stepIndex === form.steps.length - 1) ? "Finalizar Registro" : "Siguiente";
@@ -620,31 +651,61 @@ function isChipSelected(key, opt, multi){
 }
 
 /* ---------------------------- Validation ----------------------------- */
+function isOptionalField(field){
+  return Boolean(field?.optional);
+}
+
+function fieldHasValue(field){
+  const value = getAnswer(field.key, null);
+
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === "number") return Number.isFinite(value);
+
+  return value !== null && value !== undefined && String(value).trim() !== "";
+}
+
+function getMissingFieldMessage(field){
+  const fieldLabel = field?.label ? `"${field.label}"` : "este campo";
+  if (field?.type === "select" || field?.type === "chips" || field?.type === "multiselect" || field?.type === "likert") {
+    return `Selecciona una opción para ${fieldLabel}.`;
+  }
+  return `Completa ${fieldLabel} para continuar.`;
+}
+
 function validateStep(){
   const step = currentForm().steps[state.stepIndex];
 
   if(step.type === "chips"){
     const v = getAnswer(step.key, step.multi ? [] : "");
-    return step.multi ? (Array.isArray(v) && v.length > 0) : !!v;
+    const isValid = step.multi ? (Array.isArray(v) && v.length > 0) : !!v;
+    if (!isValid) {
+      return {
+        isValid: false,
+        message: "Selecciona al menos una opción para continuar.",
+      };
+    }
+    return { isValid: true, message: "" };
   }
 
   if(step.type === "group"){
-    return step.fields.some(f => {
-      const v = getAnswer(f.key, null);
-      if(Array.isArray(v)) return v.length > 0;
-      if(typeof v === "number") return true;
-      return v !== null && v !== undefined && String(v).trim() !== "";
-    });
+    const requiredFields = step.fields.filter((field) => !isOptionalField(field));
+    const missingField = requiredFields.find((field) => !fieldHasValue(field));
+    if (missingField) {
+      return { isValid: false, message: getMissingFieldMessage(missingField) };
+    }
+    return { isValid: true, message: "" };
   }
 
-  return true;
+  return { isValid: true, message: "" };
 }
 
 /* ---------------------------- Navigation ----------------------------- */
 function next(){
   const form = currentForm();
+  const validation = validateStep();
 
-  if(!validateStep()){
+  if(!validation.isValid){
+    showStepFeedback(validation.message || "Completa los datos de este paso para continuar.");
     $(".card").style.boxShadow = "0 12px 28px rgba(216,116,0,.20)";
     setTimeout(() => $(".card").style.boxShadow = "", 140);
     return;
@@ -667,12 +728,14 @@ function back(){
     return;
   }
 
+  clearStepFeedback();
+
   if (isEmbeddedFlow) {
     notifyParentBackToRegister();
   }
 }
 
-/* ---------------------------- Finish (UNIR TODO) ----------------------------- */
+/* ---------------------------- Finish ----------------------------- */
 function finish(){
   // Si no hay perfil base, regresa a la pantalla 1
   if (!ensureHasBaseProfileOrRedirect()) return;
@@ -689,18 +752,7 @@ function finish(){
   saveAppState(state, profilesController);
 
   console.log("Perfil completo listo:", updated);
-
-  const payload = { profile: updated, meta: { version: "v2" } };
-  resultJson.textContent = JSON.stringify(payload, null, 2);
-
-  resultPanel.classList.add("show");
-  resultPanel.setAttribute("aria-hidden", "false");
-}
-
-/* ---------------------------- Result panel ----------------------------- */
-function closeResult(){
-  resultPanel.classList.remove("show");
-  resultPanel.setAttribute("aria-hidden", "true");
+  redirectToDashboardByRole();
 }
 
 function escapeHtml(str){
@@ -729,27 +781,6 @@ btnClose?.addEventListener("click", () => {
     return;
   }
   alert("Guardado. Puedes cerrar esta pestaña.");
-});
-
-btnCloseResult?.addEventListener("click", closeResult);
-
-resultPanel?.addEventListener("click", (e) => {
-  if(e.target === resultPanel) closeResult();
-});
-
-btnCopy?.addEventListener("click", async () => {
-  try{
-    await navigator.clipboard.writeText(resultJson.textContent);
-    btnCopy.textContent = "Copiado ✓";
-    setTimeout(() => btnCopy.textContent = "Copiar JSON", 900);
-  }catch(e){
-    alert("No se pudo copiar. Copia manualmente desde el recuadro.");
-  }
-});
-
-btnRestart?.addEventListener("click", () => {
-  closeResult();
-  render();
 });
 
 /* Tabs

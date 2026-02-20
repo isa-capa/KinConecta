@@ -17,7 +17,10 @@
     <div class="guide-chat__body">
       <aside class="guide-chat__threads" aria-label="Conversaciones">
         <button class="guide-chat__thread is-active" type="button" data-thread="maria">
-          <span class="guide-chat__thread-avatar">MR</span>
+          <span class="guide-chat__thread-avatar" data-thread-avatar>
+            <img class="guide-chat__thread-avatar-img" alt="" hidden />
+            <span class="guide-chat__thread-avatar-fallback">MR</span>
+          </span>
           <span class="guide-chat__thread-meta">
             <span class="guide-chat__thread-name">María R.</span>
             <span class="guide-chat__thread-snippet">¿Podemos mover el tour una hora?</span>
@@ -25,7 +28,10 @@
         </button>
 
         <button class="guide-chat__thread" type="button" data-thread="alejandro">
-          <span class="guide-chat__thread-avatar">AL</span>
+          <span class="guide-chat__thread-avatar" data-thread-avatar>
+            <img class="guide-chat__thread-avatar-img" alt="" hidden />
+            <span class="guide-chat__thread-avatar-fallback">AL</span>
+          </span>
           <span class="guide-chat__thread-meta">
             <span class="guide-chat__thread-name">Alejandro M.</span>
             <span class="guide-chat__thread-snippet">Te confirmé para mañana.</span>
@@ -34,6 +40,14 @@
       </aside>
 
       <div class="guide-chat__conversation">
+        <div class="guide-chat__conversation-head">
+          <button class="guide-chat__back" type="button" data-chat-back aria-label="Volver a conversaciones">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span>Chats</span>
+          </button>
+          <p class="guide-chat__conversation-title" data-chat-active-title>Selecciona un chat</p>
+        </div>
+
         <div class="guide-chat__messages" data-guide-chat-messages aria-live="polite"></div>
 
         <form class="guide-chat__composer" data-guide-chat-form>

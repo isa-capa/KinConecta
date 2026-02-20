@@ -1,11 +1,11 @@
 (function () {
   const LEGAL_DEFS = {
     terms: {
-      title: "Terminos de Servicio",
+      title: "Términos de Servicio",
       path: "../../../components/legal/terms-of-service.html",
     },
     privacy: {
-      title: "Politica de Privacidad",
+      title: "Política de Privacidad",
       path: "../../../components/legal/privacy-policy.html",
     },
     map: {

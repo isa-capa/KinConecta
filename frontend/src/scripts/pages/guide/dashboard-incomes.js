@@ -4,8 +4,11 @@
    ========================================================= */
 
 const GuideIncomesApp = (() => {
+  const isNetworkUnavailableError = (error) =>
+    Boolean(error?.isNetworkError || error?.isApiUnavailable);
+
   const state = {
-    guideId: "guide_001", // TODO(AUTH): obtener guideId real desde sesion/JWT
+    guideId: "guide_001", // TODO(AUTH): obtener guideId real desde sesión/JWT
     selectedRange: "all",
     kpis: {
       monthlyIncome: 25450,
@@ -201,8 +204,10 @@ const GuideIncomesApp = (() => {
     // TODO(BACKEND): mover guideId a contexto de autenticacion global.
     if (!window.KCGuideApi) return;
     try {
-      const [kpisRes, chartRes, txRes] = await Promise.all([
-        window.KCGuideApi.incomes.getKpis(state.guideId),
+      // Primero intentamos KPIs para evitar multiples requests fallidas
+      // cuando el backend no esta disponible.
+      const kpisRes = await window.KCGuideApi.incomes.getKpis(state.guideId);
+      const [chartRes, txRes] = await Promise.all([
         window.KCGuideApi.incomes.getChart(state.guideId, state.selectedRange),
         window.KCGuideApi.incomes.getTransactions(state.guideId, {
           page: 0,
@@ -244,6 +249,7 @@ const GuideIncomesApp = (() => {
         }));
       }
     } catch (error) {
+      if (isNetworkUnavailableError(error)) return;
       console.warn("Incomes API fallback enabled:", error);
     }
   }
@@ -322,12 +328,12 @@ const GuideIncomesApp = (() => {
     });
 
     dom.btnOpenTransactionsFilter?.addEventListener("click", () => {
-      // TODO(BACKEND): filtros avanzados + paginacion server-side.
+      // TODO(BACKEND): filtros avanzados + paginación server-side.
       console.info("TODO: open transactions filter panel.");
     });
 
     dom.btnViewAllTransactions?.addEventListener("click", () => {
-      // TODO(BACKEND): navegar a modulo completo o paginacion incremental.
+      // TODO(BACKEND): navegar a módulo completo o paginación incremental.
       console.info("TODO: navigate to full transactions history.");
     });
   };

@@ -50,12 +50,16 @@
         </a>
 
         <div class="header__actions">
-          <a href="./frontend/src/pages/login/login.html" class="header__link" data-auth-open="login"
+          <a
+            href="./frontend/src/pages/login/login.html"
+            class="header__link"
+            data-auth-open="login"
             >Iniciar Sesión</a
           >
           <a
             href="./frontend/src/pages/login/register.html"
-            class="btn btn--primary btn--ripple" data-auth-open="register"
+            class="btn btn--primary btn--ripple"
+            data-auth-open="register"
             >Registrarse</a
           >
         </div>
@@ -89,12 +93,14 @@
           <div class="mobile-menu__actions">
             <a
               href="./frontend/src/pages/login/login.html"
-              class="btn btn--ghost btn--ripple" data-auth-open="login"
+              class="btn btn--ghost btn--ripple"
+              data-auth-open="login"
               >Iniciar Sesión</a
             >
             <a
               href="./frontend/src/pages/login/register.html"
-              class="btn btn--primary btn--large btn--ripple" data-auth-open="register"
+              class="btn btn--primary btn--large btn--ripple"
+              data-auth-open="register"
               >Registrarme</a
             >
           </div>
@@ -532,231 +538,284 @@
         <div class="container">
           <div class="comparison-layout reveal">
             <div class="comparison">
-                <div class="comparison__header">
-                  <h2 class="comparison__title">
-                    Kin Conecta vs tour tradicional
-                  </h2>
-                  <p class="comparison__subtitle">
-                    Diferencias clave para elegir una experiencia local
-                    personalizada y no un recorrido genérico.
+              <div class="comparison__header">
+                <h2 class="comparison__title">
+                  Kin Conecta vs tour tradicional
+                </h2>
+                <p class="comparison__subtitle">
+                  Diferencias clave para elegir una experiencia local
+                  personalizada y no un recorrido genérico.
+                </p>
+              </div>
+
+              <div
+                class="comparison__table"
+                role="table"
+                aria-label="Comparativa Kin Conecta vs tour tradicional"
+              >
+                <div class="comparison__row comparison__row--head" role="row">
+                  <p
+                    class="comparison__cell comparison__cell--feature"
+                    role="columnheader"
+                  >
+                    Criterio
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--kin"
+                    role="columnheader"
+                  >
+                    Kin Conecta
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--trad"
+                    role="columnheader"
+                  >
+                    Tour tradicional
                   </p>
                 </div>
 
-                <div
-                  class="comparison__table"
-                  role="table"
-                  aria-label="Comparativa Kin Conecta vs tour tradicional"
+                <div class="comparison__row" role="row">
+                  <p
+                    class="comparison__cell comparison__cell--feature"
+                    role="cell"
+                  >
+                    Personalización
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--kin comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
+                      aria-hidden="true"
+                      >check_circle</span
+                    >
+                    <span>Plan flexible según tus intereses</span>
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--trad comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
+                      aria-hidden="true"
+                      >cancel</span
+                    >
+                    <span>Itinerario fijo para grupos mixtos</span>
+                  </p>
+                </div>
+
+                <div class="comparison__row" role="row">
+                  <p
+                    class="comparison__cell comparison__cell--feature"
+                    role="cell"
+                  >
+                    Conexión local
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--kin comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
+                      aria-hidden="true"
+                      >check_circle</span
+                    >
+                    <span>Guías que viven en el destino</span>
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--trad comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
+                      aria-hidden="true"
+                      >cancel</span
+                    >
+                    <span>Recorrido estandarizado</span>
+                  </p>
+                </div>
+
+                <div class="comparison__row" role="row">
+                  <p
+                    class="comparison__cell comparison__cell--feature"
+                    role="cell"
+                  >
+                    Comunicación previa
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--kin comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
+                      aria-hidden="true"
+                      >check_circle</span
+                    >
+                    <span>Chat directo antes de confirmar</span>
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--trad comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
+                      aria-hidden="true"
+                      >cancel</span
+                    >
+                    <span>Contacto limitado o nulo</span>
+                  </p>
+                </div>
+
+                <div class="comparison__row" role="row">
+                  <p
+                    class="comparison__cell comparison__cell--feature"
+                    role="cell"
+                  >
+                    Control de experiencia
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--kin comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
+                      aria-hidden="true"
+                      >check_circle</span
+                    >
+                    <span>Ajuste de ritmo y enfoque</span>
+                  </p>
+                  <p
+                    class="comparison__cell comparison__cell--trad comparison__cell--status"
+                    role="cell"
+                  >
+                    <span
+                      class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
+                      aria-hidden="true"
+                      >cancel</span
+                    >
+                    <span>Baja adaptabilidad</span>
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="comparison__mobile"
+                aria-label="Comparativa resumida para móvil"
+              >
+                <article
+                  class="comparison__mobile-card comparison__mobile-card--kin"
                 >
-                  <div class="comparison__row comparison__row--head" role="row">
-                    <p
-                      class="comparison__cell comparison__cell--feature"
-                      role="columnheader"
+                  <h3 class="comparison__mobile-title">Kin Conecta</h3>
+                  <ul class="comparison__mobile-list">
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--kin"
                     >
-                      Criterio
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--kin"
-                      role="columnheader"
-                    >
-                      Kin Conecta
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--trad"
-                      role="columnheader"
-                    >
-                      Tour tradicional
-                    </p>
-                  </div>
-
-                  <div class="comparison__row" role="row">
-                    <p
-                      class="comparison__cell comparison__cell--feature"
-                      role="cell"
-                    >
-                      Personalización
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--kin comparison__cell--status"
-                      role="cell"
-                    >
-                      <span
-                        class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
-                        aria-hidden="true"
+                      <span class="material-symbols-outlined" aria-hidden="true"
                         >check_circle</span
                       >
-                      <span>Plan flexible según tus intereses</span>
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--trad comparison__cell--status"
-                      role="cell"
-                    >
                       <span
-                        class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
-                        aria-hidden="true"
-                        >cancel</span
+                        >Personalización: plan flexible según tus
+                        intereses.</span
                       >
-                      <span>Itinerario fijo para grupos mixtos</span>
-                    </p>
-                  </div>
-
-                  <div class="comparison__row" role="row">
-                    <p
-                      class="comparison__cell comparison__cell--feature"
-                      role="cell"
+                    </li>
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--kin"
                     >
-                      Conexión local
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--kin comparison__cell--status"
-                      role="cell"
-                    >
-                      <span
-                        class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
-                        aria-hidden="true"
+                      <span class="material-symbols-outlined" aria-hidden="true"
                         >check_circle</span
                       >
-                      <span>Guías que viven en el destino</span>
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--trad comparison__cell--status"
-                      role="cell"
-                    >
                       <span
-                        class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
-                        aria-hidden="true"
-                        >cancel</span
+                        >Conexión local: guías que viven en el destino.</span
                       >
-                      <span>Recorrido estandarizado</span>
-                    </p>
-                  </div>
-
-                  <div class="comparison__row" role="row">
-                    <p
-                      class="comparison__cell comparison__cell--feature"
-                      role="cell"
+                    </li>
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--kin"
                     >
-                      Comunicación previa
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--kin comparison__cell--status"
-                      role="cell"
-                    >
-                      <span
-                        class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
-                        aria-hidden="true"
+                      <span class="material-symbols-outlined" aria-hidden="true"
                         >check_circle</span
                       >
-                      <span>Chat directo antes de confirmar</span>
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--trad comparison__cell--status"
-                      role="cell"
-                    >
                       <span
-                        class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
-                        aria-hidden="true"
-                        >cancel</span
+                        >Comunicación previa: chat directo antes de
+                        confirmar.</span
                       >
-                      <span>Contacto limitado o nulo</span>
-                    </p>
-                  </div>
-
-                  <div class="comparison__row" role="row">
-                    <p
-                      class="comparison__cell comparison__cell--feature"
-                      role="cell"
+                    </li>
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--kin"
                     >
-                      Control de experiencia
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--kin comparison__cell--status"
-                      role="cell"
-                    >
-                      <span
-                        class="comparison__cell-icon comparison__cell-icon--kin material-symbols-outlined"
-                        aria-hidden="true"
+                      <span class="material-symbols-outlined" aria-hidden="true"
                         >check_circle</span
                       >
-                      <span>Ajuste de ritmo y enfoque</span>
-                    </p>
-                    <p
-                      class="comparison__cell comparison__cell--trad comparison__cell--status"
-                      role="cell"
-                    >
                       <span
-                        class="comparison__cell-icon comparison__cell-icon--trad material-symbols-outlined"
-                        aria-hidden="true"
+                        >Control de experiencia: ajuste de ritmo y
+                        enfoque.</span
+                      >
+                    </li>
+                  </ul>
+                </article>
+
+                <article
+                  class="comparison__mobile-card comparison__mobile-card--trad"
+                >
+                  <h3 class="comparison__mobile-title">Tour tradicional</h3>
+                  <ul class="comparison__mobile-list">
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--trad"
+                    >
+                      <span class="material-symbols-outlined" aria-hidden="true"
                         >cancel</span
                       >
-                      <span>Baja adaptabilidad</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div class="comparison__mobile" aria-label="Comparativa resumida para móvil">
-                  <article class="comparison__mobile-card comparison__mobile-card--kin">
-                    <h3 class="comparison__mobile-title">Kin Conecta</h3>
-                    <ul class="comparison__mobile-list">
-                      <li class="comparison__mobile-item comparison__mobile-item--kin">
-                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                        <span>Personalización: plan flexible según tus intereses.</span>
-                      </li>
-                      <li class="comparison__mobile-item comparison__mobile-item--kin">
-                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                        <span>Conexión local: guías que viven en el destino.</span>
-                      </li>
-                      <li class="comparison__mobile-item comparison__mobile-item--kin">
-                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                        <span>Comunicación previa: chat directo antes de confirmar.</span>
-                      </li>
-                      <li class="comparison__mobile-item comparison__mobile-item--kin">
-                        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                        <span>Control de experiencia: ajuste de ritmo y enfoque.</span>
-                      </li>
-                    </ul>
-                  </article>
-
-                  <article class="comparison__mobile-card comparison__mobile-card--trad">
-                    <h3 class="comparison__mobile-title">Tour tradicional</h3>
-                    <ul class="comparison__mobile-list">
-                      <li class="comparison__mobile-item comparison__mobile-item--trad">
-                        <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
-                        <span>Personalización: itinerario fijo para grupos mixtos.</span>
-                      </li>
-                      <li class="comparison__mobile-item comparison__mobile-item--trad">
-                        <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
-                        <span>Conexión local: recorrido estandarizado.</span>
-                      </li>
-                      <li class="comparison__mobile-item comparison__mobile-item--trad">
-                        <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
-                        <span>Comunicación previa: contacto limitado o nulo.</span>
-                      </li>
-                      <li class="comparison__mobile-item comparison__mobile-item--trad">
-                        <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
-                        <span>Control de experiencia: baja adaptabilidad.</span>
-                      </li>
-                    </ul>
-                  </article>
-                </div>
-
-                <div class="comparison__actions">
-                  <a
-                    class="btn btn--primary btn--large btn--icon btn--ripple"
-                    href="#explorar"
-                  >
-                    <span>Explorar ciudades</span>
-                    <span class="material-symbols-outlined"
-                      >travel_explore</span
+                      <span
+                        >Personalización: itinerario fijo para grupos
+                        mixtos.</span
+                      >
+                    </li>
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--trad"
                     >
-                  </a>
-                  <a
-                    class="btn btn--ghost btn--large btn--icon btn--ripple"
-                    href="./frontend/src/pages/aboutus.html#contacto"
-                  >
-                    <span>Hablar con el equipo</span>
-                    <span class="material-symbols-outlined">chat</span>
-                  </a>
-                </div>
+                      <span class="material-symbols-outlined" aria-hidden="true"
+                        >cancel</span
+                      >
+                      <span>Conexión local: recorrido estandarizado.</span>
+                    </li>
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--trad"
+                    >
+                      <span class="material-symbols-outlined" aria-hidden="true"
+                        >cancel</span
+                      >
+                      <span
+                        >Comunicación previa: contacto limitado o nulo.</span
+                      >
+                    </li>
+                    <li
+                      class="comparison__mobile-item comparison__mobile-item--trad"
+                    >
+                      <span class="material-symbols-outlined" aria-hidden="true"
+                        >cancel</span
+                      >
+                      <span>Control de experiencia: baja adaptabilidad.</span>
+                    </li>
+                  </ul>
+                </article>
+              </div>
+
+              <div class="comparison__actions">
+                <a
+                  class="btn btn--primary btn--large btn--icon btn--ripple"
+                  href="#explorar"
+                >
+                  <span>Explorar ciudades</span>
+                  <span class="material-symbols-outlined">travel_explore</span>
+                </a>
+                <a
+                  class="btn btn--ghost btn--large btn--icon btn--ripple"
+                  href="./frontend/src/pages/aboutus.html#contacto"
+                >
+                  <span>Hablar con el equipo</span>
+                  <span class="material-symbols-outlined">chat</span>
+                </a>
+              </div>
             </div>
 
             <div class="comparison-layout__aside">
@@ -874,6 +933,8 @@
 
     <script src="./frontend/src/scripts/api/http-client.js"></script>
     <script src="./frontend/src/scripts/api/auth-api-services.js"></script>
+    <!-- TEMPORAL: usuarios locales de prueba para login sin backend. -->
+    <script src="./frontend/src/scripts/api/auth-temp-users.js"></script>
     <script src="./frontend/src/scripts/components/onboarding-modal.js"></script>
     <script src="./frontend/src/scripts/components/auth-modal.js"></script>
     <script src="./frontend/src/scripts/landing.js"></script>

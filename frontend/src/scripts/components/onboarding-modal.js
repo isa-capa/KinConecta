@@ -11,6 +11,18 @@
     return String(role || "").trim().toLowerCase() === "guide" ? "guide" : "traveler";
   }
 
+  function resolveDashboardPathByRole(role) {
+    const normalizedRole = String(role || "").trim().toLowerCase();
+    const dashboardPath =
+      normalizedRole === "guide"
+        ? "Dashboard/guia/mainUserGuide.html"
+        : "Dashboard/turista/mainUserTourist.html";
+
+    const path = String(window.location.pathname || "").replace(/\\/g, "/").toLowerCase();
+    const pagesPrefix = path.includes("/frontend/src/pages/") ? "./" : "./frontend/src/pages/";
+    return `${pagesPrefix}${dashboardPath}`;
+  }
+
   function resolveWizardPath() {
     const path = String(window.location.pathname || "").replace(/\\/g, "/").toLowerCase();
     if (path.includes("/frontend/src/pages/")) {
@@ -107,6 +119,11 @@
       }
       if (event.data?.type === "kc-onboarding-resize") {
         resizeFrameToContent();
+      }
+      if (event.data?.type === "kc-onboarding-complete") {
+        const dashboardPath = resolveDashboardPathByRole(event.data?.role);
+        close();
+        window.location.href = dashboardPath;
       }
     });
 

@@ -180,7 +180,7 @@
 
       if (name.length < 3) {
         valid = false;
-        showHint("name", "Escribe tu nombre (minimo 3 caracteres).");
+        showHint("name", "Escribe tu nombre (mínimo 3 caracteres).");
       }
 
       if (!isEmail(email)) {

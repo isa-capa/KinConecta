@@ -1,5 +1,5 @@
 /* =========================================================
-   Guia - Perfil profesional (vista social)
+   Guía - Perfil profesional (vista social)
    Carga de datos desde backend (pendiente) con fallback local.
    ========================================================= */
 

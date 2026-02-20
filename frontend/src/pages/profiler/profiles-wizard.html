@@ -21,6 +21,7 @@
 
         <form id="profileForm" autocomplete="off">
           <div id="stepsContainer"></div>
+          <p class="step-feedback" id="stepFeedback" aria-live="polite"></p>
 
           <div class="footer">
             <button type="button" class="btn ghost" id="btnBack">Atr&aacute;s</button>
@@ -32,20 +33,6 @@
         </form>
     </section>
 
-    <section class="result" id="resultPanel" aria-hidden="true">
-      <div class="result-card">
-        <div class="result-head">
-          <h3>Perfil listo</h3>
-          <button class="close-btn" id="btnCloseResult" aria-label="Cerrar">&times;</button>
-        </div>
-        <p class="muted">Este JSON es el payload para tu API de registro de perfil.</p>
-        <pre id="resultJson"></pre>
-        <div class="result-actions">
-          <button class="btn ghost" id="btnCopy">Copiar JSON</button>
-          <button class="btn primary" id="btnRestart">Editar respuestas</button>
-        </div>
-      </div>
-    </section>
   </div>
 
   <script src="../../scripts/pages/profiler/ProfilesController.js"></script>

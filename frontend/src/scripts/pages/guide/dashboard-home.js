@@ -5,7 +5,7 @@
 
 const GuideDashboardApp = (() => {
   const state = {
-    guideId: "guide_001", // TODO(AUTH): obtener guideId real de JWT/sesion
+    guideId: "guide_001", // TODO(AUTH): obtener guideId real de JWT/sesión
     user: {
       id: "guide_001",
       name: "Carlos Rivera",

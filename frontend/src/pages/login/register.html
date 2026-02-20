@@ -1,4 +1,4 @@
-<div class="auth-card" data-auth-fragment data-auth-type="register">
+﻿<div class="auth-card" data-auth-fragment data-auth-type="register">
   <div class="auth-card__head">
     <p class="auth-card__eyebrow">Comienza hoy</p>
     <h3 class="auth-card__title">Crear cuenta</h3>
@@ -22,6 +22,7 @@
           <small>Publica tus servicios y conecta con viajeros.</small>
         </button>
       </div>
+      <small class="auth-form__field-error auth-form__field-error--block" data-auth-error-for="accountRole"></small>
     </div>
 
     <div class="auth-register-grid">
@@ -32,8 +33,22 @@
           name="fullName"
           autocomplete="name"
           placeholder="Nombre y apellidos"
+          minlength="3"
+          maxlength="80"
           required
         />
+        <small class="auth-form__field-error" data-auth-error-for="fullName"></small>
+      </label>
+
+      <label class="auth-form__field">
+        <span>Fecha de nacimiento</span>
+        <input
+          type="date"
+          name="dateOfBirth"
+          autocomplete="bday"
+          required
+        />
+        <small class="auth-form__field-error" data-auth-error-for="dateOfBirth"></small>
       </label>
 
       <label class="auth-form__field">
@@ -48,6 +63,7 @@
           <option value="+54">+54 (AR)</option>
           <option value="+56">+56 (CL)</option>
         </select>
+        <small class="auth-form__field-error" data-auth-error-for="countryCode"></small>
       </label>
 
       <label class="auth-form__field">
@@ -58,8 +74,12 @@
           inputmode="numeric"
           autocomplete="tel"
           placeholder="Ej. 5512345678"
+          minlength="10"
+          maxlength="10"
+          pattern="\d{10}"
           required
         />
+        <small class="auth-form__field-error" data-auth-error-for="phoneNumber"></small>
       </label>
 
       <label class="auth-form__field auth-form__field--full">
@@ -69,8 +89,11 @@
           name="email"
           autocomplete="email"
           placeholder="tu-correo@ejemplo.com"
+          maxlength="120"
+          pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
           required
         />
+        <small class="auth-form__field-error" data-auth-error-for="email"></small>
       </label>
 
       <label class="auth-form__field">
@@ -80,8 +103,11 @@
           name="password"
           autocomplete="new-password"
           placeholder="M&iacute;nimo 8 caracteres"
+          minlength="8"
+          maxlength="64"
           required
         />
+        <small class="auth-form__field-error" data-auth-error-for="password"></small>
       </label>
 
       <label class="auth-form__field">
@@ -91,8 +117,11 @@
           name="confirmPassword"
           autocomplete="new-password"
           placeholder="Repite tu contrase&ntilde;a"
+          minlength="8"
+          maxlength="64"
           required
         />
+        <small class="auth-form__field-error" data-auth-error-for="confirmPassword"></small>
       </label>
     </div>
 
@@ -100,3 +129,5 @@
     <button class="auth-form__submit" type="submit">Registrarme</button>
   </form>
 </div>
+
+

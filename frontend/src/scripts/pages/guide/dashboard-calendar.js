@@ -317,7 +317,7 @@ const GuideCalendarApp = (() => {
           removeBlockedEvent(event.id);
           return;
         }
-        // TODO(BACKEND): abrir detalle de reserva/evento en pagina/modal
+        // TODO(BACKEND): abrir detalle de reserva/evento en página/modal
         console.info("TODO: open calendar event details", event.id);
       });
 
@@ -431,7 +431,7 @@ const GuideCalendarApp = (() => {
 
   async function syncGoogleCalendar() {
     // TODO(GOOGLE): implementar OAuth 2.0 con backend (Spring Boot) para no exponer secretos.
-    // TODO(GOOGLE): guardar refresh token en backend y sincronizar por guia.
+    // TODO(GOOGLE): guardar refresh token en backend y sincronizar por guía.
     // TODO(GOOGLE): mapear eventos de Google Calendar al dominio interno de reservas/bloqueos.
     try {
       if (window.KCGuideApi) {

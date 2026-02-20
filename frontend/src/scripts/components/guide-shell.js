@@ -27,6 +27,10 @@
     return prefix.endsWith("/") ? prefix : prefix + "/";
   }
 
+  function isNetworkUnavailableError(error) {
+    return Boolean(error?.isNetworkError || error?.isApiUnavailable);
+  }
+
   function hydrateSidebar(sidebar, activeKey, pagesPrefix, assetsPrefix) {
     const links = sidebar.querySelectorAll("[data-href]");
     links.forEach((link) => {
@@ -64,7 +68,7 @@
     const button = document.createElement("button");
     button.className = "guide-sidebar-toggle";
     button.type = "button";
-    button.setAttribute("aria-label", "Abrir menú");
+    button.setAttribute("aria-label", "Abrir men\u00fa");
     button.setAttribute("aria-expanded", "false");
     button.innerHTML = '<span class="material-symbols-outlined">menu</span>';
     document.body.appendChild(button);
@@ -163,12 +167,84 @@
     }
   }
 
-  function renderMessages(messagesEl, messages) {
+  function escapeHtml(value) {
+    return String(value || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function normalizeAvatarUrl(raw) {
+    const value = String(raw || "").trim();
+    if (!value) return "";
+    return value;
+  }
+
+  function getInitials(name) {
+    const tokens = String(name || "")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+    if (!tokens.length) return "US";
+    const first = tokens[0][0] || "";
+    const second = tokens.length > 1 ? tokens[1][0] : tokens[0][1] || "";
+    return `${first}${second}`.toUpperCase();
+  }
+
+  function resolveTemporaryAvatar(seed) {
+    const normalizedSeed = encodeURIComponent(String(seed || "kinconecta"));
+    return `https://i.pravatar.cc/120?u=${normalizedSeed}`;
+  }
+
+  function setAvatarElement(avatarRoot, profile) {
+    if (!avatarRoot) return;
+    const avatarImage = avatarRoot.querySelector(".guide-chat__thread-avatar-img");
+    const avatarFallback = avatarRoot.querySelector(".guide-chat__thread-avatar-fallback");
+    const avatarUrl = normalizeAvatarUrl(profile?.avatarUrl);
+    const initials = getInitials(profile?.name || profile?.initials);
+
+    if (avatarFallback) {
+      avatarFallback.textContent = initials;
+      avatarFallback.hidden = Boolean(avatarUrl);
+    }
+
+    if (!avatarImage) return;
+    if (!avatarUrl) {
+      avatarImage.hidden = true;
+      avatarImage.removeAttribute("src");
+      return;
+    }
+
+    avatarImage.src = avatarUrl;
+    avatarImage.hidden = false;
+    avatarImage.onerror = () => {
+      avatarImage.hidden = true;
+      avatarImage.removeAttribute("src");
+      if (avatarFallback) avatarFallback.hidden = false;
+    };
+  }
+
+  function renderMessages(messagesEl, messages, resolveMessageAuthor) {
     messagesEl.innerHTML = messages
-      .map(
-        (item) =>
-          `<div class="guide-chat__bubble guide-chat__bubble--${item.from}">${item.text}</div>`,
-      )
+      .map((item, index) => {
+        const from = item?.from === "guide" ? "guide" : "guest";
+        const author = resolveMessageAuthor(from, item, index) || {};
+        const avatarUrl = normalizeAvatarUrl(author.avatarUrl);
+        const avatarName = author.name || author.initials || "Usuario";
+        const avatarFallback = getInitials(avatarName);
+        const avatarMarkup = avatarUrl
+          ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(avatarName)}" loading="lazy" />`
+          : `<span class="guide-chat__message-avatar-fallback">${escapeHtml(avatarFallback)}</span>`;
+
+        return `
+          <div class="guide-chat__message guide-chat__message--${from}">
+            <span class="guide-chat__message-avatar">${avatarMarkup}</span>
+            <div class="guide-chat__bubble guide-chat__bubble--${from}">${escapeHtml(item?.text || "")}</div>
+          </div>
+        `;
+      })
       .join("");
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
@@ -184,10 +260,12 @@
     const messagesEl = root.querySelector("[data-guide-chat-messages]");
     const form = root.querySelector("[data-guide-chat-form]");
     const input = form?.querySelector(".guide-chat__input");
+    const backBtn = root.querySelector("[data-chat-back]");
+    const activeTitle = root.querySelector("[data-chat-active-title]");
 
     const threadData = {
       maria: [
-        { from: "guest", text: "Hola Carlos, podemos mover el tour una hora?" },
+        { from: "guest", text: "Hola Carlos, ¿podemos mover el tour una hora?" },
         { from: "guide", text: "Claro, lo ajusto para iniciar a las 10:00." },
       ],
       alejandro: [
@@ -196,49 +274,73 @@
       ],
     };
     const threadIdsByKey = {};
+    const threadProfiles = {
+      maria: {
+        name: "María R.",
+        avatarUrl: resolveTemporaryAvatar("guide_maria"),
+      },
+      alejandro: {
+        name: "Alejandro M.",
+        avatarUrl: resolveTemporaryAvatar("guide_alejandro"),
+      },
+    };
+
+    const currentUserProfile = (() => {
+      let displayName = "Guía";
+      try {
+        const raw = localStorage.getItem("kc_temp_auth_session_v1");
+        const session = raw ? JSON.parse(raw) : null;
+        if (session?.fullName) displayName = session.fullName;
+      } catch (_error) {
+        // Fallback a texto por defecto.
+      }
+      return {
+        name: displayName,
+        avatarUrl: resolveTemporaryAvatar(`guide_${displayName}`),
+      };
+    })();
 
     let activeThread = "maria";
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const CHAT_ANIMATION_MS = prefersReducedMotion ? 0 : 340;
     let closeTimer = null;
 
-    const clearCloseTimer = () => {
-      if (closeTimer) {
-        window.clearTimeout(closeTimer);
-        closeTimer = null;
+    const isMobileChatMode = () => window.matchMedia("(max-width: 767px)").matches;
+    const setMobileView = (mode) => {
+      root.classList.remove("guide-chat--mobile-view-threads", "guide-chat--mobile-view-conversation");
+      if (!isMobileChatMode()) return;
+      root.classList.add(
+        mode === "conversation"
+          ? "guide-chat--mobile-view-conversation"
+          : "guide-chat--mobile-view-threads",
+      );
+    };
+
+    const updateActiveTitle = (threadKey) => {
+      if (!activeTitle) return;
+      const profile = threadProfiles[threadKey];
+      activeTitle.textContent = profile?.name || "Selecciona un chat";
+    };
+
+    const applyThreadVisual = (threadButton, profile) => {
+      if (!threadButton) return;
+      const nameNode = threadButton.querySelector(".guide-chat__thread-name");
+      if (nameNode && profile?.name) {
+        nameNode.textContent = profile.name;
       }
+      const avatarRoot = threadButton.querySelector("[data-thread-avatar]");
+      setAvatarElement(avatarRoot, profile);
     };
 
-    const openChat = () => {
-      clearCloseTimer();
-      panel.removeAttribute("hidden");
-      panel.setAttribute("aria-hidden", "false");
-      requestAnimationFrame(() => {
-        root.classList.add("guide-chat--open");
-      });
-      input?.focus();
-    };
-
-    const closeChat = () => {
-      clearCloseTimer();
-      root.classList.remove("guide-chat--open");
-      panel.setAttribute("aria-hidden", "true");
-      closeTimer = window.setTimeout(() => {
-        if (!root.classList.contains("guide-chat--open")) {
-          panel.setAttribute("hidden", "hidden");
-        }
-      }, CHAT_ANIMATION_MS);
-    };
-
-    const setThread = async (threadKey) => {
-      activeThread = threadKey;
-      threads.forEach((thread) => {
-        thread.classList.toggle("is-active", thread.dataset.thread === threadKey);
-      });
-      if (!threadData[threadKey]) {
-        await hydrateMessagesForThread(threadKey);
+    const resolveMessageAuthor = (from, item) => {
+      if (normalizeAvatarUrl(item?.avatarUrl)) {
+        return {
+          name: item?.authorName || item?.senderName || "Usuario",
+          avatarUrl: item.avatarUrl,
+        };
       }
-      renderMessages(messagesEl, threadData[threadKey] || []);
+      if (from === "guide") return currentUserProfile;
+      return threadProfiles[activeThread] || { name: "Turista", avatarUrl: "" };
     };
 
     const mapMessageFromApi = (item) => ({
@@ -249,6 +351,13 @@
           ? "guide"
           : "guest",
       text: item.text || item.message || "",
+      authorName: item.senderName || item.authorName || "",
+      avatarUrl:
+        item.senderAvatarUrl ||
+        item.avatarUrl ||
+        item.authorAvatarUrl ||
+        item.profileImageUrl ||
+        "",
     });
 
     const hydrateMessagesForThread = async (threadKey) => {
@@ -265,12 +374,23 @@
           threadData[threadKey] = items.map(mapMessageFromApi);
         }
       } catch (error) {
+        if (isNetworkUnavailableError(error)) return;
         console.warn("Chat messages fallback enabled:", error);
       }
     };
 
+    const resolveAvatarFromThreadApi = (threadItem, index) => {
+      const fromApi =
+        threadItem.touristAvatarUrl ||
+        threadItem.avatarUrl ||
+        threadItem.photoUrl ||
+        threadItem.profileImageUrl ||
+        threadItem.imageUrl;
+      return normalizeAvatarUrl(fromApi) || resolveTemporaryAvatar(`guide_thread_${index}`);
+    };
+
     const hydrateThreadsFromApi = async () => {
-      // TODO(BACKEND): endpoint final de threads por guia y paginacion.
+      // TODO(BACKEND): endpoint final de threads por guía y paginación.
       // TODO(BACKEND): agregar unreadCount por hilo y ultimo mensaje.
       if (!window.KCGuideApi) return;
       try {
@@ -281,31 +401,107 @@
         items.slice(0, threads.length).forEach((threadItem, index) => {
           const localKey = `thread_${index}`;
           const threadButton = threads[index];
-          const nameNode = threadButton.querySelector(".guide-chat__thread-name");
+          if (!threadButton) return;
+
+          threadButton.dataset.thread = localKey;
+          threadIdsByKey[localKey] = threadItem.id;
+          threadData[localKey] = [];
+
+          const profile = {
+            name: threadItem.title || threadItem.touristName || "Turista",
+            avatarUrl: resolveAvatarFromThreadApi(threadItem, index),
+          };
+          threadProfiles[localKey] = profile;
+          applyThreadVisual(threadButton, profile);
+
           const snippetNode = threadButton.querySelector(".guide-chat__thread-snippet");
-          if (nameNode) nameNode.textContent = threadItem.title || threadItem.touristName || "Turista";
           if (snippetNode) {
             snippetNode.textContent =
               threadItem.lastMessage || threadItem.lastMessagePreview || "Sin mensajes";
           }
-          threadButton.dataset.thread = localKey;
-          threadIdsByKey[localKey] = threadItem.id;
-          threadData[localKey] = [];
         });
 
         const firstKey = threads[0]?.dataset.thread;
         if (firstKey) {
           activeThread = firstKey;
-          await setThread(firstKey);
+          await setThread(firstKey, { switchMobileView: false });
         }
       } catch (error) {
+        if (isNetworkUnavailableError(error)) return;
         console.warn("Chat threads fallback enabled:", error);
       }
     };
 
+    threads.forEach((threadButton, index) => {
+      const key = threadButton.dataset.thread;
+      const nameNode = threadButton.querySelector(".guide-chat__thread-name");
+      const profileName = nameNode?.textContent?.trim() || `Chat ${index + 1}`;
+      if (!threadProfiles[key]) {
+        threadProfiles[key] = {
+          name: profileName,
+          avatarUrl: resolveTemporaryAvatar(`guide_${key}`),
+        };
+      }
+      applyThreadVisual(threadButton, threadProfiles[key]);
+    });
+
+    const clearCloseTimer = () => {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+    };
+
+    const openChat = (options) => {
+      const config = options || {};
+      clearCloseTimer();
+      panel.removeAttribute("hidden");
+      panel.setAttribute("aria-hidden", "false");
+      requestAnimationFrame(() => {
+        root.classList.add("guide-chat--open");
+      });
+      setMobileView(config.mobileView || "threads");
+      if (!isMobileChatMode()) {
+        input?.focus();
+      }
+    };
+
+    const closeChat = () => {
+      clearCloseTimer();
+      root.classList.remove("guide-chat--open");
+      panel.setAttribute("aria-hidden", "true");
+      closeTimer = window.setTimeout(() => {
+        if (!root.classList.contains("guide-chat--open")) {
+          panel.setAttribute("hidden", "hidden");
+        }
+      }, CHAT_ANIMATION_MS);
+    };
+
+    const setThread = async (threadKey, options) => {
+      const config = options || {};
+      activeThread = threadKey;
+      threads.forEach((thread) => {
+        thread.classList.toggle("is-active", thread.dataset.thread === threadKey);
+      });
+
+      // En mobile cambiamos de vista inmediatamente (antes de esperar API)
+      // para replicar el comportamiento fluido del chat de turista.
+      const shouldSwitchMobileView = config.switchMobileView !== false;
+      if (shouldSwitchMobileView) {
+        setMobileView("conversation");
+      }
+
+      const hasMessages = Array.isArray(threadData[threadKey]) && threadData[threadKey].length > 0;
+      if (!hasMessages) {
+        await hydrateMessagesForThread(threadKey);
+      }
+      updateActiveTitle(threadKey);
+      renderMessages(messagesEl, threadData[threadKey] || [], resolveMessageAuthor);
+    };
+
     launcher?.addEventListener("click", () => {
       const isOpen = root.classList.contains("guide-chat--open");
-      isOpen ? closeChat() : openChat();
+      isOpen ? closeChat() : openChat({ mobileView: "threads" });
     });
 
     const handleClose = (event) => {
@@ -320,8 +516,12 @@
     threads.forEach((thread) => {
       thread.addEventListener("click", () => {
         setThread(thread.dataset.thread);
-        openChat();
+        openChat({ mobileView: "conversation" });
       });
+    });
+
+    backBtn?.addEventListener("click", () => {
+      setMobileView("threads");
     });
 
     form?.addEventListener("submit", async (event) => {
@@ -336,35 +536,39 @@
           await window.KCGuideApi.chat.sendMessage(apiThreadId, { message: text });
         }
       } catch (error) {
+        if (isNetworkUnavailableError(error)) return;
         console.warn("Send message pending backend implementation:", error);
       }
 
       const collection = threadData[activeThread] || [];
       collection.push({ from: "guide", text });
       threadData[activeThread] = collection;
-      renderMessages(messagesEl, collection);
+      renderMessages(messagesEl, collection, resolveMessageAuthor);
       input.value = "";
     });
 
-    window.addEventListener("guide-chat:open", openChat);
+    window.addEventListener("guide-chat:open", () => openChat({ mobileView: "threads" }));
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closeChat();
     });
 
-    const extraOpeners = document.querySelectorAll(
-      '[aria-label="Mensajes"], [data-open-guide-chat]',
+    // Abridores externos del chat (evitamos [aria-label="Mensajes"] porque
+    // coincide con el panel del widget y en mobile reinicia la vista a lista).
+    const extraOpeners = [...document.querySelectorAll("[data-open-guide-chat], #btnChatGuide, #btnChat")].filter(
+      (trigger) => !trigger.closest("[data-guide-chat]"),
     );
     extraOpeners.forEach((trigger) => {
       trigger.addEventListener("click", (event) => {
         event.preventDefault();
-        openChat();
+        openChat({ mobileView: "threads" });
       });
     });
 
     root.classList.remove("guide-chat--open");
     panel.setAttribute("aria-hidden", "true");
     panel.setAttribute("hidden", "hidden");
-    setThread(activeThread);
+    setMobileView("threads");
+    setThread(activeThread, { switchMobileView: false });
     hydrateThreadsFromApi();
   }
 
@@ -426,7 +630,7 @@
       },
       {
         id: "ntf_3",
-        title: "Un turista te envió un mensaje",
+        title: "Un turista te envi\u00f3 un mensaje",
         meta: "Hace 40 min",
         read: true,
       },
@@ -451,7 +655,7 @@
 
     const mapNotification = (item) => ({
       id: item.id,
-      title: item.title || item.message || "Notificación",
+      title: item.title || item.message || "Notificaci\u00f3n",
       meta: item.dateLabel || item.relativeTime || "Reciente",
       read: Boolean(item.read || item.isRead),
     });
@@ -467,6 +671,7 @@
           renderNotifications();
         }
       } catch (error) {
+        if (isNetworkUnavailableError(error)) return;
         console.warn("Notifications API fallback enabled:", error);
       }
     };
@@ -509,6 +714,7 @@
           await window.KCGuideApi.notifications.markAsRead(notificationId);
         }
       } catch (error) {
+        if (isNetworkUnavailableError(error)) return;
         console.warn("Mark notification as read pending backend implementation:", error);
       }
     };
@@ -554,3 +760,4 @@
     setupNotifications();
   });
 })();
+

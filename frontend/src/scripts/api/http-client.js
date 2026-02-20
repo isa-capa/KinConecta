@@ -1,10 +1,12 @@
 (function () {
   const DEFAULT_TIMEOUT_MS = 10000;
+  const NETWORK_COOLDOWN_MS = 15000;
 
   const state = {
     baseUrl: "http://localhost:8080/api",
     getAuthToken: null,
     onUnauthorized: null,
+    networkDownUntil: 0,
   };
 
   function configure(options) {
@@ -33,6 +35,16 @@
     const url = buildUrl(path);
     const config = options || {};
     const method = (config.method || "GET").toUpperCase();
+
+    if (Date.now() < state.networkDownUntil) {
+      const offlineError = new Error("API temporarily unavailable (network cooldown).");
+      offlineError.isNetworkError = true;
+      offlineError.isApiUnavailable = true;
+      offlineError.url = url;
+      offlineError.method = method;
+      throw offlineError;
+    }
+
     const headers = {
       Accept: "application/json",
       ...(config.headers || {}),
@@ -52,9 +64,25 @@
       credentials: config.credentials || "include",
     };
 
-    const response = await withTimeout(fetch(url, fetchOptions), config.timeoutMs);
+    let response = null;
+    try {
+      response = await withTimeout(fetch(url, fetchOptions), config.timeoutMs);
+    } catch (error) {
+      const networkError = new Error(`API ${method} ${url} network error`);
+      networkError.isNetworkError = true;
+      networkError.cause = error;
+      networkError.url = url;
+      networkError.method = method;
+      state.networkDownUntil = Date.now() + NETWORK_COOLDOWN_MS;
+      throw networkError;
+    }
+
     const text = await response.text();
     const data = text ? safeParseJSON(text) : null;
+
+    if (response.ok) {
+      state.networkDownUntil = 0;
+    }
 
     if (response.status === 401 && typeof state.onUnauthorized === "function") {
       state.onUnauthorized(response, data);

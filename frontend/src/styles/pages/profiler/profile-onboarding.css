@@ -541,6 +541,14 @@ textarea.error {
   gap: 0.7rem;
 }
 
+.step-feedback {
+  min-height: 1rem;
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #b42318;
+}
+
 .footer-right {
   display: flex;
   gap: 0.55rem;

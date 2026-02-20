@@ -1,35 +1,41 @@
 <div class="auth-card" data-auth-fragment data-auth-type="login">
   <div class="auth-card__head">
     <p class="auth-card__eyebrow">Bienvenido a Kin Conecta</p>
-    <h3 class="auth-card__title">Inicia sesión</h3>
+    <h3 class="auth-card__title">Inicia sesi&oacute;n</h3>
     <p class="auth-card__subtitle">Accede a tu cuenta para continuar.</p>
   </div>
 
   <form class="auth-form" data-auth-form="login" novalidate>
     <label class="auth-form__field">
-      <span>Correo electrónico</span>
+      <span>Correo electr&oacute;nico</span>
       <input
         type="email"
         name="email"
         autocomplete="email"
         placeholder="tu-correo@ejemplo.com"
+        maxlength="120"
+        pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
         required
       />
+      <small class="auth-form__field-error" data-auth-error-for="email"></small>
     </label>
 
     <label class="auth-form__field">
-      <span>Contraseña</span>
+      <span>Contrase&ntilde;a</span>
       <input
         type="password"
         name="password"
         autocomplete="current-password"
         placeholder="********"
+        minlength="8"
+        maxlength="64"
         required
       />
+      <small class="auth-form__field-error" data-auth-error-for="password"></small>
     </label>
 
     <p class="auth-form__feedback" data-auth-feedback aria-live="polite"></p>
 
-    <button class="auth-form__submit" type="submit">Iniciar sesión</button>
+    <button class="auth-form__submit" type="submit">Iniciar sesi&oacute;n</button>
   </form>
 </div>

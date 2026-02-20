@@ -33,7 +33,7 @@
   position: absolute;
   right: 0;
   bottom: 72px;
-  width: min(380px, calc(100vw - 28px));
+  width: min(560px, calc(100vw - 28px));
   height: min(560px, calc(100vh - 120px));
   border-radius: 18px;
   border: 1px solid #dce7eb;
@@ -106,7 +106,7 @@
 .guide-chat__body {
   height: calc(100% - 60px);
   display: grid;
-  grid-template-columns: 1fr 1.25fr;
+  grid-template-columns: minmax(170px, 0.88fr) minmax(280px, 1.72fr);
 }
 
 .guide-chat__threads {
@@ -135,16 +135,33 @@
 }
 
 .guide-chat__thread-avatar {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
   background: #173d3c;
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   display: grid;
   place-items: center;
-  flex: 0 0 30px;
+  flex: 0 0 34px;
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-chat__thread-avatar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide-chat__thread-avatar-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .guide-chat__thread-meta {
@@ -169,8 +186,48 @@
 
 .guide-chat__conversation {
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr auto;
   min-height: 0;
+}
+
+.guide-chat__conversation-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #e2ebef;
+  background: #f8fbfc;
+}
+
+.guide-chat__conversation-title {
+  margin: 0;
+  flex: 1;
+  color: #173d3c;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.guide-chat__back {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  border: 1px solid #d2e0e6;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #173d3c;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.guide-chat__back .material-symbols-outlined {
+  font-size: 17px;
 }
 
 .guide-chat__messages {
@@ -180,6 +237,40 @@
   gap: 10px;
   align-content: start;
   background: #ffffff;
+}
+
+.guide-chat__message {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.guide-chat__message--guide {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.guide-chat__message-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  overflow: hidden;
+  flex: 0 0 24px;
+  background: #d9e6ec;
+  display: grid;
+  place-items: center;
+}
+
+.guide-chat__message-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide-chat__message-avatar-fallback {
+  font-size: 9px;
+  font-weight: 800;
+  color: #173d3c;
 }
 
 .guide-chat__bubble {
@@ -252,16 +343,42 @@
 
   .guide-chat__panel {
     width: calc(100vw - 24px);
-    height: calc(100vh - 110px);
+    height: calc(100vh - 92px);
   }
 
   .guide-chat__body {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr;
   }
 
   .guide-chat__threads {
-    max-height: 128px;
+    border-right: 0;
+    max-height: none;
+    height: 100%;
+  }
+
+  .guide-chat__conversation {
+    height: 100%;
+  }
+
+  .guide-chat__back {
+    display: inline-flex;
+  }
+
+  .guide-chat--mobile-view-threads .guide-chat__threads {
+    display: block;
+  }
+
+  .guide-chat--mobile-view-threads .guide-chat__conversation {
+    display: none;
+  }
+
+  .guide-chat--mobile-view-conversation .guide-chat__threads {
+    display: none;
+  }
+
+  .guide-chat--mobile-view-conversation .guide-chat__conversation {
+    display: grid;
   }
 }
 

@@ -1,6 +1,6 @@
 /* =========================================================
-   Guia - Centro de Ayuda
-   Base de FAQ/tickets lista para integracion API.
+   Guía - Centro de Ayuda
+   Base de FAQ/tickets lista para integración API.
    ========================================================= */
 
 const GuideHelpApp = (() => {

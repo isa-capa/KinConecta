@@ -5,7 +5,7 @@
 
 const GuideToursApp = (() => {
   const state = {
-    guideId: "guide_001", // TODO(AUTH): obtener desde sesion/JWT
+    guideId: "guide_001", // TODO(AUTH): obtener desde sesión/JWT
     tours: [],
     isSaving: false,
   };
@@ -72,7 +72,7 @@ const GuideToursApp = (() => {
   }
 
   async function hydrateFromApi() {
-    // TODO(BACKEND): aplicar paginacion, filtros y ordenamiento en server-side.
+    // TODO(BACKEND): aplicar paginación, filtros y ordenamiento en server-side.
     // TODO(BACKEND): mover guideId al contexto de autenticacion global.
     if (!window.KCGuideApi) {
       state.tours = await fetchFallbackTours();
@@ -85,7 +85,7 @@ const GuideToursApp = (() => {
         size: 100,
       });
       const items = response?.data?.items || response?.data || [];
-      if (!Array.isArray(items)) throw new Error("Respuesta de tours invalida");
+      if (!Array.isArray(items)) throw new Error("Respuesta de tours inválida");
       state.tours = items.map(normalizeTour);
     } catch (error) {
       console.warn("Tours API fallback enabled:", error);

@@ -217,6 +217,19 @@
   color: #334155;
 }
 
+.auth-form__field-error {
+  min-height: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #dc2626;
+  line-height: 1.25;
+}
+
+.auth-form__field-error--block {
+  display: block;
+  margin-top: 2px;
+}
+
 .auth-form__field input,
 .auth-form__field select {
   width: 100%;
@@ -228,6 +241,26 @@
   font-size: 14px;
   color: #0f172a;
   transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.auth-form__field input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 38px;
+}
+
+.auth-form__field input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.78;
+  filter: saturate(0.8);
+}
+
+.auth-form__field input[type="date"]::-webkit-datetime-edit {
+  color: #0f172a;
+}
+
+.auth-form__field input[type="date"]:required:invalid::-webkit-datetime-edit {
+  color: #94a3b8;
 }
 
 .auth-form__field select {
@@ -248,6 +281,19 @@
   outline: none;
   border-color: var(--auth-primary);
   box-shadow: 0 0 0 3px var(--auth-primary-focus);
+}
+
+.auth-form__field--invalid input,
+.auth-form__field--invalid select {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.auth-role-step.is-invalid .auth-role-grid {
+  border: 1px solid #ef4444;
+  border-radius: 12px;
+  padding: 8px;
+  background: rgba(239, 68, 68, 0.05);
 }
 
 .auth-form__feedback {
