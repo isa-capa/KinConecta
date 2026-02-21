@@ -49,10 +49,10 @@
                 </div>
             </header>
             
-            <!-- Área de contenido scrolleable -->
+            <!-- Área de contenido desplazable -->
             <div class="content-area">
                 <div class="content-wrapper">
-                    <!-- Botón de crear nuevo tour -->
+                    <!-- Botón para crear un nuevo recorrido -->
                     <div class="create-tour-section">
                         <button class="create-tour-button" id="btnCreateTour" type="button">
                             <span class="material-symbols-outlined">add_circle</span>
@@ -60,14 +60,14 @@
                         </button>
                     </div>
                     
-                    <!-- Grid de tours (se llenará dinámicamente) -->
+                    <!-- Cuadrícula de recorridos (se llenará dinámicamente) -->
                     <div class="tours-grid" id="toursGrid"></div>
                 </div>
             </div>
         </main>
     </div>
     
-    <!-- Modal de crear/editar recorrido -->
+    <!-- Modal para crear o editar un recorrido -->
     <div id="tourModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,7 +89,7 @@
                             type="text" 
                             id="tourTitle" 
                             class="form-control" 
-                            placeholder="Ej: Comida Callejera & Cultura"
+                            placeholder="Ej: Comida callejera y cultura"
                             required
                         />
                     </div>
@@ -175,7 +175,7 @@
                     <div class="form-group">
                         <label for="tourMaxGroup">
                             <span class="material-symbols-outlined">group</span>
-                            Tamaño Máximo del Grupo
+                            Tamaño máximo del grupo
                         </label>
                         <input 
                             type="number" 
@@ -193,7 +193,7 @@
                     <div class="form-group full-width">
                         <label for="tourMeetingPoint">
                             <span class="material-symbols-outlined">location_on</span>
-                            Punto de Encuentro
+                            Punto de encuentro
                         </label>
                         <input 
                             type="text" 
@@ -209,13 +209,13 @@
                     <div class="form-group full-width">
                         <label for="tourIncluded">
                             <span class="material-symbols-outlined">checklist</span>
-                            Ítems incluidos (separados por comas)
+                            Elementos incluidos (separados por comas)
                         </label>
                         <input 
                             type="text" 
                             id="tourIncluded" 
                             class="form-control" 
-                            placeholder="Ej: Degustación de comida, Guía experto, Transporte"
+                            placeholder="Ej: Degustación de comida, guía experto, transporte"
                             required
                         />
                     </div>
@@ -229,7 +229,7 @@
                         </label>
                         <select id="tourStatus" class="form-control" required>
                             <option value="draft">Borrador</option>
-                            <option value="pending">Pendiente de Revisión</option>
+                            <option value="pending">Pendiente de revisión</option>
                             <option value="active">Activo</option>
                         </select>
                     </div>
