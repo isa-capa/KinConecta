@@ -6,24 +6,6 @@
   // TEMPORAL: sesión local para acceso con usuarios de prueba.
   const TEMP_AUTH_SESSION_STORAGE_KEY = "kc_temp_auth_session_v1";
   // TEMPORAL: credenciales de acceso local para pruebas de flujo de login.
-  const TEMP_LOGIN_USERS = [
-    {
-      id: "tourist_temp_001",
-      role: "tourist",
-      fullName: "Turista Temporal",
-      email: "turista@prueba.com",
-      password: "contrase\u00f1a123",
-      passwordAscii: "contrasena123",
-    },
-    {
-      id: "guide_temp_001",
-      role: "guide",
-      fullName: "Guía Temporal",
-      email: "guia@prueba.com",
-      password: "contrase\u00f1a123",
-      passwordAscii: "contrasena123",
-    },
-  ];
   const VALIDATION_RULES = {
     emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
     fullNameRegex: /^[A-Za-z\u00C0-\u017F' -]+$/u,
@@ -482,28 +464,12 @@
     }
   }
 
-  function stripDiacritics(value) {
-    try {
-      return String(value || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-    } catch (_error) {
-      return String(value || "");
-    }
-  }
-
-  function resolveTemporaryLoginUser(email, password) {
-    const normalizedEmail = normalizeLoginEmail(email);
-    const normalizedPassword = normalizeLoginPassword(password);
-    const asciiPassword = stripDiacritics(normalizedPassword).toLowerCase();
-
-    return (
-      TEMP_LOGIN_USERS.find(
-        (user) =>
-          user.email === normalizedEmail &&
-          (user.password === normalizedPassword || user.passwordAscii === asciiPassword),
-      ) || null
-    );
+  function showInvalidLoginFeedback(form, email) {
+    const message = "Nombre de usuario o contrase\u00f1a inv\u00e1lidos.";
+    setFieldError(form, "email", message);
+    setFieldError(form, "password", message);
+    showFeedback(form, message);
+    console.warn("[KCAuthModal] Login temporal rechazado.", { username: email });
   }
 
   function normalizeAccountRole(value) {
@@ -681,14 +647,16 @@
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      // TEMPORAL: valida credenciales locales para acceso de prueba sin backend.
+      // TEMPORAL: valida credenciales con usuarios prealmacenados en localStorage.
       const tempAuth = getTempAuthService();
-      const tempUser =
-        resolveTemporaryLoginUser(payload.email, payload.password) ||
-        tempAuth?.validateLogin?.(payload.email, payload.password);
+      const tempUser = tempAuth?.validateLogin?.(payload.email, payload.password);
       if (tempUser) {
         persistTemporarySession(tempUser);
         showFeedback(form, "Acceso temporal concedido. Redirigiendo...", true);
+        console.info("[KCAuthModal] Login temporal exitoso.", {
+          username: payload.email,
+          role: tempUser.role,
+        });
         window.setTimeout(() => {
           closeModal();
           window.location.href = resolveDashboardPath(tempUser.role);
@@ -698,14 +666,15 @@
 
       const service = getAuthService();
       if (!service?.login) {
-        throw new Error("login-api-unavailable");
+        showInvalidLoginFeedback(form, payload.email);
+        return;
       }
 
       const result = await service.login(payload);
       const token = result?.data?.token;
       if (token) localStorage.setItem("kcAuthToken", token);
 
-      showFeedback(form, "Sesión iniciada correctamente.", true);
+      showFeedback(form, "Sesi\u00f3n iniciada correctamente.", true);
       window.setTimeout(closeModal, 420);
     } catch (error) {
       if (error?.message === "login-api-unavailable") {
@@ -866,4 +835,5 @@
     close: closeModal,
   };
 })();
+
 
