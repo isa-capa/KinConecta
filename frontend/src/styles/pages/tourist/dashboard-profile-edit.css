@@ -18,7 +18,7 @@
 
 .tourist-form-card h3 {
   margin: 0;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
   font-size: 18px;
   font-weight: 900;
 }
@@ -88,7 +88,7 @@
 }
 
 .tourist-form-feedback.is-success {
-  color: #0b7a3f;
+  color: #16232a;
   font-weight: 700;
 }
 

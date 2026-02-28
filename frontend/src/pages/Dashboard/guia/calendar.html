@@ -59,7 +59,12 @@
           </div>
 
           <div class="topbar__actions">
-            <button class="btn btn--secondary" id="btnSync" type="button">
+            <button
+              class="btn btn--secondary"
+              id="btnSync"
+              type="button"
+              data-google-client-id=""
+            >
               <span class="material-symbols-outlined btn__icon">sync</span>
               <span class="btn__text">Sincronizar calendario</span>
             </button>
@@ -235,6 +240,91 @@
         <div class="backdrop" id="backdrop" hidden></div>
       </main>
     </div>
+    <div
+      class="gcal-modal"
+      id="googleSyncModal"
+      hidden
+      aria-hidden="true"
+    >
+      <div class="gcal-modal__backdrop" data-google-close></div>
+      <section
+        class="gcal-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="googleSyncTitle"
+      >
+        <header class="gcal-modal__header">
+          <h3 class="gcal-modal__title" id="googleSyncTitle">
+            Conectar Google Calendar
+          </h3>
+          <button
+            class="gcal-modal__close"
+            type="button"
+            id="btnGoogleModalClose"
+            aria-label="Cerrar"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </header>
+
+        <p class="gcal-modal__subtitle">
+          Conecta tu cuenta para bloquear automaticamente la disponibilidad del
+          guia segun los eventos de Google Calendar.
+        </p>
+
+        <form class="gcal-modal__form" id="googleSyncForm">
+          <label class="gcal-modal__field">
+            <span>ID de calendario</span>
+            <input
+              type="text"
+              id="googleCalendarId"
+              name="googleCalendarId"
+              value="primary"
+              placeholder="primary"
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="gcal-modal__field">
+            <span>Estado de conexion</span>
+            <input
+              type="text"
+              id="googleConnectionStatus"
+              value="No conectado"
+              readonly
+            />
+          </label>
+        </form>
+
+        <p class="gcal-modal__meta" id="googleLastSyncAt">
+          Ultima sincronizacion: aun no realizada
+        </p>
+        <p class="gcal-modal__feedback" id="googleSyncFeedback" aria-live="polite"></p>
+
+        <div class="gcal-modal__actions">
+          <button class="btn btn--primary" type="button" id="btnGoogleConnect">
+            Conectar con Google
+          </button>
+          <button
+            class="btn btn--secondary"
+            type="button"
+            id="btnGoogleRunSync"
+            disabled
+          >
+            Sincronizar ahora
+          </button>
+          <button
+            class="btn btn--secondary"
+            type="button"
+            id="btnGoogleDisconnect"
+            disabled
+          >
+            Desconectar
+          </button>
+        </div>
+      </section>
+    </div>
+
     <div
       data-guide-chat-widget
       data-component-path="../../../components/guide-chat-widget.html"

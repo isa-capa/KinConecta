@@ -206,7 +206,7 @@ body {
     margin-left: 8px;
     font-size: 14px;
     font-weight: 500;
-    color: #15803d;
+    color: #16232a;
 }
 
 /* Divisor */
@@ -445,7 +445,7 @@ body {
 }
 
 .tour-status.active {
-    color: #16a34a;
+    color: #16232a;
 }
 
 .tour-status.draft {
@@ -517,7 +517,7 @@ body {
     align-items: center;
     gap: 4px;
     background-color: rgba(234, 179, 8, 0.1);
-    color: #ca8a04;
+    color: #55656e;
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 12px;
@@ -926,7 +926,7 @@ select.form-control {
 }
 
 .alert-success .material-symbols-outlined {
-    color: #16a34a;
+    color: #16232a;
 }
 
 .alert-danger .material-symbols-outlined {

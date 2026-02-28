@@ -377,7 +377,7 @@ body {
   font-size: 12px;
   font-weight: 700;
   padding: 6px 12px;
-  color: #0a7b3f;
+  color: #16232a;
   background: #dcf8e8;
 }
 
@@ -429,7 +429,7 @@ body {
   margin: 0;
   font-size: 30px;
   line-height: 1.1;
-  color: #cf7100;
+  color: #55656e;
   font-weight: 800;
 }
 
@@ -686,7 +686,7 @@ body {
 }
 
 .review-card__header span {
-  color: #cf7100;
+  color: #55656e;
   font-weight: 700;
 }
 
@@ -724,7 +724,7 @@ body {
 
 .availability-calendar .available {
   background: #dcf8e8;
-  color: #167445;
+  color: #16232a;
 }
 
 .availability-calendar .busy {
@@ -820,7 +820,7 @@ body {
   border: none;
   border-radius: 999px;
   background: rgba(255, 91, 4, 0.12);
-  color: #9f4b00;
+  color: #55656e;
   font-weight: 700;
   font-size: 12px;
   padding: 8px 12px;
@@ -835,7 +835,7 @@ body {
 
 .profile-media-modal__status {
   min-height: 20px;
-  color: #0b6f78;
+  color: #16232a;
   font-size: 13px;
   line-height: 1.35;
 }

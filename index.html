@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Kin Conecta - Inicio</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;700&display=swap"
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="./frontend/src/styles/main.css" />
   </head>
 
-  <body>
+  <body class="marketing-page">
     <header class="header" id="top">
       <div class="container header__container">
         <div class="header__nav-wrapper">
@@ -170,6 +171,7 @@
                   class="landing-search"
                   role="search"
                   aria-label="Buscar tours por ciudad"
+                  data-landing-search
                 >
                   <div class="landing-search__inner">
                     <span class="material-symbols-outlined" aria-hidden="true"
@@ -183,48 +185,36 @@
                         placeholder="Busca una ciudad (ej. Oaxaca, CDMX)"
                         aria-label="Buscar ciudad"
                         autocomplete="off"
+                        data-landing-search-input
                       />
                       <ul
                         class="landing-search__list"
                         role="listbox"
                         aria-label="Ciudades sugeridas"
+                        data-landing-search-list
                       >
-                        <li class="landing-search__option" role="option">
-                          Ciudad de México
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Oaxaca
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Guadalajara
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Monterrey
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Mérida
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Cancún
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Tulum
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          Puebla
-                        </li>
-                        <li class="landing-search__option" role="option">
-                          San Miguel de Allende
+                        <li
+                          class="landing-search__option landing-search__option--muted"
+                          role="option"
+                          aria-disabled="true"
+                        >
+                          Cargando ubicaciones...
                         </li>
                       </ul>
                     </div>
                     <button
                       class="btn btn--primary btn--ripple landing-search__btn"
                       type="button"
+                      data-landing-search-button
                     >
                       Buscar
                     </button>
                   </div>
+                  <p
+                    class="landing-search__status"
+                    data-landing-search-status
+                    aria-live="polite"
+                  ></p>
                 </div>
               </div>
 
@@ -238,7 +228,7 @@
                   <p class="landing-hero__stat-label">Satisfacción reportada</p>
                 </div>
                 <div class="landing-hero__stat">
-                  <p class="landing-hero__stat-value">24h</p>
+                  <p class="landing-hero__stat-value">1 h</p>
                   <p class="landing-hero__stat-label">
                     Tiempo medio de respuesta
                   </p>
@@ -428,7 +418,13 @@
 
             <div class="landing-testimonials" aria-label="Historias reales">
               <article class="landing-testimonials__item">
-                <div class="landing-testimonials__avatar">AR</div>
+                <div class="landing-testimonials__avatar">
+                  <img
+                    src="./frontend/src/assets/team/isaAboutUs.png"
+                    alt="Foto de Ariadna R."
+                    loading="lazy"
+                  />
+                </div>
                 <p class="landing-testimonials__quote">
                   "Encontramos un guía en horas y conocimos lugares que nunca
                   hubiéramos visto solos."
@@ -437,7 +433,13 @@
               </article>
 
               <article class="landing-testimonials__item">
-                <div class="landing-testimonials__avatar">LM</div>
+                <div class="landing-testimonials__avatar">
+                  <img
+                    src="./frontend/src/assets/team/juanAboutUs.png"
+                    alt="Foto de Luis M."
+                    loading="lazy"
+                  />
+                </div>
                 <p class="landing-testimonials__quote">
                   "Ahora mis recorridos llegan a gente que realmente quiere
                   vivir la cultura local."
@@ -446,7 +448,13 @@
               </article>
 
               <article class="landing-testimonials__item">
-                <div class="landing-testimonials__avatar">SC</div>
+                <div class="landing-testimonials__avatar">
+                  <img
+                    src="./frontend/src/assets/team/Gabriel_Flores.jpg"
+                    alt="Foto de Sofía y Carlos"
+                    loading="lazy"
+                  />
+                </div>
                 <p class="landing-testimonials__quote">
                   "Nos sentimos seguros y acompañados en cada paso. Fue una
                   experiencia hermosa."
@@ -520,7 +528,7 @@
                 </p>
               </div>
               <div class="match-kpis__item">
-                <p class="match-kpis__value">24h</p>
+                <p class="match-kpis__value">1 h</p>
                 <p class="match-kpis__label">
                   Tiempo medio para primer match sugerido
                 </p>
@@ -865,11 +873,10 @@
             <div class="footer__cols">
               <div class="footer__col">
                 <p class="footer__title">Producto</p>
-                <a class="footer__link" href="./index.html">Inicio</a>
-                <a class="footer__link" href="./index.html#explorar"
+                <a class="footer__link" href="#top">Inicio</a>
+                <a class="footer__link" href="#explorar"
                   >Explorar</a
                 >
-                <a class="footer__link" href="#beneficios">Beneficios</a>
                 <a
                   class="footer__link"
                   href="./frontend/src/pages/aboutus.html#contacto"
@@ -886,12 +893,14 @@
                 >
                 <a
                   class="footer__link"
-                  href="./frontend/src/pages/settings/help.html"
+                  href="#"
+                  data-footer-modal="help"
                   >Ayuda</a
                 >
                 <a
                   class="footer__link"
-                  href="./frontend/src/pages/settings/termsOfService.html"
+                  href="#"
+                  data-footer-modal="terms"
                   >Términos</a
                 >
               </div>
@@ -901,17 +910,28 @@
                 <p class="footer__text">
                   Recibe noticias sobre producto y comunidad.
                 </p>
-                <form class="footer__form" action="#" method="get">
+                <form
+                  class="footer__form"
+                  action="#"
+                  method="get"
+                  data-footer-newsletter-form
+                >
                   <input
                     class="footer__input"
                     type="email"
                     placeholder="tu@email.com"
                     aria-label="Correo para newsletter"
+                    required
                   />
                   <button class="btn btn--primary btn--ripple" type="submit">
                     Unirme
                   </button>
                 </form>
+                <p
+                  class="footer__feedback"
+                  data-footer-feedback
+                  aria-live="polite"
+                ></p>
               </div>
             </div>
           </div>
@@ -933,6 +953,7 @@
 
     <script src="./frontend/src/scripts/api/http-client.js"></script>
     <script src="./frontend/src/scripts/api/auth-api-services.js"></script>
+    <script src="./frontend/src/scripts/api/tourist-api-services.js"></script>
     <!-- TEMPORAL: usuarios locales de prueba para login sin backend. -->
     <script src="./frontend/src/scripts/api/auth-temp-users.js"></script>
     <script src="./frontend/src/scripts/components/onboarding-modal.js"></script>
@@ -940,3 +961,4 @@
     <script src="./frontend/src/scripts/landing.js"></script>
   </body>
 </html>
+

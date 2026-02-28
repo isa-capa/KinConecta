@@ -31,6 +31,10 @@
       createBlock: "/guides/{guideId}/calendar/blocks",
       removeBlock: "/guides/{guideId}/calendar/blocks/{blockId}",
       syncGoogle: "/guides/{guideId}/calendar/google/sync",
+      googleStatus: "/guides/{guideId}/calendar/google/status",
+      googleOAuthUrl: "/guides/{guideId}/calendar/google/oauth/url",
+      googleOAuthExchange: "/guides/{guideId}/calendar/google/oauth/exchange",
+      googleDisconnect: "/guides/{guideId}/calendar/google/disconnect",
     },
     incomes: {
       kpis: "/guides/{guideId}/incomes/kpis",
@@ -113,6 +117,14 @@
       api.delete(path(endpoints.calendar.removeBlock, { guideId, blockId })),
     syncGoogle: (guideId, payload) =>
       api.post(path(endpoints.calendar.syncGoogle, { guideId }), payload || {}),
+    getGoogleStatus: (guideId) =>
+      api.get(path(endpoints.calendar.googleStatus, { guideId })),
+    getGoogleOAuthUrl: (guideId, payload) =>
+      api.post(path(endpoints.calendar.googleOAuthUrl, { guideId }), payload || {}),
+    exchangeGoogleOAuthCode: (guideId, payload) =>
+      api.post(path(endpoints.calendar.googleOAuthExchange, { guideId }), payload || {}),
+    disconnectGoogle: (guideId) =>
+      api.post(path(endpoints.calendar.googleDisconnect, { guideId }), {}),
   };
 
   const incomes = {

@@ -120,7 +120,7 @@
   margin: 0;
   font-size: 30px;
   font-weight: 900;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
 }
 
 .profile-hero__meta {
@@ -177,7 +177,7 @@
 
 .profile-card h3 {
   margin: 0 0 10px;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
   font-size: 18px;
   font-weight: 900;
 }
@@ -228,7 +228,7 @@
 .profile-tags span {
   border-radius: 999px;
   background: rgba(7, 80, 86, 0.09);
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
   font-size: 12px;
   font-weight: 700;
   padding: 5px 9px;
@@ -264,7 +264,7 @@
   margin: 0;
   font-size: 15px;
   font-weight: 800;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
 }
 
 .trip-history__meta {
@@ -355,7 +355,7 @@
   border: none;
   border-radius: 999px;
   background: rgba(255, 91, 4, 0.12);
-  color: #9f4b00;
+  color: #55656e;
   font-weight: 700;
   font-size: 12px;
   padding: 8px 12px;
@@ -370,7 +370,7 @@
 
 .profile-media-modal__status {
   min-height: 20px;
-  color: #0b6f78;
+  color: #16232a;
   font-size: 13px;
   line-height: 1.35;
 }

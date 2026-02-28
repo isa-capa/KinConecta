@@ -121,12 +121,12 @@
   font-size: 13px;
   font-weight: 800;
   color: #fff;
-  background: #af3808;
+  background: var(--color-primary);
   cursor: pointer;
   transition: background 160ms ease, transform 160ms ease;
 }
 
 .legal-modal__button:hover {
-  background: #c2410b;
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
 }

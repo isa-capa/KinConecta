@@ -90,6 +90,18 @@
   flex-wrap: wrap;
 }
 
+.footer__feedback {
+  margin-top: 0.55rem;
+  min-height: 1.2rem;
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: #d9fbe0;
+}
+
+.footer__feedback.is-error {
+  color: #ffd5d5;
+}
+
 .footer__input {
   flex: 1;
   min-width: 200px;

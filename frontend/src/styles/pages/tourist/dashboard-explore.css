@@ -168,7 +168,7 @@
   margin: 0;
   font-size: 17px;
   font-weight: 900;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
 }
 
 .explore-card__meta {
@@ -206,7 +206,7 @@
 }
 
 .explore-card__price {
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
   font-weight: 900;
 }
 

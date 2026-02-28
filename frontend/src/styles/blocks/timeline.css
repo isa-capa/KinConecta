@@ -42,7 +42,7 @@
 
 .timeline__year {
   display: block;
-  color: var(--color-sea);
+  color: var(--color-ink);
   font-weight: 900;
   font-size: 0.85rem;
   letter-spacing: 0.14em;

@@ -28,7 +28,7 @@
 .favorites-tab__badge {
   border-radius: 999px;
   background: rgba(7, 80, 86, 0.1);
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
   font-size: 11px;
   font-weight: 800;
   padding: 2px 7px;
@@ -129,14 +129,14 @@
   margin: 0;
   font-size: 17px;
   font-weight: 900;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
 }
 
 .favorite-card__price {
   margin: 0;
   font-size: 14px;
   font-weight: 900;
-  color: var(--tourist-sea);
+  color: var(--tourist-text);
 }
 
 .favorite-card__price small {

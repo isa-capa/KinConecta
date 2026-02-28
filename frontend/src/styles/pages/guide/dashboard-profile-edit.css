@@ -114,7 +114,7 @@ body {
 
 .btn-ghost {
   background: transparent;
-  color: var(--secondary);
+  color: var(--text-dark);
 }
 
 .btn-ghost:hover {
@@ -227,7 +227,7 @@ body {
 }
 
 .form-feedback.is-success {
-  color: #0b7a3f;
+  color: #16232a;
   font-weight: 700;
 }
 

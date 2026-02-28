@@ -58,7 +58,7 @@
   margin: 0;
   font-size: 32px;
   font-weight: 1000;
-  color: var(--color-secondary);
+  color: var(--text);
 }
 
 .t-dashboard__subtitle {
@@ -171,7 +171,7 @@
 
 .trip-card__status--ok {
   background: rgba(34, 197, 94, 0.14);
-  color: #166534;
+  color: #16232a;
   border-color: rgba(34, 197, 94, 0.22);
 }
 
@@ -260,7 +260,7 @@
   margin: 0;
   font-size: 20px;
   font-weight: 1000;
-  color: var(--color-secondary);
+  color: var(--text);
 }
 
 .section__title--sm {
@@ -343,7 +343,7 @@
 
 .guide-card__rating .material-symbols-outlined {
   font-size: 16px;
-  color: #fb9d0b;
+  color: #55656e;
 }
 
 .guide-card__tags {
@@ -401,7 +401,7 @@
 }
 
 .guide-card__price strong {
-  color: var(--color-secondary);
+  color: var(--text);
   font-size: 16px;
   font-weight: 1000;
 }

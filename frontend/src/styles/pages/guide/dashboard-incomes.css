@@ -346,7 +346,7 @@ body {
 
 .stat-icon.green {
     background-color: rgba(34, 197, 94, 0.1);
-    color: #16a34a;
+    color: #16232a;
 }
 
 .stat-icon.orange {
@@ -368,7 +368,7 @@ body {
 
 .stat-change {
     background-color: rgba(34, 197, 94, 0.1);
-    color: #16a34a;
+    color: #16232a;
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 12px;
@@ -377,7 +377,7 @@ body {
 
 .stat-change.positive {
     background-color: rgba(34, 197, 94, 0.1);
-    color: #16a34a;
+    color: #16232a;
 }
 
 .stat-comparison {
@@ -620,7 +620,7 @@ body {
 
 .transaction-icon.green {
     background-color: rgba(34, 197, 94, 0.1);
-    color: #16a34a;
+    color: #16232a;
 }
 
 .transaction-icon.red {
@@ -659,12 +659,12 @@ body {
 
 .status-badge.yellow {
     background-color: rgba(234, 179, 8, 0.1);
-    color: #a16207;
+    color: #55656e;
 }
 
 .status-badge.green {
     background-color: rgba(34, 197, 94, 0.1);
-    color: #15803d;
+    color: #16232a;
 }
 
 .status-badge.gray {

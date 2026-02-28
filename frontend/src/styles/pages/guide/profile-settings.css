@@ -71,7 +71,7 @@ body { font-family: var(--kc-font-family); background: var(--bg); color: var(--t
 
 .badge-verified {
     display: inline-flex; align-items: center; gap: 6px; background: #DCFCE7;
-    color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 10px;
+    color: #16232a; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 10px;
 }
 
 .card-divider { border: 0; border-top: 1px solid var(--border); margin: 24px 0; }

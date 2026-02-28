@@ -340,4 +340,115 @@
       showToast();
     });
   }
+
+  const footerNewsletterForm = qs("[data-footer-newsletter-form]");
+  const footerFeedback = qs("[data-footer-feedback]");
+  if (footerNewsletterForm && footerFeedback) {
+    const newsletterEmail = qs('input[type="email"]', footerNewsletterForm);
+
+    footerNewsletterForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = newsletterEmail?.value.trim() || "";
+      const valid = isEmail(email);
+
+      footerFeedback.classList.remove("is-error");
+      if (!valid) {
+        footerFeedback.textContent = "Escribe un correo valido para unirte.";
+        footerFeedback.classList.add("is-error");
+        return;
+      }
+
+      footerFeedback.textContent = "Listo, te has unido a las novedades de Kin Conecta.";
+      footerNewsletterForm.reset();
+    });
+  }
+
+  const footerModalLinks = qsa("[data-footer-modal]");
+  if (footerModalLinks.length) {
+    const footerModalDefs = {
+      terms: {
+        title: "Terminos de Servicio",
+        path: "../components/legal/terms-of-service.html",
+      },
+      help: {
+        title: "Centro de Ayuda",
+        path: "../components/legal/help-center.html",
+      },
+    };
+
+    const modal = document.createElement("div");
+    modal.className = "legal-modal";
+    modal.setAttribute("aria-hidden", "true");
+    modal.innerHTML = `
+      <div class="legal-modal__backdrop" data-footer-modal-close></div>
+      <section class="legal-modal__panel" role="dialog" aria-modal="true" aria-labelledby="footer-legal-title">
+        <header class="legal-modal__header">
+          <h2 class="legal-modal__title" id="footer-legal-title"></h2>
+          <button class="legal-modal__close" type="button" aria-label="Cerrar" data-footer-modal-close>
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </header>
+        <div class="legal-modal__body">
+          <div class="legal-modal__scroll legal-modal__content" data-footer-modal-content></div>
+        </div>
+        <footer class="legal-modal__footer">
+          <button class="legal-modal__button" type="button" data-footer-modal-close>Cerrar</button>
+        </footer>
+      </section>
+    `;
+    document.body.appendChild(modal);
+
+    const modalTitle = qs("#footer-legal-title", modal);
+    const modalContent = qs("[data-footer-modal-content]", modal);
+    const closeTargets = qsa("[data-footer-modal-close]", modal);
+    const cache = new Map();
+    let previousOverflow = "";
+
+    const closeModal = () => {
+      modal.classList.remove("legal-modal--open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = previousOverflow;
+    };
+
+    const loadMarkup = async (path) => {
+      if (cache.has(path)) return cache.get(path);
+      const response = await fetch(path, { cache: "no-cache" });
+      if (!response.ok) throw new Error("No se pudo cargar el contenido: " + path);
+      const html = await response.text();
+      cache.set(path, html);
+      return html;
+    };
+
+    const openModal = async (key) => {
+      const definition = footerModalDefs[key];
+      if (!definition || !modalTitle || !modalContent) return;
+
+      try {
+        modalTitle.textContent = definition.title;
+        modalContent.innerHTML = await loadMarkup(definition.path);
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        modal.classList.add("legal-modal--open");
+        modal.setAttribute("aria-hidden", "false");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    footerModalLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        openModal(link.getAttribute("data-footer-modal"));
+      });
+    });
+
+    closeTargets.forEach((target) => {
+      target.addEventListener("click", closeModal);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+  }
 })();
