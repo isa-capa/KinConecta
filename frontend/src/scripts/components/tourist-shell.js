@@ -27,6 +27,148 @@
     return prefix.endsWith("/") ? prefix : prefix + "/";
   }
 
+  const AUTH_STORAGE_KEYS = Object.freeze([
+    "kc_temp_auth_session_v1",
+    "kcAuthMode",
+    "kcAuthToken",
+    "kcUserRole",
+    "kc_guide_id",
+    "kc_tourist_id",
+    "kcOnboardingRole",
+  ]);
+
+  function getSessionSnapshot() {
+    try {
+      const rawSession = localStorage.getItem("kc_temp_auth_session_v1");
+      if (!rawSession) return null;
+      const parsed = JSON.parse(rawSession);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function resolveLandingPath() {
+    const currentPath = String(window.location.pathname || "").replace(/\\/g, "/").toLowerCase();
+    if (currentPath.includes("/frontend/src/pages/")) {
+      return "../../../../../index.html";
+    }
+    return "./index.html";
+  }
+
+  async function runLogout() {
+    try {
+      // TODO(BACKEND): usar endpoint de logout del backend cuando este disponible.
+      const maybeLogout = window.KCTouristApi?.auth?.logout;
+      if (typeof maybeLogout === "function") {
+        await maybeLogout();
+      }
+    } catch (error) {
+      console.warn("Tourist logout API fallback enabled:", error);
+    } finally {
+      AUTH_STORAGE_KEYS.forEach((key) => {
+        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+      });
+      window.location.href = resolveLandingPath();
+    }
+  }
+
+  function bindLogoutTrigger(trigger) {
+    if (!trigger || trigger.dataset.logoutBound === "true") return;
+    trigger.dataset.logoutBound = "true";
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      void runLogout();
+    });
+  }
+
+  function setupLogoutActions() {
+    const logoutTriggers = [...document.querySelectorAll("#btnLogout, [data-user-logout]")];
+    logoutTriggers.forEach(bindLogoutTrigger);
+  }
+
+  function setupTopbarUserMenu() {
+    const root = document.querySelector("[data-shell-user-menu]");
+    if (!root || root.dataset.userMenuReady === "true") return;
+
+    const session = getSessionSnapshot();
+    const sidebarUserName = String(document.getElementById("userName")?.textContent || "").trim();
+    const fullName = String(session?.fullName || sidebarUserName || "Turista").trim();
+    const roleLabel = "TURISTA";
+    const initials = getInitials(fullName);
+    const avatarUrl =
+      normalizeAvatarUrl(session?.avatarUrl) ||
+      resolveTemporaryAvatar(`tourist_menu_${fullName || "kinconecta"}`);
+    const avatarMarkup = avatarUrl
+      ? `<img src="${escapeHtml(avatarUrl)}" alt="Avatar de ${escapeHtml(fullName)}" loading="lazy" />`
+      : escapeHtml(initials);
+
+    root.classList.add("kc-user-menu");
+    root.innerHTML = `
+      <button class="kc-user-menu__trigger" type="button" aria-haspopup="menu" aria-expanded="false" data-user-menu-trigger>
+        <span class="kc-user-menu__avatar">${avatarMarkup}</span>
+        <span class="kc-user-menu__meta">
+          <span class="kc-user-menu__name">${escapeHtml(fullName)}</span>
+          <span class="kc-user-menu__role">${roleLabel}</span>
+        </span>
+        <span class="material-symbols-outlined kc-user-menu__chevron" aria-hidden="true">expand_more</span>
+      </button>
+      <div class="kc-user-menu__dropdown" role="menu" hidden>
+        <a class="kc-user-menu__item" href="./profileTourist.html" role="menuitem">
+          <span class="material-symbols-outlined" aria-hidden="true">person</span>
+          <span>Mi perfil</span>
+        </a>
+        <a class="kc-user-menu__item" href="./help.html" role="menuitem">
+          <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+          <span>Ajustes</span>
+        </a>
+        <div class="kc-user-menu__divider" aria-hidden="true"></div>
+        <button class="kc-user-menu__item kc-user-menu__item--danger" type="button" role="menuitem" data-user-logout>
+          <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+          <span>Cerrar sesi&oacute;n</span>
+        </button>
+      </div>
+    `;
+
+    const trigger = root.querySelector("[data-user-menu-trigger]");
+    const dropdown = root.querySelector(".kc-user-menu__dropdown");
+    const closeMenu = () => {
+      root.classList.remove("kc-user-menu--open");
+      trigger?.setAttribute("aria-expanded", "false");
+      dropdown?.setAttribute("hidden", "hidden");
+    };
+    const openMenu = () => {
+      root.classList.add("kc-user-menu--open");
+      trigger?.setAttribute("aria-expanded", "true");
+      dropdown?.removeAttribute("hidden");
+    };
+
+    trigger?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (root.classList.contains("kc-user-menu--open")) {
+        closeMenu();
+        return;
+      }
+      openMenu();
+    });
+
+    dropdown?.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!root.contains(event.target)) closeMenu();
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+
+    root.dataset.userMenuReady = "true";
+  }
+
   function hydrateSidebar(sidebar, activeKey, pagesPrefix, assetsPrefix) {
     const links = sidebar.querySelectorAll("[data-href]");
     links.forEach((link) => {
@@ -54,11 +196,26 @@
 
   function createMobileSidebarFallbackToggle() {
     const button = document.createElement("button");
-    button.className = "tourist-sidebar-toggle";
     button.type = "button";
     button.setAttribute("aria-label", "Abrir men\u00fa");
     button.setAttribute("aria-expanded", "false");
     button.innerHTML = '<span class="material-symbols-outlined">menu</span>';
+
+    const breadcrumb = document.querySelector(".topbar .breadcrumb");
+    if (breadcrumb) {
+      button.className = "topbar__menu-btn sidebar-toggle-fallback";
+      breadcrumb.prepend(button);
+      return button;
+    }
+
+    const topbar = document.querySelector(".topbar");
+    if (topbar) {
+      button.className = "topbar__menu-btn sidebar-toggle-fallback";
+      topbar.prepend(button);
+      return button;
+    }
+
+    button.className = "tourist-sidebar-toggle";
     document.body.appendChild(button);
     return button;
   }
@@ -564,7 +721,7 @@
   function setupNotifications() {
     const triggers = [
       ...document.querySelectorAll(
-        "#btnNotif, .topbar__notif, .notification-button, [data-notifications-trigger]",
+        "#btnNotif, .topbar__notif, .notification-button, .icon-btn[aria-label='Notificaciones'], [data-notifications-trigger]",
       ),
     ];
     if (!triggers.length) return;
@@ -696,6 +853,8 @@
   document.addEventListener("DOMContentLoaded", async () => {
     await mountSidebar();
     setupResponsiveSidebar();
+    setupTopbarUserMenu();
+    setupLogoutActions();
     await mountChatWidget();
     setupNotifications();
   });

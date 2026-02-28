@@ -1,5 +1,9 @@
 ﻿(function () {
   const ONBOARDING_STORAGE_KEY = "match_profile_v2";
+  const AUTH_LOGIN_DRAFT_STORAGE_KEY = "kc_auth_login_draft_v1";
+  const AUTH_REGISTER_DRAFT_STORAGE_KEY = "kc_auth_register_draft_v1";
+  const FORGOT_PASSWORD_PREVIEW_MESSAGE =
+    "Enviaremos instrucciones a tu correo electr\u00f3nico para restablecer tu contrase\u00f1a.";
 
   // TODO(BACKEND): poner en false cuando /auth/register este disponible y estable.
   const ALLOW_REGISTER_FLOW_WITHOUT_BACKEND = true;
@@ -116,6 +120,98 @@
       const fieldName = element.getAttribute("data-auth-error-for");
       if (!fieldName) return;
       setFieldError(form, fieldName, "");
+    });
+  }
+
+  function readDraft(storageKey) {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return null;
+      return parsed;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function writeDraft(storageKey, values) {
+    if (!values || typeof values !== "object") return;
+    try {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          values,
+          updatedAt: new Date().toISOString(),
+        }),
+      );
+    } catch (_error) {
+      // Ignorar errores de cuota o modo privado.
+    }
+  }
+
+  function clearDraft(storageKey) {
+    localStorage.removeItem(storageKey);
+  }
+
+  function collectFormValues(form) {
+    if (!form) return {};
+    const result = {};
+    const elements = [...form.elements];
+    elements.forEach((element) => {
+      const name = element?.name;
+      if (!name) return;
+      if (element.type === "radio") {
+        if (element.checked) result[name] = element.value;
+        return;
+      }
+      if (element.type === "checkbox") {
+        result[name] = Boolean(element.checked);
+        return;
+      }
+      result[name] = element.value ?? "";
+    });
+    return result;
+  }
+
+  function applyRoleSelectionVisual(form, roleValue) {
+    if (!form) return;
+    const normalizedRole = normalizeAccountRole(roleValue);
+    const hiddenRoleInput = form.querySelector('input[name="accountRole"]');
+    if (hiddenRoleInput) hiddenRoleInput.value = normalizedRole;
+
+    const roleButtons = [...form.querySelectorAll("[data-register-role]")];
+    roleButtons.forEach((button) => {
+      const role = normalizeAccountRole(button.getAttribute("data-register-role"));
+      button.classList.toggle("is-selected", Boolean(normalizedRole) && role === normalizedRole);
+    });
+  }
+
+  function restoreFormValues(form, values) {
+    if (!form || !values || typeof values !== "object") return;
+    const elements = [...form.elements];
+    elements.forEach((element) => {
+      const name = element?.name;
+      if (!name || !(name in values)) return;
+      const value = values[name];
+      if (element.type === "radio") {
+        element.checked = String(element.value) === String(value);
+        return;
+      }
+      if (element.type === "checkbox") {
+        element.checked = Boolean(value);
+        return;
+      }
+      element.value = value ?? "";
+    });
+  }
+
+  function hasFormProgress(form) {
+    if (!form) return false;
+    const values = collectFormValues(form);
+    return Object.entries(values).some(([name, value]) => {
+      if (name === "accountRole") return Boolean(normalizeAccountRole(value));
+      return String(value || "").trim() !== "";
     });
   }
 
@@ -389,12 +485,58 @@
     roleButtons.forEach((button) => button.classList.remove("is-selected"));
   }
 
-  function resetRegisterForm(form) {
+  function persistLoginDraft(form) {
+    if (!form) return;
+    writeDraft(AUTH_LOGIN_DRAFT_STORAGE_KEY, collectFormValues(form));
+  }
+
+  function persistRegisterDraft(form) {
+    if (!form) return;
+    writeDraft(AUTH_REGISTER_DRAFT_STORAGE_KEY, collectFormValues(form));
+  }
+
+  function restoreLoginDraft(form) {
+    if (!form) return;
+    const draft = readDraft(AUTH_LOGIN_DRAFT_STORAGE_KEY);
+    if (!draft?.values) return;
+    restoreFormValues(form, draft.values);
+  }
+
+  function restoreRegisterDraft(form) {
+    if (!form) return;
+    const draft = readDraft(AUTH_REGISTER_DRAFT_STORAGE_KEY);
+    if (!draft?.values) return;
+    restoreFormValues(form, draft.values);
+    applyRoleSelectionVisual(form, draft.values.accountRole);
+  }
+
+  function resetRegisterForm(form, options) {
+    const config = options || {};
     if (!form) return;
     form.reset();
     clearRegisterRoleSelection(form);
     clearAllFieldErrors(form);
     showFeedback(form, "");
+    if (config.clearDraft) {
+      clearDraft(AUTH_REGISTER_DRAFT_STORAGE_KEY);
+    }
+  }
+
+  function persistModalDrafts() {
+    const loginForm = dom.views.get("login")?.querySelector('[data-auth-form="login"]');
+    persistLoginDraft(loginForm);
+    persistRegisterDraft(registerFormRef);
+  }
+
+  function confirmCloseWithProgress() {
+    const hasLoginProgress = hasFormProgress(
+      dom.views.get("login")?.querySelector('[data-auth-form="login"]'),
+    );
+    const hasRegisterProgress = hasFormProgress(registerFormRef);
+    if (!hasLoginProgress && !hasRegisterProgress) return true;
+    return window.confirm(
+      "Guardaremos tu avance para que puedas continuar luego. Deseas cerrar esta ventana?",
+    );
   }
 
   function setView(type, options) {
@@ -417,7 +559,12 @@
     }
 
     if (activeType === "register" && config.resetRegisterForm) {
-      resetRegisterForm(registerFormRef);
+      resetRegisterForm(registerFormRef, { clearDraft: true });
+    } else if (activeType === "register") {
+      restoreRegisterDraft(registerFormRef);
+    } else {
+      const loginForm = dom.views.get("login")?.querySelector('[data-auth-form="login"]');
+      restoreLoginDraft(loginForm);
     }
   }
 
@@ -426,7 +573,7 @@
     const shouldResetRegisterForm =
       typeof config.resetRegisterForm === "boolean"
         ? config.resetRegisterForm
-        : type === "register";
+        : false;
 
     setView(type, { resetRegisterForm: shouldResetRegisterForm });
     previousBodyOverflow = document.body.style.overflow;
@@ -435,8 +582,13 @@
     document.body.style.overflow = "hidden";
   }
 
-  function closeModal() {
+  function closeModal(options) {
+    const config = options || {};
     if (!dom.modal) return;
+    if (!config.force && !confirmCloseWithProgress()) return;
+    if (config.persistDraft !== false) {
+      persistModalDrafts();
+    }
     dom.modal.classList.remove("auth-modal--open");
     dom.modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = previousBodyOverflow;
@@ -563,7 +715,8 @@
     const profilerRole = mapAccountRoleToProfilerRole(payload.accountRole);
     localStorage.setItem("kcOnboardingRole", profilerRole);
     seedProfilerState(payload);
-    closeModal();
+    clearDraft(AUTH_REGISTER_DRAFT_STORAGE_KEY);
+    closeModal({ force: true, persistDraft: false });
 
     if (window.KCOnboardingModal?.open) {
       window.KCOnboardingModal.open(profilerRole);
@@ -625,6 +778,7 @@
         });
         clearFieldError(form, "accountRole");
         showFeedback(form, "");
+        persistRegisterDraft(form);
       });
     });
   }
@@ -658,7 +812,8 @@
           role: tempUser.role,
         });
         window.setTimeout(() => {
-          closeModal();
+          clearDraft(AUTH_LOGIN_DRAFT_STORAGE_KEY);
+          closeModal({ force: true, persistDraft: false });
           window.location.href = resolveDashboardPath(tempUser.role);
         }, 240);
         return;
@@ -675,7 +830,10 @@
       if (token) localStorage.setItem("kcAuthToken", token);
 
       showFeedback(form, "Sesi\u00f3n iniciada correctamente.", true);
-      window.setTimeout(closeModal, 420);
+      window.setTimeout(() => {
+        clearDraft(AUTH_LOGIN_DRAFT_STORAGE_KEY);
+        closeModal({ force: true, persistDraft: false });
+      }, 420);
     } catch (error) {
       if (error?.message === "login-api-unavailable") {
         console.warn("KCAuthApi.auth.login no esta disponible.");
@@ -749,18 +907,35 @@
     }
   }
 
+  function bindDraftAutosave(form, persistFn) {
+    if (!form || typeof persistFn !== "function") return;
+    const saveDraft = () => persistFn(form);
+    form.addEventListener("input", saveDraft);
+    form.addEventListener("change", saveDraft);
+  }
+
   function setupFormHandlers() {
     const loginForm = dom.views.get("login")?.querySelector('[data-auth-form="login"]');
     const registerForm = dom.views.get("register")?.querySelector('[data-auth-form="register"]');
+    const forgotPasswordTrigger = loginForm?.querySelector("[data-auth-forgot-password]");
 
     registerFormRef = registerForm || null;
+    restoreLoginDraft(loginForm);
+    restoreRegisterDraft(registerFormRef);
     setupRegisterRoleSelection(registerFormRef);
     applyFieldInputRestrictions(loginForm);
     applyFieldInputRestrictions(registerFormRef);
+    bindDraftAutosave(loginForm, persistLoginDraft);
+    bindDraftAutosave(registerFormRef, persistRegisterDraft);
 
     loginForm?.addEventListener("submit", (event) => {
       event.preventDefault();
       handleLogin(loginForm);
+    });
+
+    forgotPasswordTrigger?.addEventListener("click", (event) => {
+      event.preventDefault();
+      showFeedback(loginForm, FORGOT_PASSWORD_PREVIEW_MESSAGE, true);
     });
 
     registerForm?.addEventListener("submit", (event) => {
@@ -773,12 +948,20 @@
     dom.tabs.forEach((tab) => {
       tab.addEventListener("click", () => {
         const type = tab.getAttribute("data-auth-tab");
-        setView(type, { resetRegisterForm: type === "register" });
+        setView(type, { resetRegisterForm: false });
       });
     });
 
     dom.closeTriggers.forEach((trigger) => {
-      trigger.addEventListener("click", closeModal);
+      trigger.addEventListener("click", (event) => {
+        const isBackdrop = trigger.classList.contains("auth-modal__backdrop");
+        if (isBackdrop) {
+          event.preventDefault();
+          persistModalDrafts();
+          return;
+        }
+        closeModal();
+      });
     });
 
     window.addEventListener("keydown", (event) => {

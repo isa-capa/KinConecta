@@ -2,7 +2,6 @@
   const dom = {
     modal: null,
     frame: null,
-    closeTriggers: [],
   };
 
   let previousBodyOverflow = "";
@@ -44,7 +43,7 @@
     wrapper.setAttribute("data-onboarding-modal", "");
     wrapper.setAttribute("aria-hidden", "true");
     wrapper.innerHTML = `
-      <div class="onboarding-modal__backdrop" data-onboarding-close></div>
+      <div class="onboarding-modal__backdrop"></div>
       <section class="onboarding-modal__panel" role="dialog" aria-modal="true" aria-label="Formulario de registro de perfil">
         <iframe class="onboarding-modal__frame" title="Formulario de onboarding" data-onboarding-frame></iframe>
       </section>
@@ -53,11 +52,6 @@
     document.body.appendChild(wrapper);
     dom.modal = wrapper;
     dom.frame = wrapper.querySelector("[data-onboarding-frame]");
-    dom.closeTriggers = [...wrapper.querySelectorAll("[data-onboarding-close]")];
-
-    dom.closeTriggers.forEach((trigger) => {
-      trigger.addEventListener("click", close);
-    });
 
     dom.frame?.addEventListener("load", () => {
       resizeFrameToContent();
@@ -104,10 +98,6 @@
   }
 
   function bindGlobalEvents() {
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") close();
-    });
-
     window.addEventListener("message", (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === "kc-onboarding-close") {

@@ -9,6 +9,7 @@ function loadAppState(state, profilesController){
 
     // UI
     if(parsed?.role) state.role = parsed.role;
+    if(typeof parsed?.stepIndex === "number") state.stepIndex = parsed.stepIndex;
     if(parsed?.answers) state.answers = parsed.answers;
     if(typeof parsed?.currentProfileId === "number") state.currentProfileId = parsed.currentProfileId;
 
@@ -26,6 +27,7 @@ function loadAppState(state, profilesController){
 function saveAppState(state, profilesController){
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
     role: state.role,
+    stepIndex: state.stepIndex,
     answers: state.answers,
     currentProfileId: state.currentProfileId,
     controller: {

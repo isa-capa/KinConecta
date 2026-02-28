@@ -5,6 +5,8 @@
   display: grid;
   place-items: center;
   padding: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   --auth-primary: var(--kc-color-primary, var(--color-primary, #ff5b04));
   --auth-primary-hover: var(--kc-color-primary-hover, var(--color-primary-hover, #e65100));
   --auth-primary-soft: rgba(255, 91, 4, 0.12);
@@ -30,11 +32,16 @@
   position: relative;
   z-index: 1;
   width: min(560px, 100%);
+  max-height: min(860px, calc(100vh - 40px));
+  max-height: min(860px, calc(100dvh - 40px));
   border-radius: 1.5rem;
   border: 1px solid #d6e1e6;
   background: #ffffff;
   box-shadow: 0 24px 56px rgba(22, 35, 42, 0.22);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .auth-modal__header {
@@ -100,6 +107,9 @@
 
 .auth-modal__body {
   padding: 14px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  min-height: 0;
 }
 
 .auth-modal__view[hidden] {
@@ -307,6 +317,24 @@
   color: #16232a;
 }
 
+.auth-form__forgot {
+  justify-self: end;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: -2px 0 4px;
+  color: var(--auth-primary);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.auth-form__forgot:hover {
+  color: var(--auth-primary-hover);
+}
+
 .auth-form__submit {
   width: 100%;
   min-height: 42px;
@@ -332,7 +360,11 @@
 
 @media (max-width: 520px) {
   .auth-modal {
-    padding: 14px;
+    padding:
+      max(12px, env(safe-area-inset-top))
+      14px
+      max(14px, env(safe-area-inset-bottom));
+    place-items: start center;
   }
 
   .auth-modal__body {
@@ -349,5 +381,11 @@
 
   .auth-register-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-height: 760px) {
+  .auth-modal {
+    place-items: start center;
   }
 }

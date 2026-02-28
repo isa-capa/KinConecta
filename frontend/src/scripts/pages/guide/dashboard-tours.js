@@ -8,6 +8,7 @@ const GuideToursApp = (() => {
     guideId: "guide_001", // TODO(AUTH): obtener desde sesión/JWT
     tours: [],
     isSaving: false,
+    modalInitialSnapshot: "",
   };
 
   const dom = {
@@ -327,11 +328,59 @@ const GuideToursApp = (() => {
     clearFormErrors();
   }
 
+  function getFormSnapshot() {
+    return JSON.stringify({
+      id: dom.fieldTourId.value.trim(),
+      title: dom.fieldTitle.value.trim(),
+      description: dom.fieldDescription.value.trim(),
+      price: String(dom.fieldPrice.value).trim(),
+      category: dom.fieldCategory.value.trim(),
+      duration: String(dom.fieldDuration.value).trim(),
+      maxGroup: String(dom.fieldMaxGroup.value).trim(),
+      meetingPoint: dom.fieldMeetingPoint.value.trim(),
+      included: dom.fieldIncluded.value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .join(","),
+      status: dom.fieldStatus.value,
+    });
+  }
+
+  function captureModalSnapshot() {
+    state.modalInitialSnapshot = getFormSnapshot();
+  }
+
+  function hasUnsavedModalChanges() {
+    return getFormSnapshot() !== state.modalInitialSnapshot;
+  }
+
+  function closeModalInternal() {
+    dom.modal.classList.remove("show");
+    document.body.style.overflow = "";
+    resetForm();
+    state.modalInitialSnapshot = "";
+  }
+
+  function requestModalClose() {
+    if (state.isSaving) return;
+    if (
+      hasUnsavedModalChanges() &&
+      !window.confirm(
+        "Tienes cambios sin guardar. Pulsa Aceptar para salir sin guardar o Cancelar para continuar editando.",
+      )
+    ) {
+      return;
+    }
+    closeModalInternal();
+  }
+
   function openModalForCreate() {
     dom.modalTitle.textContent = "Crear nuevo recorrido";
     resetForm();
     dom.modal.classList.add("show");
     document.body.style.overflow = "hidden";
+    captureModalSnapshot();
   }
 
   function openModalForEdit(tourId) {
@@ -342,12 +391,11 @@ const GuideToursApp = (() => {
     clearFormErrors();
     dom.modal.classList.add("show");
     document.body.style.overflow = "hidden";
+    captureModalSnapshot();
   }
 
   function closeModal() {
-    dom.modal.classList.remove("show");
-    document.body.style.overflow = "";
-    resetForm();
+    closeModalInternal();
   }
 
   async function createTour(payload) {
@@ -492,13 +540,20 @@ const GuideToursApp = (() => {
     dom.fieldStatus = document.getElementById("tourStatus");
 
     dom.btnCreateTour?.addEventListener("click", openModalForCreate);
-    dom.btnCloseModal?.addEventListener("click", closeModal);
-    dom.btnCancelModal?.addEventListener("click", closeModal);
+    dom.btnCloseModal?.addEventListener("click", requestModalClose);
+    dom.btnCancelModal?.addEventListener("click", requestModalClose);
     dom.form?.addEventListener("submit", handleFormSubmit);
     dom.toursGrid?.addEventListener("click", handleTourGridClick);
 
     dom.modal?.addEventListener("click", (event) => {
-      if (event.target === dom.modal) closeModal();
+      if (event.target === dom.modal) requestModalClose();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (!dom.modal?.classList.contains("show")) return;
+      event.preventDefault();
+      requestModalClose();
     });
   }
 

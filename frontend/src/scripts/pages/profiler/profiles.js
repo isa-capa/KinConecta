@@ -256,7 +256,6 @@ const formSubtitle = $("#formSubtitle");
 
 const btnBack = $("#btnBack");
 const btnNext = $("#btnNext");
-const btnSave = $("#btnSave");
 
 const btnClose = $("#btnClose");
 const stepFeedback = $("#stepFeedback");
@@ -287,11 +286,34 @@ function clearStepFeedback(){
 
 function setAnswer(key, value){
   currentAnswers()[key] = value;
+  saveAppState(state, profilesController);
   clearStepFeedback();
 }
 function getAnswer(key, fallback){
   const v = currentAnswers()[key];
   return (v === undefined ? fallback : v);
+}
+
+function hasMeaningfulValue(value){
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === "number") return Number.isFinite(value);
+  if (typeof value === "string") return value.trim() !== "";
+  if (value && typeof value === "object") {
+    return Object.values(value).some((item) => hasMeaningfulValue(item));
+  }
+  return Boolean(value);
+}
+
+function hasWizardProgress(){
+  if (state.stepIndex > 0) return true;
+  return hasMeaningfulValue(currentAnswers());
+}
+
+function confirmExitIfNeeded(){
+  if (!hasWizardProgress()) return true;
+  return window.confirm(
+    "Ya tienes avances en tu perfil. Si sales ahora, podras retomarlo despues desde este punto. Deseas salir?",
+  );
 }
 
 function setRole(role){
@@ -388,19 +410,7 @@ function renderField(f){
   container.appendChild(labelRow);
 
   if(f.type === "select"){
-    const wrap = document.createElement("div");
-    wrap.className = "select-wrap";
-
-    const sel = document.createElement("select");
-    sel.innerHTML =
-      `<option value="">${escapeHtml(f.placeholder || "Selecciona una opción")}</option>` +
-      (f.options || []).map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join("");
-
-    sel.value = getAnswer(f.key, "") || "";
-    sel.addEventListener("change", () => setAnswer(f.key, sel.value));
-
-    wrap.appendChild(sel);
-    container.appendChild(wrap);
+    container.appendChild(renderModernSelect(f));
   }
 
   if(f.type === "textarea"){
@@ -432,8 +442,18 @@ function renderField(f){
     slider.max = f.max;
     slider.step = f.step || 1;
 
-    const existing = getAnswer(f.key, (f.default ?? f.min));
-    slider.value = existing;
+    const storedValue = getAnswer(f.key, undefined);
+    const hasStoredNumericValue =
+      storedValue !== null &&
+      storedValue !== undefined &&
+      String(storedValue).trim() !== "" &&
+      Number.isFinite(Number(storedValue));
+    const initialValue = Number(hasStoredNumericValue ? storedValue : (f.default ?? f.min));
+    slider.value = initialValue;
+    // El valor inicial del slider debe contar como respuesta valida aunque el usuario no lo mueva.
+    if (!hasStoredNumericValue) {
+      setAnswer(f.key, initialValue);
+    }
 
     const setFill = () => {
       const percent = ((slider.value - slider.min) * 100) / (slider.max - slider.min);
@@ -466,13 +486,14 @@ function renderField(f){
     (f.options || []).forEach(opt => {
       const b = document.createElement("button");
       b.type = "button";
+      b.className = "btn ghost likert__button";
       b.textContent = opt.label;
-      if(existing === opt.value) b.classList.add("selected");
+      if(existing === opt.value) b.classList.add("is-selected");
 
       b.addEventListener("click", () => {
         setAnswer(f.key, opt.value);
-        $$("button", wrap).forEach(x => x.classList.remove("selected"));
-        b.classList.add("selected");
+        $$("button", wrap).forEach(x => x.classList.remove("is-selected"));
+        b.classList.add("is-selected");
       });
 
       wrap.appendChild(b);
@@ -486,117 +507,230 @@ function renderField(f){
   }
 
   if(f.type === "multiselect"){
-    const existing = getAnswer(f.key, []);
-    if(!Array.isArray(existing)) setAnswer(f.key, []);
-
-    const ms = document.createElement("div");
-    ms.className = "ms";
-
-    const header = document.createElement("button");
-    header.type = "button";
-    header.className = "ms-header";
-
-    const titleSpan = document.createElement("span");
-    const count = document.createElement("span");
-    count.className = "ms-count";
-
-    const caret = document.createElement("span");
-    caret.className = "ms-caret";
-    caret.textContent = "▾";
-
-    header.appendChild(titleSpan);
-    header.appendChild(count);
-    header.appendChild(caret);
-
-    const panel = document.createElement("div");
-    panel.className = "ms-panel";
-
-    const search = document.createElement("input");
-    search.type = "text";
-    search.className = "ms-search";
-    search.placeholder = f.placeholder || "Buscar...";
-
-    const list = document.createElement("div");
-    list.className = "ms-list";
-
-    panel.appendChild(search);
-    panel.appendChild(list);
-
-    ms.appendChild(header);
-    ms.appendChild(panel);
-    container.appendChild(ms);
-
-    const max = f.max ?? Infinity;
-
-    function updateHeader(){
-      const arr = getAnswer(f.key, []);
-      titleSpan.textContent = arr.length ? arr.join(", ") : (f.placeholderEmpty || "Selecciona idiomas");
-      count.textContent = arr.length ? `(${arr.length})` : "";
-    }
-
-    function renderList(){
-      const q = (search.value || "").trim().toLowerCase();
-      const arr = getAnswer(f.key, []);
-      list.innerHTML = "";
-
-      const filtered = (f.options || []).filter(opt => opt.toLowerCase().includes(q));
-      filtered.forEach(opt => {
-        const row = document.createElement("label");
-        row.className = "ms-item";
-
-        const cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.checked = arr.includes(opt);
-
-        cb.addEventListener("change", () => {
-          const current = getAnswer(f.key, []);
-          const has = current.includes(opt);
-
-          if(cb.checked && !has){
-            if(current.length >= max){
-              cb.checked = false;
-              return;
-            }
-            setAnswer(f.key, [...current, opt]);
-          } else if(!cb.checked && has){
-            setAnswer(f.key, current.filter(x => x !== opt));
-          }
-
-          updateHeader();
-        });
-
-        const text = document.createElement("span");
-        text.textContent = opt;
-
-        row.appendChild(cb);
-        row.appendChild(text);
-        list.appendChild(row);
-      });
-    }
-
-    function toggle(open){
-      ms.classList.toggle("open", open);
-      if(open){
-        search.value = "";
-        renderList();
-        setTimeout(() => search.focus(), 0);
-      }
-      window.setTimeout(notifyParentToResize, 20);
-    }
-
-    header.addEventListener("click", () => toggle(!ms.classList.contains("open")));
-    search.addEventListener("input", renderList);
-
-    document.addEventListener("click", (e) => {
-      if(!ms.contains(e.target)) toggle(false);
-    });
-
-    updateHeader();
+    container.appendChild(renderModernMultiselect(f));
   }
 
   return container;
 }
 
+
+function createDropdownShell(extraClass){
+  const ms = document.createElement("div");
+  ms.className = extraClass ? `ms ${extraClass}` : "ms";
+
+  const header = document.createElement("button");
+  header.type = "button";
+  header.className = "ms-header";
+  header.setAttribute("aria-expanded", "false");
+
+  const titleSpan = document.createElement("span");
+  const count = document.createElement("span");
+  count.className = "ms-count";
+
+  const caret = document.createElement("span");
+  caret.className = "ms-caret";
+  caret.textContent = "v";
+
+  header.appendChild(titleSpan);
+  header.appendChild(count);
+  header.appendChild(caret);
+
+  const panel = document.createElement("div");
+  panel.className = "ms-panel";
+
+  const list = document.createElement("div");
+  list.className = "ms-list";
+  panel.appendChild(list);
+
+  ms.appendChild(header);
+  ms.appendChild(panel);
+
+  const toggle = (open) => {
+    ms.classList.toggle("open", open);
+    header.setAttribute("aria-expanded", open ? "true" : "false");
+    window.setTimeout(notifyParentToResize, 20);
+  };
+
+  header.addEventListener("click", () => toggle(!ms.classList.contains("open")));
+
+  document.addEventListener("click", (event) => {
+    if(!ms.contains(event.target)) toggle(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if(event.key === "Escape") toggle(false);
+  });
+
+  return { ms, header, panel, list, titleSpan, count, toggle };
+}
+
+function renderModernSelect(f){
+  const { ms, panel, list, titleSpan, count, toggle } = createDropdownShell("ms--single");
+  const options = Array.isArray(f.options) ? f.options : [];
+  const enableSearch = options.length > 7;
+  let search = null;
+
+  if(enableSearch){
+    search = document.createElement("input");
+    search.type = "text";
+    search.className = "ms-search";
+    search.placeholder = "Buscar opcion...";
+    panel.insertBefore(search, list);
+  }
+
+  function getCurrentValue(){
+    return String(getAnswer(f.key, "") || "");
+  }
+
+  function updateHeader(){
+    const current = getCurrentValue();
+    titleSpan.textContent = current || (f.placeholder || "Selecciona una opcion");
+    titleSpan.classList.toggle("ms-placeholder", !current);
+    count.textContent = current ? "1/1" : "";
+  }
+
+  function renderList(){
+    const query = (search?.value || "").trim().toLowerCase();
+    const current = getCurrentValue();
+    const filtered = options.filter((opt) => String(opt).toLowerCase().includes(query));
+
+    list.innerHTML = "";
+    if(!filtered.length){
+      const empty = document.createElement("p");
+      empty.className = "ms-empty";
+      empty.textContent = "Sin resultados.";
+      list.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach((opt) => {
+      const value = String(opt);
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = "ms-option";
+      option.textContent = value;
+      option.classList.toggle("is-selected", value === current);
+      option.addEventListener("click", () => {
+        setAnswer(f.key, value);
+        updateHeader();
+        renderList();
+        toggle(false);
+      });
+      list.appendChild(option);
+    });
+  }
+
+  if(search){
+    search.addEventListener("input", renderList);
+    ms.querySelector(".ms-header")?.addEventListener("click", () => {
+      if(ms.classList.contains("open")){
+        search.value = "";
+        renderList();
+        setTimeout(() => search.focus(), 0);
+      }
+    });
+  }
+
+  updateHeader();
+  renderList();
+  return ms;
+}
+
+function renderModernMultiselect(f){
+  const existing = getAnswer(f.key, []);
+  if(!Array.isArray(existing)) setAnswer(f.key, []);
+
+  const { ms, list, titleSpan, count } = createDropdownShell("ms--multi");
+  const search = document.createElement("input");
+  search.type = "text";
+  search.className = "ms-search";
+  search.placeholder = f.placeholder || "Buscar...";
+  ms.querySelector(".ms-panel")?.insertBefore(search, list);
+
+  const max = f.max ?? Infinity;
+  const options = Array.isArray(f.options) ? f.options : [];
+
+  function getSelected(){
+    const arr = getAnswer(f.key, []);
+    return Array.isArray(arr) ? arr : [];
+  }
+
+  function updateHeader(){
+    const arr = getSelected();
+    if(arr.length){
+      const summary = arr.slice(0, 2).join(", ");
+      const extra = arr.length > 2 ? ` +${arr.length - 2}` : "";
+      titleSpan.textContent = `${summary}${extra}`;
+      titleSpan.classList.remove("ms-placeholder");
+    } else {
+      titleSpan.textContent = f.placeholderEmpty || "Selecciona opciones";
+      titleSpan.classList.add("ms-placeholder");
+    }
+    count.textContent = arr.length ? `${arr.length}/${max === Infinity ? "*" : max}` : "";
+  }
+
+  function renderList(){
+    const q = (search.value || "").trim().toLowerCase();
+    const arr = getSelected();
+    const filtered = options.filter((opt) => String(opt).toLowerCase().includes(q));
+    list.innerHTML = "";
+
+    if(!filtered.length){
+      const empty = document.createElement("p");
+      empty.className = "ms-empty";
+      empty.textContent = "Sin resultados.";
+      list.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach((opt) => {
+      const value = String(opt);
+      const row = document.createElement("label");
+      row.className = "ms-item";
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = arr.includes(value);
+
+      cb.addEventListener("change", () => {
+        const current = getSelected();
+        const has = current.includes(value);
+
+        if(cb.checked && !has){
+          if(current.length >= max){
+            cb.checked = false;
+            return;
+          }
+          setAnswer(f.key, [...current, value]);
+        } else if(!cb.checked && has){
+          setAnswer(f.key, current.filter((x) => x !== value));
+        }
+
+        updateHeader();
+      });
+
+      const text = document.createElement("span");
+      text.textContent = value;
+
+      row.appendChild(cb);
+      row.appendChild(text);
+      list.appendChild(row);
+    });
+  }
+
+  search.addEventListener("input", renderList);
+  ms.querySelector(".ms-header")?.addEventListener("click", () => {
+    if(ms.classList.contains("open")){
+      search.value = "";
+      renderList();
+      setTimeout(() => search.focus(), 0);
+    }
+  });
+
+  updateHeader();
+  renderList();
+  return ms;
+}
 /* ---------------------------- Chips ----------------------------- */
 function renderChips(key, options, multi, max){
   const wrap = document.createElement("div");
@@ -731,6 +865,8 @@ function back(){
   clearStepFeedback();
 
   if (isEmbeddedFlow) {
+    saveAppState(state, profilesController);
+    if (!confirmExitIfNeeded()) return;
     notifyParentBackToRegister();
   }
 }
@@ -768,19 +904,18 @@ function escapeHtml(str){
 btnNext?.addEventListener("click", next);
 btnBack?.addEventListener("click", back);
 
-btnSave?.addEventListener("click", () => {
-  saveAppState(state, profilesController);
-  btnSave.textContent = "Guardado ✓";
-  setTimeout(() => btnSave.textContent = "Guardar", 900);
-});
-
 btnClose?.addEventListener("click", () => {
   saveAppState(state, profilesController);
+  if (!confirmExitIfNeeded()) return;
   if (isEmbeddedFlow) {
     notifyParentToCloseModal();
     return;
   }
   alert("Guardado. Puedes cerrar esta pestaña.");
+});
+
+window.addEventListener("beforeunload", () => {
+  saveAppState(state, profilesController);
 });
 
 /* Tabs
@@ -841,6 +976,7 @@ function redirectToStartFlow(){
   render();
   window.setTimeout(notifyParentToResize, 40);
 })();
+
 
 
 

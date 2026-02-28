@@ -67,6 +67,25 @@
   object-fit: cover;
 }
 
+.trip-featured__guide a,
+.trip-featured__guide-link,
+.trip-item__guide-link {
+  border: 0;
+  background: transparent;
+  color: var(--tourist-primary);
+  font-size: inherit;
+  font-weight: 800;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.trip-featured__guide-link {
+  display: inline-flex;
+  align-items: center;
+}
+
 .trip-featured__actions {
   margin-top: 8px;
   display: flex;
@@ -76,6 +95,22 @@
 
 .trip-featured__actions .btn {
   border-radius: 999px;
+}
+
+.trip-featured__notice {
+  min-height: 18px;
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--tourist-muted);
+}
+
+.trip-featured__notice.is-success {
+  color: #166534;
+}
+
+.trip-featured__notice.is-error {
+  color: #991b1b;
 }
 
 .trip-list {
@@ -158,4 +193,10 @@
   font-size: 12px;
   font-weight: 800;
   cursor: pointer;
+}
+
+.trip-item__actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
 }
