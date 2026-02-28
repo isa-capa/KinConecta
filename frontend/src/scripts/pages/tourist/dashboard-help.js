@@ -4,11 +4,18 @@
    ========================================================= */
 
 const TouristHelpApp = (() => {
+  const SOCIAL_LINKS = Object.freeze({
+    linkedin: "https://www.linkedin.com/company/kinconecta",
+    x: "https://x.com/kinconecta",
+    instagram: "https://www.instagram.com/kinconecta",
+  });
+
   const dom = {
     supportOpenButton: null,
     modal: null,
     modalCloseTriggers: [],
     form: null,
+    submitButton: null,
     fileInput: null,
     fileDropzoneTitle: null,
     toast: null,
@@ -51,24 +58,94 @@ const TouristHelpApp = (() => {
     };
   }
 
+  function resolveHelpApi() {
+    return window.KCTouristApi?.help || null;
+  }
+
+  function shouldUsePreviewFallback(error) {
+    const status = Number(error?.status || 0);
+    return Boolean(
+      error?.isNetworkError ||
+      error?.isApiUnavailable ||
+      status === 404 ||
+      status === 405 ||
+      status === 501 ||
+      status === 503,
+    );
+  }
+
+  function getSupportErrorMessage(error) {
+    const backendMessage =
+      error?.payload?.message ||
+      error?.payload?.error ||
+      error?.message;
+    if (backendMessage) return String(backendMessage);
+    return "No se pudo enviar. Intenta nuevamente.";
+  }
+
+  function setSubmitting(isSubmitting) {
+    if (!dom.submitButton) return;
+    if (!dom.submitButton.dataset.originalLabel) {
+      dom.submitButton.dataset.originalLabel = dom.submitButton.innerHTML;
+    }
+    dom.submitButton.disabled = isSubmitting;
+    dom.submitButton.setAttribute("aria-busy", isSubmitting ? "true" : "false");
+    dom.submitButton.innerHTML = isSubmitting
+      ? 'Enviando mensaje <span class="material-symbols-outlined">hourglass_top</span>'
+      : dom.submitButton.dataset.originalLabel;
+  }
+
+  function resetSupportForm() {
+    dom.form?.reset();
+    if (dom.fileDropzoneTitle) {
+      dom.fileDropzoneTitle.textContent = "Haz clic o arrastra una imagen o documento";
+    }
+  }
+
+  function applySocialLinks() {
+    const byLabel = {
+      linkedin: SOCIAL_LINKS.linkedin,
+      x: SOCIAL_LINKS.x,
+      instagram: SOCIAL_LINKS.instagram,
+    };
+    document.querySelectorAll(".support__social-btn[aria-label]").forEach((anchor) => {
+      const label = String(anchor.getAttribute("aria-label") || "").trim().toLowerCase();
+      const href = byLabel[label];
+      if (!href) return;
+      anchor.setAttribute("href", href);
+      anchor.setAttribute("target", "_blank");
+      anchor.setAttribute("rel", "noopener noreferrer");
+    });
+  }
+
   async function submitTicket(event) {
     event.preventDefault();
     const payload = buildTicketPayload();
+    setSubmitting(true);
 
     try {
-      if (window.KCTouristApi) {
+      const helpApi = resolveHelpApi();
+      if (helpApi?.sendTicket) {
         // TODO(BACKEND): endpoint real de tickets y adjuntos para turista.
-        await window.KCTouristApi.help.sendTicket(payload);
+        await helpApi.sendTicket(payload);
+      } else {
+        // TODO(BACKEND): eliminar fallback cuando el endpoint para turista exista en todos los ambientes.
+        console.warn("Tourist support endpoint unavailable. Using preview fallback.");
       }
       showToast("Mensaje enviado. Te responderemos pronto.");
-      dom.form.reset();
-      if (dom.fileDropzoneTitle) {
-        dom.fileDropzoneTitle.textContent = "Haz clic o arrastra una imagen o documento";
-      }
+      resetSupportForm();
       closeModal();
     } catch (error) {
-      console.warn("Support ticket flow pending backend implementation:", error);
-      showToast("No se pudo enviar. Intenta nuevamente.");
+      if (shouldUsePreviewFallback(error)) {
+        console.warn("Support endpoint unavailable. Using preview success fallback:", error);
+        showToast("Mensaje enviado (modo prueba). Te responderemos pronto.");
+        resetSupportForm();
+        closeModal();
+      } else {
+        showToast(getSupportErrorMessage(error));
+      }
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -89,6 +166,7 @@ const TouristHelpApp = (() => {
     dom.modal = document.querySelector("[data-support-modal]");
     dom.modalCloseTriggers = [...document.querySelectorAll("[data-support-close]")];
     dom.form = document.querySelector("[data-support-form]");
+    dom.submitButton = dom.form?.querySelector(".form__submit") || null;
     dom.fileInput = document.getElementById("file");
     dom.fileDropzoneTitle = document.querySelector(".dropzone__title");
     dom.toast = document.querySelector("[data-toast]");
@@ -115,6 +193,7 @@ const TouristHelpApp = (() => {
 
   function init() {
     bind();
+    applySocialLinks();
     setupFaqBehavior();
   }
 

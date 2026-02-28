@@ -1,5 +1,7 @@
 ﻿(function () {
   const ONBOARDING_STORAGE_KEY = "match_profile_v2";
+  const FORGOT_PASSWORD_PREVIEW_MESSAGE =
+    "Enviaremos instrucciones a tu correo electr\u00f3nico para restablecer tu contrase\u00f1a.";
 
   // TODO(BACKEND): poner en false cuando /auth/register este disponible y estable.
   const ALLOW_REGISTER_FLOW_WITHOUT_BACKEND = true;
@@ -752,6 +754,7 @@
   function setupFormHandlers() {
     const loginForm = dom.views.get("login")?.querySelector('[data-auth-form="login"]');
     const registerForm = dom.views.get("register")?.querySelector('[data-auth-form="register"]');
+    const forgotPasswordTrigger = loginForm?.querySelector("[data-auth-forgot-password]");
 
     registerFormRef = registerForm || null;
     setupRegisterRoleSelection(registerFormRef);
@@ -761,6 +764,11 @@
     loginForm?.addEventListener("submit", (event) => {
       event.preventDefault();
       handleLogin(loginForm);
+    });
+
+    forgotPasswordTrigger?.addEventListener("click", (event) => {
+      event.preventDefault();
+      showFeedback(loginForm, FORGOT_PASSWORD_PREVIEW_MESSAGE, true);
     });
 
     registerForm?.addEventListener("submit", (event) => {

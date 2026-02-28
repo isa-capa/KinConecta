@@ -52,6 +52,10 @@
       uploadAvatar: "/tourist/profile/me/avatar",
       uploadCover: "/tourist/profile/me/cover",
     },
+    help: {
+      faq: "/support/faq",
+      sendTicket: "/support/tickets",
+    },
     notifications: {
       list: "/tourist/notifications",
       markAsRead: "/tourist/notifications/{notificationId}/read",
@@ -140,6 +144,11 @@
       api.post(endpoints.profile.uploadCover, formData, { headers: {} }),
   };
 
+  const help = {
+    getFaq: () => api.get(endpoints.help.faq),
+    sendTicket: (payload) => api.post(endpoints.help.sendTicket, payload),
+  };
+
   const notifications = {
     list: (query) =>
       api.get(withQuery(endpoints.notifications.list, query)),
@@ -160,6 +169,7 @@
     trips,
     reviews,
     profile,
+    help,
     notifications,
     messages,
   };

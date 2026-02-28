@@ -4,6 +4,9 @@
   display: grid;
   place-items: center;
   padding: 20px;
+  --security-primary: var(--kc-color-primary, #ff5b04);
+  --security-primary-hover: var(--kc-color-primary-hover, #e65100);
+  --security-primary-soft: rgba(255, 91, 4, 0.12);
   opacity: 0;
   visibility: hidden;
   transition: opacity 180ms ease, visibility 180ms ease;
@@ -40,8 +43,8 @@
   height: 38px;
   border: 0;
   border-radius: 999px;
-  background: rgba(175, 56, 8, 0.12);
-  color: #af3808;
+  background: var(--security-primary-soft);
+  color: var(--security-primary);
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -59,8 +62,8 @@
   width: 50px;
   height: 50px;
   border-radius: 14px;
-  background: rgba(175, 56, 8, 0.1);
-  color: #af3808;
+  background: var(--security-primary-soft);
+  color: var(--security-primary);
   display: grid;
   place-items: center;
   margin-bottom: 10px;
@@ -122,7 +125,7 @@
 }
 
 .security-field__input:focus {
-  border-color: rgba(175, 56, 8, 0.36);
+  border-color: rgba(255, 91, 4, 0.36);
   box-shadow: 0 0 0 3px rgba(255, 91, 4, 0.18);
 }
 
@@ -137,7 +140,7 @@
   margin: 0;
   font-size: 13px;
   font-weight: 700;
-  color: #af3808;
+  color: var(--security-primary);
 }
 
 .security-settings__actions {
@@ -161,6 +164,10 @@
 }
 
 .security-settings__btn--primary {
-  background: #af3808;
+  background: var(--security-primary);
   color: #fff;
+}
+
+.security-settings__btn--primary:hover {
+  background: var(--security-primary-hover);
 }

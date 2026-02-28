@@ -1,4 +1,6 @@
 (function () {
+  const MIN_PASSWORD_LENGTH = 8;
+
   async function fetchMarkup(path) {
     const response = await fetch(path, { cache: "no-cache" });
     if (!response.ok) {
@@ -61,11 +63,14 @@
       return {
         currentEmail: String(data.get("currentEmail") || "").trim(),
         newEmail: String(data.get("newEmail") || "").trim(),
-        currentPassword: String(data.get("currentPassword") || "").trim(),
-        newPassword: String(data.get("newPassword") || "").trim(),
-        confirmNewPassword: String(data.get("confirmNewPassword") || "").trim(),
+        // No se hace trim en contrasenas para conservar la longitud exacta que ingreso el usuario.
+        currentPassword: String(data.get("currentPassword") || ""),
+        newPassword: String(data.get("newPassword") || ""),
+        confirmNewPassword: String(data.get("confirmNewPassword") || ""),
       };
     };
+
+    const getPasswordLength = (value) => Array.from(String(value || "")).length;
 
     const validatePayload = (payload) => {
       if (
@@ -81,8 +86,14 @@
         if (!payload.currentPassword) {
           return "Ingresa tu contraseña actual para cambiar la contraseña.";
         }
-        if (payload.newPassword.length < 8) {
+        if (!payload.newPassword) {
+          return "Ingresa una nueva contrasena.";
+        }
+        if (getPasswordLength(payload.newPassword) < MIN_PASSWORD_LENGTH) {
           return "La nueva contraseña debe tener al menos 8 caracteres.";
+        }
+        if (!payload.confirmNewPassword) {
+          return "Confirma la nueva contrasena.";
         }
         if (payload.newPassword !== payload.confirmNewPassword) {
           return "La confirmación de contraseña no coincide.";
@@ -118,7 +129,14 @@
         }, 650);
       } catch (error) {
         console.error(error);
-        if (feedback) feedback.textContent = "No se pudieron guardar los cambios. Intenta nuevamente.";
+        const backendMessage =
+          error?.payload?.message ||
+          error?.payload?.error ||
+          error?.message;
+        if (feedback) {
+          feedback.textContent =
+            backendMessage || "No se pudieron guardar los cambios. Intenta nuevamente.";
+        }
       }
     };
 
