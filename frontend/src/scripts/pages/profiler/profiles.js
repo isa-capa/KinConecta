@@ -256,7 +256,6 @@ const formSubtitle = $("#formSubtitle");
 
 const btnBack = $("#btnBack");
 const btnNext = $("#btnNext");
-const btnSave = $("#btnSave");
 
 const btnClose = $("#btnClose");
 const stepFeedback = $("#stepFeedback");
@@ -287,6 +286,7 @@ function clearStepFeedback(){
 
 function setAnswer(key, value){
   currentAnswers()[key] = value;
+  saveAppState(state, profilesController);
   clearStepFeedback();
 }
 function getAnswer(key, fallback){
@@ -903,12 +903,6 @@ function escapeHtml(str){
 /* ---------------------------- Events ----------------------------- */
 btnNext?.addEventListener("click", next);
 btnBack?.addEventListener("click", back);
-
-btnSave?.addEventListener("click", () => {
-  saveAppState(state, profilesController);
-  btnSave.textContent = "Guardado ✓";
-  setTimeout(() => btnSave.textContent = "Guardar", 900);
-});
 
 btnClose?.addEventListener("click", () => {
   saveAppState(state, profilesController);
