@@ -4,6 +4,14 @@
    ========================================================= */
 
 const GuideToursApp = (() => {
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
+
   const state = {
     guideId: "guide_001", // TODO(AUTH): obtener desde sesión/JWT
     tours: [],
@@ -497,8 +505,7 @@ const GuideToursApp = (() => {
     }
 
     if (action === "bookings") {
-      // TODO(BACKEND): navegar a lista de reservas de ese tour.
-      showAlert("Vista de reservas en preparación.", "info");
+      openUnderConstructionModal();
     }
   }
 
@@ -587,3 +594,4 @@ if (document.readyState === "loading") {
 } else {
   bootstrapGuideTours();
 }
+

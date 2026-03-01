@@ -4,6 +4,14 @@
    ========================================================= */
 
 const GuidePublicProfileApp = (() => {
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
+
   const params = new URLSearchParams(window.location.search);
   const state = {
     guideId: params.get("guideId") || "guide_001", // TODO(ROUTER): obtener del slug/url real
@@ -231,9 +239,7 @@ const GuidePublicProfileApp = (() => {
     dom.toursList?.addEventListener("click", (event) => {
       const button = event.target.closest("[data-book-tour]");
       if (!button) return;
-      const tourId = button.getAttribute("data-book-tour");
-      // TODO(BACKEND): flujo de reserva -> crear booking para turista autenticado.
-      console.info("TODO: start booking flow", { guideId: state.guideId, tourId });
+      openUnderConstructionModal();
     });
   }
 

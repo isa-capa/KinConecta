@@ -1,4 +1,12 @@
 const TouristExploreApp = (() => {
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
+
   const state = {
     activeFilter: "all",
     items: [],
@@ -177,7 +185,7 @@ const TouristExploreApp = (() => {
       });
 
       card.addEventListener("click", () => {
-        // TODO(BACKEND): navegar al detalle real de experiencia.
+        openUnderConstructionModal();
       });
 
       dom.cards.appendChild(card);

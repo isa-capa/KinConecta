@@ -4,6 +4,14 @@
    ========================================================= */
 
 const GuideProfileSettingsApp = (() => {
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
+
   const state = {
     guideId: "guide_001", // TODO(AUTH): resolver guía autenticado real
     profile: {
@@ -102,11 +110,7 @@ const GuideProfileSettingsApp = (() => {
 
     dom.saveButton?.addEventListener("click", saveProfile);
     dom.avatarOverlay?.addEventListener("click", async () => {
-      // TODO(BACKEND): abrir selector de archivo y enviar FormData a uploadAvatar.
-      // TODO(BACKEND): validar tipo/tamano y recortar imagen antes de subir.
-      if (window.KCGuideApi) {
-        console.info("TODO: invoke KCGuideApi.profile.uploadAvatar(guideId, formData)");
-      }
+      openUnderConstructionModal();
     });
   }
 

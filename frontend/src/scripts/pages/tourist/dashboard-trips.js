@@ -1,4 +1,12 @@
 const TouristTripsApp = (() => {
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
+
   const state = {
     featuredTrip: null,
     trips: [],
@@ -450,7 +458,7 @@ const TouristTripsApp = (() => {
     });
 
     dom.btnNewTrip?.addEventListener("click", () => {
-      // TODO(BACKEND): wizard de nuevo viaje.
+      openUnderConstructionModal();
     });
   }
 

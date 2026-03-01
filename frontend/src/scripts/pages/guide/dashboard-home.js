@@ -100,6 +100,13 @@ const GuideDashboardApp = (() => {
 
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
   const createUid = () => Math.random().toString(36).slice(2, 10);
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
 
   const formatMoneyMXN = (amount) =>
     new Intl.NumberFormat("es-MX", {
@@ -318,8 +325,7 @@ const GuideDashboardApp = (() => {
           </div>
         `;
         card.addEventListener("click", () => {
-          // TODO(BACKEND): navegar a detalle de reserva /booking/:id
-          console.info("TODO: open booking details", item.id);
+          openUnderConstructionModal();
         });
       }
 
@@ -390,8 +396,7 @@ const GuideDashboardApp = (() => {
       `;
 
       const openTour = () => {
-        // TODO(BACKEND): abrir detalle de tour /guides/:guideId/tours/:tourId
-        console.info("TODO: open tour details", tour.id);
+        openUnderConstructionModal();
       };
       card.addEventListener("click", openTour);
       card.addEventListener("keydown", (event) => {

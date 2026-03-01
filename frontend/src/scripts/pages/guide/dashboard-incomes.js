@@ -6,6 +6,13 @@
 const GuideIncomesApp = (() => {
   const isNetworkUnavailableError = (error) =>
     Boolean(error?.isNetworkError || error?.isApiUnavailable);
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
 
   const state = {
     guideId: "guide_001", // TODO(AUTH): obtener guideId real desde sesión/JWT
@@ -301,40 +308,19 @@ const GuideIncomesApp = (() => {
     dom.transactionsSearchInput?.addEventListener("input", renderTransactions);
 
     dom.btnDownloadReport?.addEventListener("click", async () => {
-      // TODO(BACKEND): descargar reporte (CSV/PDF) desde Spring Boot.
-      // Sugerencia endpoint: GET /guides/{guideId}/incomes/export?range=...
-      if (!window.KCGuideApi) return;
-      try {
-        await window.KCGuideApi.incomes.exportReport(state.guideId, {
-          range: state.selectedRange,
-        });
-      } catch (error) {
-        console.warn("Export report pending backend implementation.", error);
-      }
+      openUnderConstructionModal();
     });
 
     dom.btnWithdrawFunds?.addEventListener("click", async () => {
-      // TODO(BACKEND): abrir modal de retiro y enviar solicitud real.
-      // Sugerencia endpoint: POST /guides/{guideId}/incomes/withdraw
-      if (!window.KCGuideApi) return;
-      try {
-        await window.KCGuideApi.incomes.requestWithdraw(state.guideId, {
-          amount: 0,
-          accountId: "TODO_ACCOUNT_ID",
-        });
-      } catch (error) {
-        console.warn("Withdraw flow pending backend implementation.", error);
-      }
+      openUnderConstructionModal();
     });
 
     dom.btnOpenTransactionsFilter?.addEventListener("click", () => {
-      // TODO(BACKEND): filtros avanzados + paginación server-side.
-      console.info("TODO: open transactions filter panel.");
+      openUnderConstructionModal();
     });
 
     dom.btnViewAllTransactions?.addEventListener("click", () => {
-      // TODO(BACKEND): navegar a módulo completo o paginación incremental.
-      console.info("TODO: navigate to full transactions history.");
+      openUnderConstructionModal();
     });
   };
 
@@ -365,3 +351,4 @@ if (document.readyState === "loading") {
 } else {
   bootstrapGuideIncomes();
 }
+

@@ -57,6 +57,13 @@ const GuideCalendarApp = (() => {
 
   const pad2 = (n) => String(n).padStart(2, "0");
   const uid = () => Math.random().toString(36).slice(2, 10);
+  const openUnderConstructionModal = () => {
+    if (window.KCUnderConstruction?.open) {
+      window.KCUnderConstruction.open();
+      return;
+    }
+    window.alert("Aun estamos trabajando en esto.");
+  };
 
   const loadingMarkup = (label, extraClass = "") => {
     const className = ["guide-loading", "guide-loading--compact", extraClass]
@@ -832,11 +839,10 @@ const GuideCalendarApp = (() => {
           return;
         }
         if (event.type === "blocked" && event.source === "google") {
-          window.alert("Este bloqueo viene de Google Calendar. Editalo desde tu cuenta de Google.");
+          openUnderConstructionModal();
           return;
         }
-        // TODO(BACKEND): abrir detalle de reserva/evento en pagina/modal
-        console.info("TODO: open calendar event details", event.id);
+        openUnderConstructionModal();
       });
 
       row.appendChild(sub);
@@ -880,8 +886,7 @@ const GuideCalendarApp = (() => {
     });
 
     if (view !== "month") {
-      // TODO(UI): implementar vistas week/list con consultas paginadas al backend.
-      window.alert(`Vista "${view}" aun no implementada. Por ahora mostramos "mes".`);
+      openUnderConstructionModal();
       state.view = "month";
       dom.viewButtons.forEach((button) => {
         const isActive = button.dataset.view === "month";
@@ -912,39 +917,7 @@ const GuideCalendarApp = (() => {
   }
 
   async function addBlockToSelectedDay() {
-    if (!state.selectedDateISO) {
-      window.alert("Selecciona un dia para bloquear.");
-      return;
-    }
-
-    const title = window.prompt("Nombre del bloqueo:", "Bloqueo personal");
-    if (!title) return;
-
-    const start = window.prompt("Hora inicio (HH:MM):", "10:00") || "10:00";
-    const end = window.prompt("Hora fin (HH:MM):", "18:00") || "18:00";
-
-    const payload = {
-      date: state.selectedDateISO,
-      title,
-      startTime: start,
-      endTime: end,
-    };
-
-    try {
-      if (window.KCGuideApi) {
-        // TODO(BACKEND): validar contrato createBlock y manejo de errores de solapamiento.
-        await window.KCGuideApi.calendar.createBlock(state.guideId, payload);
-      }
-    } catch (error) {
-      console.warn("Create block pending backend implementation:", error);
-    }
-
-    const event = { id: uid(), source: "internal", type: "blocked", title, start, end };
-    if (!state.events[state.selectedDateISO]) state.events[state.selectedDateISO] = [];
-    state.events[state.selectedDateISO].push(event);
-
-    renderMonth();
-    selectDate(state.selectedDateISO);
+    openUnderConstructionModal();
   }
 
   async function syncGoogleCalendar() {
@@ -1039,17 +1012,19 @@ const GuideCalendarApp = (() => {
 
     dom.googleSyncForm?.addEventListener("submit", (event) => {
       event.preventDefault();
-      syncGoogleCalendar();
+      openUnderConstructionModal();
     });
 
     dom.btnGoogleConnect?.addEventListener("click", async () => {
-      state.google.calendarId = (dom.googleCalendarId?.value || state.google.calendarId).trim() || "primary";
-      const connected = await connectGoogleCalendar(true);
-      if (connected) await syncGoogleCalendar();
+      openUnderConstructionModal();
     });
 
-    dom.btnGoogleSync?.addEventListener("click", syncGoogleCalendar);
-    dom.btnGoogleDisconnect?.addEventListener("click", disconnectGoogleCalendar);
+    dom.btnGoogleSync?.addEventListener("click", () => {
+      openUnderConstructionModal();
+    });
+    dom.btnGoogleDisconnect?.addEventListener("click", () => {
+      openUnderConstructionModal();
+    });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && dom.googleModal && !dom.googleModal.hidden) {
@@ -1095,8 +1070,7 @@ const GuideCalendarApp = (() => {
       updateGoogleModalState();
     });
     dom.btnEditDay?.addEventListener("click", () => {
-      // TODO(BACKEND): abrir modal de edicion diaria (cupo, franjas, bloqueos)
-      window.alert("Editor diario en preparacion.");
+      openUnderConstructionModal();
     });
   }
 

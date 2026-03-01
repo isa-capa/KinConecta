@@ -27,6 +27,183 @@
     return prefix.endsWith("/") ? prefix : prefix + "/";
   }
 
+  function ensureUnderConstructionModalApi() {
+    if (window.KCUnderConstruction?.open) return window.KCUnderConstruction;
+
+    const STYLE_ID = "kc-under-construction-style";
+    const MODAL_ID = "kcUnderConstructionModal";
+    const TITLE_ID = "kcUnderConstructionTitle";
+    const DEFAULT_IMAGE_SRC = "../../../assets/en%20construcci%C3%B3n.jpeg";
+    // true: card completo con imagen de fondo | false: card tradicional con imagen dentro.
+    const USE_IMAGE_CARD_BACKGROUND = false;
+
+    if (!document.getElementById(STYLE_ID)) {
+      const style = document.createElement("style");
+      style.id = STYLE_ID;
+      style.textContent = `
+        .kc-uc {
+          position: fixed;
+          inset: 0;
+          z-index: 2200;
+          display: grid;
+          place-items: center;
+          padding: 18px;
+        }
+        .kc-uc[hidden] {
+          display: none;
+        }
+        .kc-uc__backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(9, 14, 18, 0.52);
+          border: 0;
+          border-radius: 0;
+          margin: 0;
+          padding: 0;
+          cursor: pointer;
+        }
+        .kc-uc__dialog {
+          position: relative;
+          z-index: 1;
+          width: min(430px, calc(100vw - 20px));
+          background: #f8f8f8;
+          border-radius: 20px;
+          border: 1px solid var(--kc-border, #d6e1e6);
+          box-shadow: none;
+          padding: 22px 20px 18px;
+          text-align: center;
+          color: var(--kc-text, #16232a);
+          font-family: var(--kc-font-family, "Spline Sans", system-ui, sans-serif);
+          overflow: hidden;
+        }
+        .kc-uc__dialog > * {
+          position: relative;
+          z-index: 1;
+        }
+        .kc-uc__dialog--image-bg {
+          background: url("${DEFAULT_IMAGE_SRC}") center center / cover no-repeat;
+          border-color: rgba(255, 255, 255, 0.45);
+          color: #ffffff;
+        }
+        .kc-uc__dialog--image-bg::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.22) 0%,
+            rgba(12, 23, 29, 0.6) 68%,
+            rgba(12, 23, 29, 0.78) 100%
+          );
+          z-index: 0;
+        }
+        .kc-uc__dialog--image-bg .kc-uc__image {
+          display: none;
+        }
+        .kc-uc__image {
+          width: min(100%, 280px);
+          max-height: 280px;
+          height: auto;
+          object-fit: contain;
+          border-radius: 18px;
+          display: block;
+          margin: 0 auto 14px;
+          border: 0;
+        }
+        .kc-uc__title {
+          margin: 0 0 8px;
+          font-size: 1.05rem;
+          font-weight: 700;
+        }
+        .kc-uc__dialog--image-bg .kc-uc__title {
+          margin-top: 180px;
+          color: #ffffff;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        }
+        .kc-uc__text {
+          margin: 0;
+          font-size: 0.93rem;
+          line-height: 1.45;
+          color: var(--kc-text-muted, #55656e);
+        }
+        .kc-uc__dialog--image-bg .kc-uc__text,
+        .kc-uc__dialog--image-bg .kc-uc__return {
+          color: rgba(255, 255, 255, 0.95);
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .kc-uc__return {
+          margin: 4px 0 0;
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: var(--kc-color-sea, #075056);
+        }
+        .kc-uc__btn {
+          margin-top: 14px;
+          width: 100%;
+          border: 0;
+          border-radius: 12px;
+          background: var(--kc-color-primary, var(--color-primary, #ff5b04));
+          color: #ffffff;
+          font-weight: 700;
+          padding: 11px 14px;
+          cursor: pointer;
+        }
+        .kc-uc__btn:hover {
+          background: var(--kc-color-primary-hover, var(--color-primary-hover, #e65100));
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    let host = document.getElementById(MODAL_ID);
+    if (!host) {
+      host = document.createElement("section");
+      host.id = MODAL_ID;
+      host.className = "kc-uc";
+      host.hidden = true;
+      host.setAttribute("aria-hidden", "true");
+      const dialogClass = USE_IMAGE_CARD_BACKGROUND
+        ? "kc-uc__dialog kc-uc__dialog--image-bg"
+        : "kc-uc__dialog";
+      host.innerHTML = `
+        <div class="kc-uc__backdrop" data-kc-uc-close aria-hidden="true"></div>
+        <article class="${dialogClass}" role="dialog" aria-modal="true" aria-labelledby="${TITLE_ID}">
+          <img class="kc-uc__image" src="${DEFAULT_IMAGE_SRC}" alt="Seccion en construccion" loading="lazy" />
+          <h3 class="kc-uc__title" id="${TITLE_ID}">A\u00fan estamos trabajando en esto</h3>
+          <p class="kc-uc__text">Queremos que funcione incre\u00edble antes de mostr\u00e1rtelo \uD83C\uDF1E</p>
+          <p class="kc-uc__return">\u00a1Vuelve pronto!</p>
+          <button class="kc-uc__btn" type="button" data-kc-uc-close>Entendido</button>
+        </article>
+      `;
+      document.body.appendChild(host);
+    }
+
+    const close = () => {
+      host.hidden = true;
+      host.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("kc-modal-open");
+    };
+
+    const open = () => {
+      host.hidden = false;
+      host.setAttribute("aria-hidden", "false");
+      document.body.classList.add("kc-modal-open");
+    };
+
+    if (!host.dataset.bound) {
+      host.dataset.bound = "true";
+      host.querySelectorAll("[data-kc-uc-close]").forEach((trigger) => {
+        trigger.addEventListener("click", close);
+      });
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !host.hidden) close();
+      });
+    }
+
+    window.KCUnderConstruction = { open, close };
+    return window.KCUnderConstruction;
+  }
+
   const AUTH_STORAGE_KEYS = Object.freeze([
     "kc_temp_auth_session_v1",
     "kcAuthMode",
@@ -761,6 +938,11 @@
   }
 
   function setupNotifications() {
+    ensureUnderConstructionModalApi();
+    const openUnderConstruction = () => {
+      window.KCUnderConstruction?.open?.();
+    };
+
     const triggers = [
       ...document.querySelectorAll(
         "#btnNotif, .topbar__notif, .notification-button, .icon-btn[aria-label='Notificaciones'], [data-notifications-trigger]",
@@ -892,6 +1074,8 @@
       const item = event.target.closest("[data-notification-id]");
       if (item) {
         markAsRead(item.getAttribute("data-notification-id"));
+        close();
+        openUnderConstruction();
       }
       event.stopPropagation();
     });
@@ -911,6 +1095,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
+    ensureUnderConstructionModalApi();
     await mountSidebar();
     setupResponsiveSidebar();
     setupTopbarUserMenu();

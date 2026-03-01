@@ -61,10 +61,16 @@
 .landing-search {
   position: absolute;
   left: 50%;
-  bottom: 1.9rem;
+  bottom: 1.2rem;
   transform: translateX(-50%);
   z-index: 20;
   width: min(760px, 92%);
+}
+
+@media (min-width: 1080px) {
+  .landing-search {
+    bottom: 0.75rem;
+  }
 }
 
 .landing-search__inner {
@@ -272,7 +278,7 @@
 
 @media (max-width: 720px) {
   .landing-search {
-    bottom: 1.45rem;
+    bottom: 1rem;
     width: min(740px, 94%);
   }
 
@@ -1352,13 +1358,13 @@
   }
 
   .landing-hero__frame:hover {
-    transform: translateY(-2px);
-    border-color: rgba(242, 159, 5, 0.45);
-    box-shadow: var(--shadow-strong);
+    transform: none;
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-card);
   }
 
   .landing-hero__frame:hover .landing-hero__glow {
-    opacity: 0.88;
+    opacity: 1;
   }
 
   .landing-hero__stat:hover {
