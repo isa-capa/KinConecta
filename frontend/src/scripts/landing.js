@@ -481,6 +481,19 @@
     return landingSearchState.resultsDom;
   };
 
+  const scrollToResultsSection = () => {
+    const section = landingSearchState.resultsSection;
+    if (!section || !document.body.contains(section)) return;
+
+    const headerOffset = 112;
+    const targetTop = section.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: prefersReduced ? "auto" : "smooth",
+    });
+  };
+
   const renderSearchLoading = (city) => {
     const results = ensureResultsSection();
     if (!results) return;
@@ -704,6 +717,7 @@
     searchDom.input.blur();
     setSearchStatus(`Buscando opciones para ${selectedCity}...`);
     renderSearchLoading(selectedCity);
+    scrollToResultsSection();
 
     try {
       const { tours, guides } = await fetchLandingResults(selectedCity);
