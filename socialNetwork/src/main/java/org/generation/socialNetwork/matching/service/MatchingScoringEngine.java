@@ -1,4 +1,4 @@
-package org.generation.socialNetwork.matching.service;
+package generation.socialNetwork.matching.service;
 
 import org.generation.socialNetwork.matching.dto.MatchedFieldDTO;
 import org.springframework.stereotype.Component;
