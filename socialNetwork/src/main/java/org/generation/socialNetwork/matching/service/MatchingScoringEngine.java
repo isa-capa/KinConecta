@@ -1,6 +1,8 @@
-package org.generation.socialNetwork.matching.service;
+package generation.socialNetwork.matching.service;
 
 import org.generation.socialNetwork.matching.dto.MatchedFieldDTO;
+import org.generation.socialNetwork.matching.service.MatchingProfiles;
+import org.generation.socialNetwork.matching.service.MatchingTextUtils;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

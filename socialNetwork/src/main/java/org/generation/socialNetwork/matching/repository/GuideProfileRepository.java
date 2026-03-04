@@ -1,4 +1,4 @@
-package org.generation.socialNetwork.matching.repository;
+package generation.socialNetwork.matching.repository;
 
 import org.generation.socialNetwork.matching.model.GuideProfileEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,5 @@
 package org.generation.socialNetwork.matching.service;
 
-import org.generation.socialNetwork.matching.dto.MatchListResponseDTO;
 import org.generation.socialNetwork.matching.dto.MatchResultDTO;
 import org.generation.socialNetwork.matching.dto.ProfilePreviewDTO;
 import org.generation.socialNetwork.matching.model.GuideAdaptationEntity;
@@ -12,6 +11,7 @@ import org.generation.socialNetwork.matching.model.LanguageEntity;
 import org.generation.socialNetwork.matching.model.TouristProfileEntity;
 import org.generation.socialNetwork.matching.repository.GuideProfileRepository;
 import org.generation.socialNetwork.matching.repository.TouristProfileRepository;
+import org.generation.socialNetwork.matching.dto.MatchListResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
