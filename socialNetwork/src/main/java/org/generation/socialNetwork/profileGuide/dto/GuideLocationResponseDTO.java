@@ -1,0 +1,20 @@
+package org.generation.socialNetwork.profileGuide.dto;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.generation.socialNetwork.profileGuide.model.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class GuideLocationResponseDTO {
+
+    private Long guideLocationId;
+    private Long userId;
+    private String locationName;
+}

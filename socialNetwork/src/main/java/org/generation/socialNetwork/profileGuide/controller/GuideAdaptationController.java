@@ -17,26 +17,36 @@ public class GuideAdaptationController {
 
     private final GuideAdaptationService service;
 
+    // Endpoint para crear una nueva adaptación del guía
+    // URL: POST /api/guide_adaptations
     @PostMapping
     public ResponseEntity<GuideAdaptationResponseDTO> create(@RequestBody GuideAdaptationCreateRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
+    // Se llama al service para crear el registro
+    // Se responde con HTTP 201 (CREATED)
     @GetMapping
     public ResponseEntity<List<GuideAdaptationResponseDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
+    // Endpoint para obtener todos los registros
+    // URL: GET /api/guide_adaptations
     @GetMapping("/{id}")
     public ResponseEntity<GuideAdaptationResponseDTO> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    // Endpoint para obtener un registro específico por su ID
+    // URL: GET /api/guide_adaptations/{id}
     @PutMapping("/{id}")
     public ResponseEntity<GuideAdaptationResponseDTO> update(@PathVariable("id") Long id, @RequestBody GuideAdaptationUpdateRequestDTO dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
+    // Endpoint para eliminar un registro por ID
+    // URL: DELETE /api/guide_adaptations/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         service.delete(id);
