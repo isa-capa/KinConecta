@@ -19,3 +19,6 @@ Gemfile.lock
 
 # Folder Bugbuster only for the team
 /Bugbuster
+
+.idea/
+*.iml
