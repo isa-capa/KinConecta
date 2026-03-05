@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.w3c.dom.Text;
 
 import java.util.Date;
 
 
 //Lombok
 @Entity
-@Table
+@Table(name="trip_bookings")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,6 +31,23 @@ public class TripBookings {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trip_status")
+    private TripStatus status;
+
+    @Column(name="cancel_reason")
+    private String cancelReason;
+
+    @Column
+    private Text notes;
+
+    @Column(nullable = false, name="created_at")
+    private java.sql.Date createdAt;
+
+    @Column(nullable = false, name="updated_at")
+    private Date updatedAt;
+
+    @Column(name="is_featured")
+    private Character isFeatured;
+
     private
 
 
