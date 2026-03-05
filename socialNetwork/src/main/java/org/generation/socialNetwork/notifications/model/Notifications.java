@@ -24,7 +24,7 @@ public class Notifications {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
-    private Users user;
+    private generation.socialNetwork.users.model.User user;
 
     @Column(nullable = false)
     private  String type;
@@ -42,7 +42,7 @@ public class Notifications {
     private Long relatedEntityId;
 
     @Column(nullable = false, name = "is_read")
-    private Byte idRead; // Boolean
+    private Boolean idRead; // Byte
 
     @Column(nullable = false, name = "create_at")
     private LocalDateTime createdAt;

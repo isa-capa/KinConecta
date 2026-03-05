@@ -3,6 +3,9 @@ package generation.socialNetwork.users.service;
 import generation.socialNetwork.users.model.User;
 import generation.socialNetwork.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.generation.socialNetwork.notifications.dto.NotificationsRequest;
+import org.generation.socialNetwork.notifications.model.Notifications;
+import org.generation.socialNetwork.notifications.repository.NotificationsRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final NotificationsRepository notificationsRepository;
     //Añadir un nuevo usuario
     public User addUser(User user){
         String passwordEncripted = passwordEncoder.encode(user.getPassword());
@@ -73,4 +76,78 @@ public class UserService {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public User addNotification(Long idUser, NotificationsRequest notification){
+        User user = userRepository.findById(idUser).orElseThrow(
+                () -> new IllegalArgumentException("El usuario con el id " + idUser + " no existe")
+        );
+
+        Notifications notificationObject = new Notifications();
+
+        if(notification.getBody() != null) notificationObject.setBody(notification.getBody());
+        if(notification.getCreatedAt() != null) notificationObject.setCreatedAt(notification.getCreatedAt());
+        if(notification.getType() != null) notificationObject.setType(notification.getType());
+        if(notification.getTitle() != null) notificationObject.setTitle(notification.getTitle());
+        if(notification.getReadAt() != null) notificationObject.setReadAt(notification.getReadAt());
+        if(notification.getIdRead() != null) notificationObject.setIdRead(notification.getIdRead());
+        if(notification.getRelatedEntityId() != null) notificationObject.setRelatedEntityId(notification.getRelatedEntityId());
+        if(notification.getRelatedEntityType() != null) notificationObject.setRelatedEntityType(notification.getRelatedEntityType());
+
+        notificationObject.setUser(user);
+        notificationsRepository.save(notificationObject);
+        user.getNotifications().add(notificationObject);
+        return userRepository.save(user);
+
+    }
 }

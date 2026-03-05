@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.generation.socialNetwork.notifications.model.Notifications;
 
 import java.util.Date;
+import java.util.List;
 
 //Lombok
 @Entity
@@ -65,5 +67,45 @@ public class User {
 
     @Column(nullable = false, name="updated_at")
     private Date updatedAt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notifications> notifications;
 
 }
