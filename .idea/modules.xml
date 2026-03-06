@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/KinConecta.iml" filepath="$PROJECT_DIR$/.idea/KinConecta.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/socialNetwork.main.iml" filepath="$PROJECT_DIR$/.idea/modules/socialNetwork.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/socialNetwork.iml" filepath="$PROJECT_DIR$/.idea/modules/socialNetwork.iml" group="socialNetwork" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/socialNetwork_main.iml" filepath="$PROJECT_DIR$/.idea/modules/socialNetwork_main.iml" group="socialNetwork" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/socialNetwork_test.iml" filepath="$PROJECT_DIR$/.idea/modules/socialNetwork_test.iml" group="socialNetwork" />
     </modules>
   </component>
 </project>
