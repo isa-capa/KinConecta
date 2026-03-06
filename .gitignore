@@ -22,3 +22,5 @@ Gemfile.lock
 
 .idea/
 *.iml
+#unitari test
+tmp_compile/ 
