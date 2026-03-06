@@ -3,6 +3,7 @@ package generation.socialNetwork.users.controller;
 import generation.socialNetwork.users.model.User;
 import generation.socialNetwork.users.service.UserService;
 import lombok.AllArgsConstructor;
+import org.generation.socialNetwork.notifications.dto.NotificationsRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,5 +46,10 @@ public class UserController {
     @PutMapping(path="{fullName}_{userId}")
     public User updateUserById(@PathVariable("userId")Long id, @RequestBody User user){
         return userService.updateUserById(id,user);
+    }
+
+    @PostMapping(path = "/{userId}/add-notification")
+    public User addNotification(@PathVariable("userId") Long id, @RequestBody NotificationsRequest notification){
+        return userService.addNotification(id, notification);
     }
 }
