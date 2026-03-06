@@ -13,10 +13,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Destinations {
-
     @Id
     @GeneratedValue
-    @Column(unique=true, nullable=false)
+    @Column(unique=true, nullable=false, name="destination_id")
     private Long destinationId;
 
     @Column(nullable = false)
@@ -28,6 +27,6 @@ public class Destinations {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private String c;
+    @Column(nullable = false,name="is_featured")
+    private boolean isFeatured;
 }

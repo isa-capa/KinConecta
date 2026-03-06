@@ -20,7 +20,7 @@ import java.util.Date;
 public class TripBookings {
     @Id
     @GeneratedValue
-    @Column(unique=true, nullable=false)
+    @Column(unique=true, nullable=false, name="trip_id")
     private Long tripId;
 
     @Column(nullable=false, name="start_datetime")
@@ -46,7 +46,7 @@ public class TripBookings {
     private Date updatedAt;
 
     @Column(name="is_featured")
-    private Character isFeatured;
+    private boolean isFeatured;
 
     private
 
