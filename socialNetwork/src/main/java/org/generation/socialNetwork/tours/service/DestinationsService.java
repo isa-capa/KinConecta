@@ -1,7 +1,10 @@
 package org.generation.socialNetwork.tours.service;
 
 import org.generation.socialNetwork.tours.model.Destinations;
+import org.generation.socialNetwork.tours.model.Tour;
+import org.generation.socialNetwork.tours.model.TourDestination;
 import org.generation.socialNetwork.tours.repository.DestinationsRepository;
+import org.generation.socialNetwork.tours.repository.TourDestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +15,12 @@ public class DestinationsService {
 
     // Inyección de dependencias por constructor
     private final DestinationsRepository destinationsRepository;
+    private final TourDestinationRepository tourDestinationRepository;
 
     @Autowired
-    public DestinationsService(DestinationsRepository destinationsRepository) {
+    public DestinationsService(DestinationsRepository destinationsRepository, TourDestinationRepository tourDestinationRepository) {
         this.destinationsRepository = destinationsRepository;
+        this.tourDestinationRepository = tourDestinationRepository;
     }
 
     // Obtener todas los lugares de destino
@@ -48,9 +53,34 @@ public class DestinationsService {
 
         existing.setCity(updatedDestinations.getCity());
         existing.setCountry(updatedDestinations.getCountry());
-        existing.setDescription(updatedDestinations.getDescription()); //Viene del front end
-        existing.setIsFeatured(updatedDestinations.getIsFeatured());
+        existing.setDescription(updatedDestinations.getDescription());
+        existing.setFeatured(updatedDestinations.getFeatured()); //Viene del front end
 
         return destinationsRepository.save(existing);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public Destinations addTourDestination(Long idDestination){
+        Destinations destinations = destinationsRepository.findById(idDestination).orElseThrow(
+                () -> new IllegalArgumentException("El lugar de destino con el id " + idDestination + " no existe")
+        );
+
+        TourDestination tourDestination = new TourDestination();
+
+        tourDestination.setDestinationsId(idDestination);
+        tourDestinationRepository.save(tourDestination);
+        destinations.getTourDestinations().add(tourDestination);
+        return destinationsRepository.save(destinations);
+
     }
 }

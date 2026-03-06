@@ -1,6 +1,7 @@
 package org.generation.socialNetwork.tours.controller;
 
 import lombok.AllArgsConstructor;
+import org.generation.socialNetwork.notifications.dto.NotificationsRequest;
 import org.generation.socialNetwork.tours.model.Destinations;
 import org.generation.socialNetwork.tours.model.TripBookings;
 import org.generation.socialNetwork.tours.service.DestinationsService;
@@ -44,6 +45,11 @@ public class DestinationsController {
     @PutMapping(path = "{destinationId}")
     public Destinations updateDestinationsById(@PathVariable("destinationId") Long destinationId, @RequestBody Destinations destinations) {
         return destinationsService.updateDestinationsById(destinationId, destinations);
+    }
+
+    @PostMapping(path = "/{destinationId}/add-tour")
+    public Destinations addTourDestination(@PathVariable("destinationId") Long destinationId){
+        return destinationsService.addTourDestination(destinationId);
     }
 
 }

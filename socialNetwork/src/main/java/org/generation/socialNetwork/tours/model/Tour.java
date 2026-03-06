@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.generation.socialNetwork.notifications.model.Notifications;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tours")
@@ -81,4 +83,19 @@ public class Tour {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    @OneToMany(mappedBy = "tour_id", cascade = CascadeType.ALL)
+    private List<TourDestination> tourDestinations;
+
 }

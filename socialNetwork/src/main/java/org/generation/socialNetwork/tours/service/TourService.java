@@ -1,6 +1,9 @@
 package org.generation.socialNetwork.tours.service;
 
+
 import org.generation.socialNetwork.tours.model.Tour;
+import org.generation.socialNetwork.tours.model.TourDestination;
+import org.generation.socialNetwork.tours.repository.TourDestinationRepository;
 import org.generation.socialNetwork.tours.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +15,12 @@ public class TourService {
 
     // Inyección de dependencias por constructor
     private final TourRepository tourRepository;
+    private final TourDestinationRepository tourDestinationRepository;
 
     @Autowired
-    public TourService(TourRepository tourRepository) {
-        this.tourRepository = tourRepository;
+    public TourService(TourRepository tourRepository, TourDestinationRepository tourDestinationRepository) {
+       this.tourRepository = tourRepository;
+        this.tourDestinationRepository = tourDestinationRepository;
     }
 
     // Obtener todos los tours
@@ -61,5 +66,31 @@ public class TourService {
         existing.setBookingsCount(updatedTour.getBookingsCount());
 
         return tourRepository.save(existing);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Tour addTourDestination(Long idTour){
+        Tour tour = tourRepository.findById(idTour).orElseThrow(
+                () -> new IllegalArgumentException("El tour con el id " + idTour + " no existe")
+        );
+
+        TourDestination tourDestination = new TourDestination();
+
+        tourDestination.setToursId(idTour);
+        tourDestinationRepository.save(tourDestination);
+        tour.getTourDestinations().add(tourDestination);
+        return tourRepository.save(tour);
+
     }
 }

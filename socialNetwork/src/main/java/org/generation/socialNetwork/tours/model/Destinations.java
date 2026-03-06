@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "destinations")
 @AllArgsConstructor
@@ -27,6 +29,17 @@ public class Destinations {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false,name="is_featured")
-    private boolean isFeatured;
+    @Column(nullable = false,name="featured")
+    private Byte featured;
+
+
+
+
+
+
+
+
+    @OneToMany(mappedBy = "destination_id", cascade = CascadeType.ALL)
+    private List<TourDestination> tourDestinations;
+
 }
