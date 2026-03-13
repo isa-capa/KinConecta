@@ -1,0 +1,445 @@
+<!doctype html>
+<html class="light" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Ingresos y pagos - Portal de guía</title>
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../styles/pages/platform.css" />
+    <link
+      rel="stylesheet"
+      href="../../../styles/pages/guide/dashboard-incomes.css"
+    />
+  </head>
+  <body class="platform-page role-guide">
+    <div class="container">
+      <!-- Barra lateral -->
+      <div
+        data-guide-sidebar
+        data-component-path="../../../components/guide-sidebar.html"
+        data-pages-prefix="../../"
+        data-assets-prefix="../../../"
+        data-guide-active="incomes"
+      ></div>
+
+      <!-- Contenido principal -->
+      <main class="main-content">
+        <!-- Encabezado -->
+        <header class="header">
+          <div class="mobile-header">
+            <button class="menu-button" type="button" aria-label="Abrir menú">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <span class="mobile-logo">Kin Conecta</span>
+          </div>
+          <div class="header-title">
+            <h2 class="page-title">Ingresos y Pagos</h2>
+            <p class="page-subtitle">
+              Administra tus ganancias e historial de pagos.
+            </p>
+          </div>
+          <div class="header-actions">
+            <div class="status-badge">
+              <span class="material-symbols-outlined"
+                >account_balance_wallet</span
+              >
+              <span class="status-text">Cuenta de Pago Activa</span>
+            </div>
+            <button
+              class="notification-button"
+              type="button"
+              aria-label="Notificaciones"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="notification-dot"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Área de contenido desplazable -->
+        <div class="content-area">
+          <div class="content-wrapper">
+            <!-- Barra de acciones superior -->
+            <div class="action-bar">
+              <div class="last-updated">
+                <span id="lastUpdatedAt"
+                  >Última actualización: 24 Oct 2023, 10:30 AM</span
+                >
+                <span class="material-symbols-outlined refresh-icon"
+                  >refresh</span
+                >
+              </div>
+              <div class="action-buttons">
+                <button
+                  class="btn-secondary"
+                  id="btnDownloadReport"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined">download</span>
+                  Descargar Reporte
+                </button>
+                <button class="btn-primary" id="btnWithdrawFunds" type="button">
+                  <span class="material-symbols-outlined">payments</span>
+                  Retirar Fondos
+                </button>
+              </div>
+            </div>
+
+            <!-- Tarjetas de estadísticas -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div>
+                    <h3 class="stat-label">Ganancias este Mes</h3>
+                    <p class="stat-value" id="kpiMonthlyIncome">MXN 25,450</p>
+                  </div>
+                  <div class="stat-icon green">
+                    <span class="material-symbols-outlined">trending_up</span>
+                  </div>
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-change positive" id="kpiMonthlyIncomeDelta"
+                    >+12%</span
+                  >
+                  <span class="stat-comparison" id="kpiMonthlyIncomeDeltaLabel"
+                    >vs mes anterior</span
+                  >
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div>
+                    <h3 class="stat-label">Pagos Pendientes</h3>
+                    <p class="stat-value" id="kpiPendingPayouts">MXN 4,200</p>
+                  </div>
+                  <div class="stat-icon orange">
+                    <span class="material-symbols-outlined">hourglass_top</span>
+                  </div>
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-comparison" id="kpiPendingPayoutsLabel"
+                    >Procesando el próximo martes</span
+                  >
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div>
+                    <h3 class="stat-label">Total Retirado</h3>
+                    <p class="stat-value" id="kpiTotalWithdrawn">MXN 142,890</p>
+                  </div>
+                  <div class="stat-icon blue">
+                    <span class="material-symbols-outlined"
+                      >account_balance</span
+                    >
+                  </div>
+                </div>
+                <div class="stat-footer">
+                  <span class="stat-change positive" id="kpiTotalWithdrawnDelta"
+                    >+8%</span
+                  >
+                  <span class="stat-comparison" id="kpiTotalWithdrawnDeltaLabel"
+                    >desde el inicio</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección de gráfico -->
+            <div class="chart-section">
+              <div class="chart-header">
+                <div>
+                  <h3 class="section-title">Resumen de Ingresos</h3>
+                  <p class="section-subtitle">
+                    Ganancias mensuales de los últimos 6 meses
+                  </p>
+                </div>
+                <div class="chart-filters">
+                  <button
+                    class="filter-btn"
+                    data-chart-range="6m"
+                    type="button"
+                  >
+                    6 Meses
+                  </button>
+                  <button
+                    class="filter-btn"
+                    data-chart-range="12m"
+                    type="button"
+                  >
+                    12 Meses
+                  </button>
+                  <button
+                    class="filter-btn active"
+                    data-chart-range="all"
+                    type="button"
+                  >
+                    Todo
+                  </button>
+                </div>
+              </div>
+              <div class="chart-placeholder" id="incomeChart">
+                <div class="chart-bar" style="height: 60%">
+                  <span class="chart-label">Abr</span>
+                  <span class="chart-value">18K</span>
+                </div>
+                <div class="chart-bar" style="height: 75%">
+                  <span class="chart-label">May</span>
+                  <span class="chart-value">22K</span>
+                </div>
+                <div class="chart-bar" style="height: 55%">
+                  <span class="chart-label">Jun</span>
+                  <span class="chart-value">16K</span>
+                </div>
+                <div class="chart-bar" style="height: 85%">
+                  <span class="chart-label">Jul</span>
+                  <span class="chart-value">28K</span>
+                </div>
+                <div class="chart-bar" style="height: 70%">
+                  <span class="chart-label">Ago</span>
+                  <span class="chart-value">21K</span>
+                </div>
+                <div class="chart-bar active" style="height: 90%">
+                  <span class="chart-label">Sep</span>
+                  <span class="chart-value">25K</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla de transacciones -->
+            <div class="table-section">
+              <div class="table-header">
+                <h3 class="section-title">Transacciones Recientes</h3>
+                <div class="table-actions">
+                  <div class="search-wrapper">
+                    <span class="material-symbols-outlined search-icon"
+                      >search</span
+                    >
+                    <input
+                      class="search-input"
+                      id="transactionsSearchInput"
+                      placeholder="Buscar..."
+                      type="text"
+                    />
+                  </div>
+                  <button
+                    class="filter-button"
+                    id="btnOpenTransactionsFilter"
+                    type="button"
+                  >
+                    <span class="material-symbols-outlined">filter_list</span>
+                  </button>
+                </div>
+              </div>
+              <div class="table-wrapper">
+                <table class="transactions-table">
+                  <thead>
+                    <tr>
+                      <th>Transacción / Tour</th>
+                      <th>Fecha</th>
+                      <th>Tipo</th>
+                      <th>Estado</th>
+                      <th class="text-right">Monto</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactionsTableBody">
+                    <tr>
+                      <td>
+                        <div class="transaction-info">
+                          <div class="transaction-icon orange">
+                            <span class="material-symbols-outlined">tour</span>
+                          </div>
+                          <div>
+                            <p class="transaction-name">
+                              Comida Callejera & Cultura
+                            </p>
+                            <p class="transaction-details">
+                              Reserva #BK-9928 • Juan P.
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="transaction-date">24 Oct 2023</td>
+                      <td class="transaction-type">Ingreso de recorrido</td>
+                      <td>
+                        <span class="status-badge yellow">
+                          <span class="status-dot"></span> Pendiente
+                        </span>
+                      </td>
+                      <td class="transaction-amount">MXN 850.00</td>
+                      <td class="text-right">
+                        <button class="more-button">
+                          <span class="material-symbols-outlined"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="transaction-info">
+                          <div class="transaction-icon green">
+                            <span class="material-symbols-outlined"
+                              >account_balance</span
+                            >
+                          </div>
+                          <div>
+                            <p class="transaction-name">Pago Semanal</p>
+                            <p class="transaction-details">
+                              Transferencia a BBVA •••• 4589
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="transaction-date">17 Oct 2023</td>
+                      <td class="transaction-type">Retiro</td>
+                      <td>
+                        <span class="status-badge green">
+                          <span class="status-dot"></span> Completado
+                        </span>
+                      </td>
+                      <td class="transaction-amount">- MXN 5,420.00</td>
+                      <td class="text-right">
+                        <button class="more-button">
+                          <span class="material-symbols-outlined"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="transaction-info">
+                          <div class="transaction-icon orange">
+                            <span class="material-symbols-outlined">tour</span>
+                          </div>
+                          <div>
+                            <p class="transaction-name">
+                              Amanecer en Teotihuacan
+                            </p>
+                            <p class="transaction-details">
+                              Reserva #BK-9842 • Sarah M.
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="transaction-date">16 Oct 2023</td>
+                      <td class="transaction-type">Ingreso de recorrido</td>
+                      <td>
+                        <span class="status-badge green">
+                          <span class="status-dot"></span> Pagado
+                        </span>
+                      </td>
+                      <td class="transaction-amount">MXN 1,200.00</td>
+                      <td class="text-right">
+                        <button class="more-button">
+                          <span class="material-symbols-outlined"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="transaction-info">
+                          <div class="transaction-icon orange">
+                            <span class="material-symbols-outlined">tour</span>
+                          </div>
+                          <div>
+                            <p class="transaction-name">
+                              Comida Callejera & Cultura
+                            </p>
+                            <p class="transaction-details">
+                              Reserva #BK-9811 • Grupo de 4
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="transaction-date">15 Oct 2023</td>
+                      <td class="transaction-type">Ingreso de recorrido</td>
+                      <td>
+                        <span class="status-badge green">
+                          <span class="status-dot"></span> Pagado
+                        </span>
+                      </td>
+                      <td class="transaction-amount">MXN 3,400.00</td>
+                      <td class="text-right">
+                        <button class="more-button">
+                          <span class="material-symbols-outlined"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="transaction-info">
+                          <div class="transaction-icon red">
+                            <span class="material-symbols-outlined"
+                              >cancel</span
+                            >
+                          </div>
+                          <div>
+                            <p class="transaction-name">
+                              Reembolso: Paseo Arquitectónico
+                            </p>
+                            <p class="transaction-details">
+                              Reserva #BK-9755 • Solicitud del usuario
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="transaction-date">12 Oct 2023</td>
+                      <td class="transaction-type">Reembolso</td>
+                      <td>
+                        <span class="status-badge gray">
+                          <span class="status-dot"></span> Procesado
+                        </span>
+                      </td>
+                      <td class="transaction-amount negative">- MXN 850.00</td>
+                      <td class="text-right">
+                        <button class="more-button">
+                          <span class="material-symbols-outlined"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-footer">
+                <button
+                  class="view-all-button"
+                  id="btnViewAllTransactions"
+                  type="button"
+                >
+                  Ver Todas las Transacciones
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="../../../scripts/api/http-client.js"></script>
+    <script src="../../../scripts/api/guide-api-services.js"></script>
+    <script src="../../../scripts/pages/guide/dashboard-incomes.js"></script>
+    <div
+      data-guide-chat-widget
+      data-component-path="../../../components/guide-chat-widget.html"
+    ></div>
+    <script src="../../../scripts/components/guide-shell.js"></script>
+  </body>
+</html>

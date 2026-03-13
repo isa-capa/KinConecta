@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kin Conecta - Inicio (Turista)</title>
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../../../styles/pages/platform.css" />
+    <link rel="stylesheet" href="../../../styles/pages/tourist/dashboard-home.css" />
+
+    <script defer src="../../../scripts/api/http-client.js"></script>
+    <script defer src="../../../scripts/api/tourist-api-services.js"></script>
+    <script defer src="../../../scripts/pages/tourist/dashboard-home.js"></script>
+  </head>
+
+  <body class="app platform-page role-tourist">
+    <div class="layout">
+      <div
+        data-tourist-sidebar
+        data-component-path="../../../components/tourist-sidebar.html"
+        data-pages-prefix="../../"
+        data-assets-prefix="../../../"
+        data-tourist-active="home"
+      ></div>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar__left">
+            <button
+              class="topbar__menu-btn"
+              id="btnSidebar"
+              type="button"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">menu</span>
+              <span class="u-sr-only">Abrir menú</span>
+            </button>
+
+            <div class="search" role="search">
+              <span class="material-symbols-outlined search__icon" aria-hidden="true">search</span>
+              <input
+                class="search__input"
+                id="searchInput"
+                type="search"
+                placeholder="Buscar destinos, guías y experiencias"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <button class="topbar__notif" id="btnNotif" type="button" aria-label="Notificaciones">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="topbar__notif-dot topbar__notif-dot--gold" aria-hidden="true"></span>
+            </button>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="t-dashboard">
+            <div class="t-dashboard__container">
+              <header class="t-dashboard__hero">
+                <div class="t-dashboard__hero-text">
+                  <h1 class="t-dashboard__title" id="welcomeTitle">Hola</h1>
+                  <p class="t-dashboard__subtitle">
+                    Planea tu siguiente aventura en México con guías verificados.
+                  </p>
+                </div>
+
+                <article class="trip-card" aria-label="Próximo viaje">
+                  <div class="trip-card__media" id="nextTripMedia" role="img" aria-label="Imagen del próximo destino">
+                    <div class="trip-card__media-overlay" aria-hidden="true"></div>
+                    <div class="trip-card__media-badge">
+                      <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                      <span>Próximo destino</span>
+                    </div>
+                    <h3 class="trip-card__media-title" id="nextTripDestination">Sin viaje próximo</h3>
+                  </div>
+
+                  <div class="trip-card__body">
+                    <div class="trip-card__row">
+                      <div>
+                        <h4 class="trip-card__title" id="nextTripTitle">Aún no tienes una reserva confirmada</h4>
+                        <p class="trip-card__date">
+                          <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+                          <span id="nextTripDates">Cuando tengas una reserva, la verás aquí.</span>
+                        </p>
+                      </div>
+                      <span class="trip-card__status trip-card__status--ok" id="nextTripStatus">Pendiente</span>
+                    </div>
+
+                    <div class="trip-card__guide">
+                      <div class="trip-card__guide-avatar" id="nextTripGuideAvatar" role="img" aria-label="Guía asignada"></div>
+                      <div class="trip-card__guide-meta">
+                        <span class="trip-card__guide-label">Tu guía asignada</span>
+                        <span class="trip-card__guide-name" id="nextTripGuideName">Sin guía asignado</span>
+                      </div>
+                      <button class="icon-btn" id="btnChatGuide" type="button" aria-label="Chatear con tu guía">
+                        <span class="material-symbols-outlined">chat</span>
+                      </button>
+                    </div>
+
+                    <div class="trip-card__actions">
+                      <button class="btn btn--primary btn--full" id="btnTripDetails" type="button">Ver detalles</button>
+                      <button class="btn btn--secondary btn--full" id="btnTripManage" type="button">Gestionar</button>
+                    </div>
+                  </div>
+                </article>
+              </header>
+
+              <section class="section">
+                <div class="section__header">
+                  <h2 class="section__title">Recomendados para ti</h2>
+                  <button class="section__link" id="btnViewAllGuides" type="button">
+                    Ver todos
+                    <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <div class="card-grid" id="recommendedGuides"></div>
+              </section>
+
+              <section class="t-dashboard__grid">
+                <div class="section section--destinations">
+                  <div class="section__header">
+                    <h2 class="section__title">Destinos populares en México</h2>
+                  </div>
+                  <div class="destination-grid" id="destinationGrid"></div>
+                </div>
+
+                <aside class="section section--saved">
+                  <div class="section__header">
+                    <h2 class="section__title section__title--sm">Guías guardados</h2>
+                    <button class="section__link section__link--sm" id="btnSavedAll" type="button">
+                      Ver todo
+                    </button>
+                  </div>
+
+                  <div class="saved-card">
+                    <ul class="saved-list" id="savedGuides"></ul>
+                    <button class="saved-card__add" id="btnExploreMore" type="button">
+                      <span class="material-symbols-outlined" aria-hidden="true">add</span>
+                      Explorar más guías
+                    </button>
+                  </div>
+                </aside>
+              </section>
+            </div>
+          </section>
+
+          <div class="backdrop" id="backdrop" hidden></div>
+        </div>
+      </main>
+    </div>
+
+    <div
+      data-tourist-chat-widget
+      data-component-path="../../../components/guide-chat-widget.html"
+    ></div>
+    <script src="../../../scripts/components/tourist-shell.js"></script>
+  </body>
+</html>
+

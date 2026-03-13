@@ -13,7 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StaticContentController {
 
-    @GetMapping({"/", "/index.html", "/favicon.ico", "/frontend/**"})
+    @GetMapping({
+            "/",
+            "/index.html",
+            "/favicon.ico",
+            "/assets/**",
+            "/components/**",
+            "/pages/**",
+            "/scripts/**",
+            "/styles/**"
+    })
     public ResponseEntity<Resource> serveStaticContent(HttpServletRequest request) {
         String requestPath = request.getRequestURI();
         String resourcePath = "/".equals(requestPath) ? "static/index.html" : "static" + requestPath;

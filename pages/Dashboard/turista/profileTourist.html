@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kin Conecta - Perfil de turista</title>
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../../../styles/pages/platform.css" />
+    <link rel="stylesheet" href="../../../styles/pages/tourist/dashboard-profile.css" />
+
+    <script defer src="../../../scripts/api/http-client.js"></script>
+    <script defer src="../../../scripts/api/tourist-api-services.js"></script>
+    <script defer src="../../../scripts/pages/tourist/dashboard-profile.js"></script>
+  </head>
+
+  <body class="app platform-page role-tourist">
+    <div class="layout">
+      <div
+        data-tourist-sidebar
+        data-component-path="../../../components/tourist-sidebar.html"
+        data-pages-prefix="../../"
+        data-assets-prefix="../../../"
+        data-tourist-active="home"
+      ></div>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar__left">
+            <button
+              class="topbar__menu-btn"
+              id="btnSidebar"
+              type="button"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">menu</span>
+              <span class="u-sr-only">Abrir menú</span>
+            </button>
+            <div class="topbar__heading">
+              <h2 class="topbar__title">Perfil</h2>
+              <p class="topbar__subtitle">Información personal y preferencias de viaje.</p>
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <button class="btn btn--primary" id="btnEditProfileNav" type="button">
+              <span class="material-symbols-outlined btn__icon">edit_square</span>
+              Actualizar información
+            </button>
+            <button class="topbar__notif" id="btnNotif" type="button" aria-label="Notificaciones">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="topbar__notif-dot" aria-hidden="true"></span>
+            </button>
+          </div>
+        </header>
+
+        <section class="tourist-page">
+          <div class="tourist-page__container profile-page">
+            <article class="profile-hero">
+              <div class="profile-hero__cover" id="profileCover">
+                <button class="profile-hero__edit-btn" id="profileCardEditBtn" type="button" aria-label="Editar foto de portada">
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+                <div class="profile-hero__overlay"></div>
+              </div>
+              <div class="profile-hero__body">
+                <div class="profile-hero__top">
+                  <div class="profile-hero__identity">
+                    <div class="profile-hero__avatar-wrap">
+                      <div class="profile-hero__avatar" id="profileAvatar"></div>
+                      <button
+                        class="profile-hero__avatar-edit"
+                        id="profileAvatarEditBtn"
+                        type="button"
+                        aria-label="Editar foto de perfil"
+                      >
+                        <span class="material-symbols-outlined">edit</span>
+                      </button>
+                    </div>
+                    <div>
+                      <h1 class="profile-hero__name" id="profileName">Sofía Ramírez</h1>
+                      <p class="profile-hero__meta">
+                        <span class="material-symbols-outlined">location_on</span>
+                        <span id="profileLocation">Ciudad de México</span>
+                      </p>
+                      <p class="profile-hero__meta">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                        <span id="profileMemberSince">Miembro desde Ene 2023</span>
+                      </p>
+                    </div>
+                  </div>
+                  <span class="profile-hero__badge">
+                    <span class="material-symbols-outlined">verified</span>
+                    <span id="profileBadge">Viajero frecuente</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <section class="profile-layout">
+              <div class="profile-layout__main">
+                <div class="profile-card">
+                  <h3>Sobre mí</h3>
+                  <p id="profileBio">
+                    Amante de la naturaleza y la comida callejera.
+                  </p>
+                </div>
+
+                <section class="profile-card">
+                  <h3>Historial de viajes</h3>
+                  <div class="trip-history" id="profileHistory"></div>
+                </section>
+
+                <article class="profile-card preference-card">
+                  <h3>Comida y planeación</h3>
+                  <dl class="profile-kv">
+                    <div>
+                      <dt>Preferencias alimenticias</dt>
+                      <dd id="profileDietaryPreferences">Sin restricciones, con interés local.</dd>
+                    </div>
+                    <div>
+                      <dt>Nivel de planificación</dt>
+                      <dd id="profilePlanningLevel">Intermedio.</dd>
+                    </div>
+                  </dl>
+                </article>
+
+                <article class="profile-card preference-card">
+                  <h3>Necesidades y logística</h3>
+                  <dl class="profile-kv">
+                    <div>
+                      <dt>Accesibilidad</dt>
+                      <dd id="profileAccessibility">Sin necesidades especiales por ahora.</dd>
+                    </div>
+                    <div>
+                      <dt>Notas adicionales</dt>
+                      <dd id="profileAdditionalNotes">Disponible para itinerarios flexibles.</dd>
+                    </div>
+                  </dl>
+                </article>
+              </div>
+
+              <aside class="profile-layout__aside">
+                <article class="profile-card">
+                  <h3>Intereses</h3>
+                  <div class="profile-tags" id="profileInterests"></div>
+                </article>
+
+                <article class="profile-card preference-card">
+                  <h3>Estilo de viaje</h3>
+                  <dl class="profile-kv">
+                    <div>
+                      <dt>Estilo de viaje</dt>
+                      <dd id="profileTravelStyle">Cultural y flexible.</dd>
+                    </div>
+                    <div>
+                      <dt>Tipo de viaje</dt>
+                      <dd id="profileTripType">Escapadas de fin de semana.</dd>
+                    </div>
+                    <div>
+                      <dt>Idiomas</dt>
+                      <dd id="profileLanguages">Español, Inglés.</dd>
+                    </div>
+                  </dl>
+                </article>
+
+                <article class="profile-card preference-card">
+                  <h3>Ritmo y compañía</h3>
+                  <dl class="profile-kv">
+                    <div>
+                      <dt>Ritmo y compañía</dt>
+                      <dd id="profilePaceAndCompany">Ritmo moderado en grupos pequeños.</dd>
+                    </div>
+                    <div>
+                      <dt>Nivel de actividad</dt>
+                      <dd id="profileActivityLevel">Moderado.</dd>
+                    </div>
+                    <div>
+                      <dt>Preferencia de grupo</dt>
+                      <dd id="profileGroupPreference">Pareja o grupos de 3 a 6 personas.</dd>
+                    </div>
+                  </dl>
+                </article>
+
+                <article class="profile-card preference-card">
+                  <h3>Comodidades</h3>
+                  <dl class="profile-kv">
+                    <div>
+                      <dt>Comodidades</dt>
+                      <dd id="profileAmenities">Hospedaje céntrico y Wi-Fi estable.</dd>
+                    </div>
+                    <div>
+                      <dt>Transporte</dt>
+                      <dd id="profileTransport">Caminata y transporte público.</dd>
+                    </div>
+                    <div>
+                      <dt>Preferencia de fotos</dt>
+                      <dd id="profilePhotoPreference">Fotos espontáneas y retratos naturales.</dd>
+                    </div>
+                  </dl>
+                </article>
+              </aside>
+            </section>
+
+          </div>
+        </section>
+
+        <div class="profile-media-backdrop" id="profileMediaBackdrop" hidden></div>
+        <section
+          class="profile-media-modal"
+          id="profileMediaModal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="profileMediaModalTitle"
+          hidden
+        >
+          <button class="profile-media-modal__close" id="profileMediaClose" type="button" aria-label="Cerrar">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+          <h3 id="profileMediaModalTitle">Editar foto de perfil</h3>
+          <p id="profileMediaModalHint">Selecciona una imagen para actualizar tu foto de perfil.</p>
+          <img class="profile-media-modal__preview" id="profileMediaPreview" src="" alt="Vista previa" />
+          <input class="profile-media-modal__input" id="profileMediaInput" type="file" accept="image/*" />
+          <p class="profile-media-modal__filename" id="profileMediaFilename">Ningún archivo seleccionado.</p>
+          <p class="profile-media-modal__status" id="profileMediaStatus"></p>
+          <div class="profile-media-modal__actions">
+            <button class="modal-btn modal-btn--ghost" id="profileMediaCancel" type="button">Cancelar</button>
+            <button class="modal-btn modal-btn--primary" id="profileMediaSave" type="button">Guardar imagen</button>
+          </div>
+        </section>
+
+        <div class="backdrop" id="backdrop" hidden></div>
+      </main>
+    </div>
+
+    <div
+      data-tourist-chat-widget
+      data-component-path="../../../components/guide-chat-widget.html"
+    ></div>
+    <script src="../../../scripts/components/tourist-shell.js"></script>
+  </body>
+</html>
+

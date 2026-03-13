@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kin Conecta - Mis viajes</title>
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../../../styles/pages/platform.css" />
+    <link rel="stylesheet" href="../../../styles/pages/tourist/dashboard-trips.css" />
+
+    <script defer src="../../../scripts/api/http-client.js"></script>
+    <script defer src="../../../scripts/api/tourist-api-services.js"></script>
+    <script defer src="../../../scripts/pages/tourist/dashboard-trips.js"></script>
+  </head>
+
+  <body class="app platform-page role-tourist">
+    <div class="layout">
+      <div
+        data-tourist-sidebar
+        data-component-path="../../../components/tourist-sidebar.html"
+        data-pages-prefix="../../"
+        data-assets-prefix="../../../"
+        data-tourist-active="trips"
+      ></div>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar__left">
+            <button
+              class="topbar__menu-btn"
+              id="btnSidebar"
+              type="button"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <span class="material-symbols-outlined">menu</span>
+              <span class="u-sr-only">Abrir menú</span>
+            </button>
+            <div class="topbar__heading">
+              <h2 class="topbar__title">Mis viajes</h2>
+              <p class="topbar__subtitle">Gestiona reservas, fechas y cambios de tus viajes.</p>
+            </div>
+          </div>
+
+          <div class="topbar__actions">
+            <button class="topbar__notif" id="btnNotif" type="button" aria-label="Notificaciones">
+              <span class="material-symbols-outlined">notifications</span>
+              <span class="topbar__notif-dot" aria-hidden="true"></span>
+            </button>
+            <div class="kc-user-menu" data-shell-user-menu data-shell-role="tourist"></div>
+          </div>
+        </header>
+
+        <section class="tourist-page">
+          <div class="tourist-page__container trips-page">
+            <header class="tourist-section__header">
+              <div>
+                <h1 class="tourist-section__title">Próximo viaje</h1>
+                <p class="tourist-section__subtitle">Resumen rápido de tu reserva más cercana.</p>
+              </div>
+            </header>
+
+            <article class="trip-featured">
+              <div class="trip-featured__image" id="featuredTripImage"></div>
+              <div class="trip-featured__body">
+                <h3 class="trip-featured__title" id="featuredTripTitle">Historic Center Photo Tour</h3>
+                <p class="trip-featured__meta">
+                  <span class="material-symbols-outlined">location_on</span>
+                  <span id="featuredTripLocation">Ciudad de México</span>
+                </p>
+                <p class="trip-featured__meta">
+                  <span class="material-symbols-outlined">calendar_month</span>
+                  <span id="featuredTripDate">15 Feb 2026</span>
+                </p>
+                <p class="trip-featured__guide">
+                  <img id="featuredTripGuideAvatar" src="../../../assets/users/user_guide.png" alt="Avatar de guía" />
+                  <span id="featuredTripGuideName">Luis Martínez</span>
+                </p>
+                <div class="trip-featured__actions">
+                  <button class="btn btn--primary" id="btnFeaturedDetails" type="button">Ver detalles</button>
+                  <button class="btn btn--secondary" id="btnFeaturedChat" type="button">Contactar guía</button>
+                </div>
+              </div>
+            </article>
+
+            <section>
+              <div class="tourist-section__header">
+                <h2 class="tourist-section__title">Historial de viajes</h2>
+              </div>
+              <div class="trip-list" id="tripsList"></div>
+            </section>
+          </div>
+        </section>
+
+        <div class="backdrop" id="backdrop" hidden></div>
+      </main>
+    </div>
+
+    <div
+      data-tourist-chat-widget
+      data-component-path="../../../components/guide-chat-widget.html"
+    ></div>
+    <script src="../../../scripts/components/tourist-shell.js"></script>
+  </body>
+</html>
+

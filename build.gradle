@@ -51,3 +51,16 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.named('processResources') {
+	from(projectDir) {
+		into 'static'
+		include 'index.html'
+		include 'favicon.ico'
+		include 'assets/**'
+		include 'components/**'
+		include 'pages/**'
+		include 'scripts/**'
+		include 'styles/**'
+	}
+}
+
